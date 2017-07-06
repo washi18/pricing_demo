@@ -1,0 +1,26 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<style src="css/configInterfaz.css"/>
+	<div apply="org.zkoss.bind.BindComposer"
+		 viewModel="@id('vmConfigInterfaz') @init('com.pricing.viewModel.ConfigInterfazVM')">
+		<div width="100%" sclass="div_content_config">
+			<div width="100%" sclass="div_content_config_title">
+				<a iconSclass="fa fa-industry estilos-iconos div_content_config_title_a"/>
+				<label value="CONFIGURACION DE INTERFAZ (Front-End)" sclass="div_content_config_title_lbl"/>
+			</div>
+			<div>
+				<div>
+					<label value="Configurar vista de Pricing:" sclass="lbl_congif_sutitle"/>
+					 <div>
+					 	<button label="CONFIGURAR" zclass="estilo_subir_imagen" id="configColores" onClick="@command('mostrarConfigColoresPricing')"/>
+					 </div>
+				</div>
+				<space></space>
+			 	<div zclass="div_content_btns_operaciones" align="center" width="100%">
+			 		<button label="ACTUALIZAR" width="100%" zclass="btn_actualizar" onClick="@command('guardarCambiosModoPricing',componente=self)"/>
+			 		<button label="CANCELAR" width="100%" zclass="btn_editar" onClick="@command('Cancelar')"/>
+			 	</div>
+			</div>
+		</div>
+	</div>
+</zk>

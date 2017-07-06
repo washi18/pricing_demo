@@ -1,6 +1,15 @@
-<?page title="Auto Generated index.zul"?>
-<window title="Hello World!!" border="normal" width="200px">
-
-<label value="You are using: ${desktop.webApp.version}"/>
-
-</window>
+<?page viewport="width=device-width, initial-scale=1.0,  user-scalable=no"?>
+<zk>
+	<style src="css/pricing.css"/>
+	<style src="css/revisar.css"/>
+	<style src="fonts/style.css"/>
+	<style src="fonts/font-awesome.css"/>
+	<style src="css/style_zk.css"/>
+	<style src="css/hotelesPorCategoria.css"/>
+	<style src="css/disponibilidad.css"/>
+	<style src="css/imagenesHotel.css"/>
+	<timer id="timerKeepAliveSession" repeats="true" delay="1800000" onTimer=""/>
+	<div apply="org.zkoss.bind.BindComposer" viewModel="@id('vmIndex') @init('com.pricing.viewModel.indexVM')">
+<!-- 		<div visible="@bind(vmIndex.mostrarAdmin)"><include src="panelAdmin.zul"/></div> -->
+	</div>
+</zk>
