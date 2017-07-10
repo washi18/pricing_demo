@@ -4,7 +4,6 @@
 		closable="true"
 		position="center"
 		sclass="win_imagenesHotel"
-		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vmIti') @init('com.pricing.viewModel.itinerarioPaqueteVM')">
 		<html content="@bind(vmIti.itinerario)"/>
 </window>

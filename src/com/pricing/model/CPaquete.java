@@ -898,7 +898,7 @@ public class CPaquete
 		this.conCalendarioPropio=false;
 		this.abrirEditorItinerario=false;
 		this.abrirEditorDescripcion=false;
-		this.url_pricingPaquete="https://www.e-ranti.com/pricing_info/?var1="+cPaqueteCod;
+		this.url_pricingPaquete="https://www.e-ranti.com/pricing_demo/?var1="+cPaqueteCod;
 		/***Recuperando lo que contiene el paquete***/
 		listaDestinos=new ArrayList<CDestino>();
 		listaServicios=new ArrayList<CServicio>();

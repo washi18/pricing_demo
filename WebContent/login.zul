@@ -1,8 +1,7 @@
 <?page title="LOGIN" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<style src="css/Login.css"/>
-	<div apply="org.zkoss.bind.BindComposer" 
-		 viewModel="@id('vm') @init('com.pricing.viewModel.LoginVM')"
+	<div viewModel="@id('vm') @init('com.pricing.viewModel.LoginVM')"
 		 sclass="div_content_general_login">
 		<div zclass="content_login">
 			<label value="ADMIN" zclass="lbl_title_login"/>

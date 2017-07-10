@@ -2,8 +2,7 @@
 <zk>
 	<style src="css/formas_Generales.css"></style>
 	<style src="css/estilos_Servicios.css"></style>
-	<div apply="org.zkoss.bind.BindComposer"
-		 viewModel="@id('vmServicio') @init('com.pricing.viewModel.servicioVM')">
+	<div viewModel="@id('vmServicio') @init('com.pricing.viewModel.servicioVM')">
 		<div zclass="div_contenedor_nuevo">
 			<div zclass="div_contendor_btn_nuevo" onClick="div_llenar_servicios.setVisible(true)">
 				<div zclass="div_btn_nuevo" width="150px">
@@ -418,7 +417,7 @@
 				    								value="Nombre:">
 				    							</label>
 				    						</div>
-				    						<textbox hflex="1"
+				    						<textbox hflex="min"
 				    							width="100%" height="30px" sclass="txt_llenar_datos" style="text-transform: uppercase;"
 				    							value="@bind(each.cServicioIndioma4) @save(each.cServicioIndioma4,before='actualizarServicio')" />
 				    						<div width="100%">
@@ -427,7 +426,7 @@
 				    							</label>
 				    						</div>
 				    						<textbox multiline="true" sclass="txt_llenar_datos"
-				    							width="100%" hflex="1" height="100px"
+				    							width="100%" hflex="min" height="100px"
 				    							value="@bind(each.cDescripcionIdioma4) @save(each.cDescripcionIdioma4,before='actualizarServicio')" />
 				    					</div>
 				    				</div>
@@ -439,7 +438,7 @@
 				    								value="Nombre:">
 				    							</label>
 				    						</div>
-				    						<textbox hflex="1"
+				    						<textbox hflex="min"
 				    							width="100%" height="30px" sclass="txt_llenar_datos" style="text-transform: uppercase;"
 				    							value="@bind(each.cServicioIndioma5) @save(each.cServicioIndioma5,before='actualizarServicio')" />
 				    						<div width="100%">
@@ -448,7 +447,7 @@
 				    							</label>
 				    						</div>
 				    						<textbox multiline="true"
-				    							width="100%" hflex="1" height="100px" sclass="txt_llenar_datos"
+				    							width="100%" hflex="min" height="100px" sclass="txt_llenar_datos"
 				    							value="@bind(each.cDescripcionIdioma5) @save(each.cDescripcionIdioma5,before='actualizarServicio')" />
 				    					</div>
 				    				</div>

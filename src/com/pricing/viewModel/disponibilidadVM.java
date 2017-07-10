@@ -958,9 +958,9 @@ public class disponibilidadVM
 		    {
 		    	ArrayList<Integer> listDispoMesActual=new ArrayList<Integer>();
 				listDispoMesActual=recuperarDispoMesUrl(a,m);
-				if(listDispoMesActual.isEmpty())
-					listDispoMesActual=recuperarDispoMes(a,m, listaDisponibilidad);
-				actualizarDispoMesAnioActual(a,m,k,listDispoMesActual);
+				if(!listDispoMesActual.isEmpty())
+//					listDispoMesActual=recuperarDispoMes(a,m, listaDisponibilidad);
+					actualizarDispoMesAnioActual(a,m,k,listDispoMesActual);
 //				int nro=1;
 //				for(Integer dispo:listDispoMesActual)
 //				{
@@ -1165,9 +1165,9 @@ public class disponibilidadVM
 		    {
 		    	ArrayList<Integer> listDispoMesSig=new ArrayList<Integer>();
 				listDispoMesSig=recuperarDispoMesUrl(a,m);
-				if(listDispoMesSig.isEmpty())
-					listDispoMesSig=recuperarDispoMes(a,m, listaDisponibilidad);
-				actualizarDispoMesAnioSig(a,m,k,listDispoMesSig);
+				if(!listDispoMesSig.isEmpty())
+//					listDispoMesSig=recuperarDispoMes(a,m, listaDisponibilidad);
+					actualizarDispoMesAnioSig(a,m,k,listDispoMesSig);
 				int nro=1;
 		    }
 		}

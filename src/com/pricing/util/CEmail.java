@@ -74,78 +74,6 @@ public class CEmail
 		simbolos.setDecimalSeparator('.');
 		df=new DecimalFormat("########0.00",simbolos);
 	}
-	//=====METODOS====
-	public void enviarCorreoImages()
-	{
-		// Nombre del host de correo, es smtp.gmail.com
-		/**Recuperamos la configuracion de SMTP de la Base de Datos**/
-		CCorreoSmtpDAO correoSmtpDao=new CCorreoSmtpDAO();
-		correoSmtpDao.asignarConfiguracionCorreoSMTP(correoSmtpDao.recuperarCorreoSmtpDB());
-	      try {
-	  		Properties props = new Properties();
-			props.put("mail.smtp.host", correoSmtpDao.getoCorreoSmtp().getcSMTPHost());
-			// Puerto de gmail para envio de correos
-			props.setProperty("mail.smtp.port",""+correoSmtpDao.getoCorreoSmtp().getnSMTPPort());
-			// Si requiere o no usuario y password para conectarse.
-			props.setProperty("mail.smtp.auth", "true");
-			props.setProperty("mail.smtp.ssl.enable", "true");
-        	props.setProperty("mail.smtp.socketFactory.port", "465");
-        	props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-	        // Nombre del usuario
-	        props.setProperty("mail.smtp.user", remitente);
-
-	        Session session = Session.getDefaultInstance(props);
-
-	        MimeMessage message = new MimeMessage(session);
-			//Luego ponemos el FROM y el TO es decir:
-			// Quien envia el correo
-			message.setFrom(new InternetAddress(remitente));
-			// A quien va dirigido y a quien responder
-			InternetAddress address = new InternetAddress("washi1886@gmail.com");
-			InternetAddress[] dir={address};
-			message.setReplyTo(dir);
-			message.reply(true);
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(remitente));
-			//Ahora llenamos el asunto
-			message.setSubject("Testing Images");
-			// This mail has 2 part, the BODY and the embedded image
-	         MimeMultipart multipart = new MimeMultipart("related");
-
-	         // first part (the html)
-	         BodyPart messageBodyPart = new MimeBodyPart();
-	         String htmlText = "<H1>Hello</H1><img src=\"cid:cuatro.png\">";
-	         messageBodyPart.setContent(htmlText, "text/html");
-	         // add it
-	         multipart.addBodyPart(messageBodyPart);
-	         // second part (the image)
-	         messageBodyPart = new MimeBodyPart();
-	         DataSource fds = new FileDataSource(
-	            "/img/cuatro.png");
-
-	         messageBodyPart.setDataHandler(new DataHandler(fds));
-	         messageBodyPart.setHeader("Content-ID", "<image>");
-
-	         // add image to the multipart
-	         multipart.addBodyPart(messageBodyPart);
-
-	         // put everything together
-	         message.setContent(multipart);
-
-			
-			//Enviamos el mensaje
-			//Para enviar el mensaje usamos la clase Transport, que se obtiene de Session. El método getTransport() requiere un parámetro String con el nombre del protocolo a usar
-			Transport t = session.getTransport("smtp");
-			//Ahora debemos establecer la conexion
-			t.connect(remitente,password);
-			//finalmente enviamos el mensaje
-			t.sendMessage(message,message.getAllRecipients());
-			//una vez enviado cerramos la conexion
-			t.close();
-            System.out.println("Sent message successfully....");
-	      } catch (Exception e) {
-	    	  e.printStackTrace();
-	      }
-	}
 	public boolean sendMailSimple(String mailCliente,String asunto,String mensaje)
 	{
 		try
@@ -387,35 +315,6 @@ public class CEmail
 	        props.setProperty("mail.smtp.user", remitente);
 		}
 	}
-	public boolean enviarCorreoConPagoMasterDiners(String asunto,String codAutorizacion,String Monto,String tarjeta)
-	{
-		String mensajeHTML=
-				"<html>"+
-					"<head></head>"+
-					"<body>"+
-						"<div style='width:100%;background:rgb(242, 242, 242);'>"+
-							"<table border='0' width='100%' align='center' style='background:rgb(242, 242, 242);'>"+
-								"<tr>"+
-							      "<td align='center' width='20%' style='padding:8px 20px 8px 20px;'>"+
-							      	"<a style='text-decoration:none;'>"+
-							      		"<img src='http://www.peruandestop.com/wp-content/uploads/2016/09/logo.png' width='90' height='60' border='0' />"+
-							      	"</a>"+
-							      "</td>"+
-							      "<td style='color:black;font-size:17px;font-weight:bold;' align='left' width='80%'>RESUMEN DE TRANSACCION</td>"+
-							    "</tr>"+
-							"</table>"+
-							"<div style='padding:20px;background:white;border:20px solid rgb(242, 242, 242);'>"+
-								"<div style='background:#1A5276;border-radius:5px;width:25%;padding:1px 0 1px 0;' align='center'>"+
-									"<p style='font-weight:bold;'>Codigo Autorizacion<strong style='color:white;'>"+codAutorizacion+"</strong></p>"+
-								"</div>"+
-								"<p>Se efectuó un Pago con "+tarjeta+".</p>"+
-								"<p>Total: USD. "+Monto+"</p>"+
-							"</div>"+
-						"</div>"+
-					"</body>"+
-				"</html>";
-		return sendMailSimple("webmaster@peruandestop.com",asunto, mensajeHTML);
-	}
 	public boolean enviarCorreoSinPago(String titulo,String language,CImpuesto oImpuesto,String[] etiqueta,CReservaPaqueteCategoriaHotel oReservaPCH,
 			String fechaInicio,String fechaFin,String fechaArribo,CReserva reserva,
 			ArrayList<String> fechasAlternas,String totalPago,String pagoParcial,
@@ -456,7 +355,8 @@ public class CEmail
 		/**OBTENEMOS LA FECHA DE ARRIBO**/
 		String arribo="";
 		if(reserva.getoPaquete().isConFechaArribo())
-			arribo="<P>"+etiqueta[243]+": "+fechaArribo+"</P>";
+			arribo="<br />"+
+					"<strong>"+etiqueta[249]+"</strong><strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaArribo+"</span></strong>";
 		/****************************************/
 		String textoParcial="";
 		String textoTotal="";
@@ -485,6 +385,10 @@ public class CEmail
 						"<input type='hidden' name='contacto' value='"+reserva.getcContacto()+"'/>"+
 						"<input type='hidden' name='language' value='"+language+"'/>"+
 						"<input type='hidden' name='impuestoPaypal' value='"+oImpuesto.getImpuestoPaypal()+"'/>"+
+						"<input type='hidden' name='fechaInicio' value='"+fechaInicio+"'/>"+
+						"<input type='hidden' name='fechaFin' value='"+fechaFin+"'/>"+
+						"<input type='hidden' name='nroPersonas' value='"+reserva.getnNroPersonas()+"'/>"+
+						"<input type='hidden' name='telefono' value='"+reserva.getcTelefono()+"'/>"+
 						"<input type='image' name='submit' border='0'"+
 		    			"src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'/>"+
 					"</form>"+
@@ -500,6 +404,10 @@ public class CEmail
 						"<input type='hidden' name='contacto' value='"+reserva.getcContacto()+"'/>"+
 						"<input type='hidden' name='language' value='"+language+"'/>"+
 						"<input type='hidden' name='impuestoPaypal' value='"+oImpuesto.getImpuestoPaypal()+"'/>"+
+						"<input type='hidden' name='fechaInicio' value='"+fechaInicio+"'/>"+
+						"<input type='hidden' name='fechaFin' value='"+fechaFin+"'/>"+
+						"<input type='hidden' name='nroPersonas' value='"+reserva.getnNroPersonas()+"'/>"+
+						"<input type='hidden' name='telefono' value='"+reserva.getcTelefono()+"'/>"+
 						"<input type='image' name='submit' border='0'"+
 		    			"src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'/>"+
 					"</form>"+
@@ -517,6 +425,10 @@ public class CEmail
 						"<input type='hidden' name='contacto' value='"+reserva.getcContacto()+"'/>"+
 						"<input type='hidden' name='language' value='"+language+"'/>"+
 						"<input type='hidden' name='impuestoPaypal' value='"+oImpuesto.getImpuestoPaypal()+"'/>"+
+						"<input type='hidden' name='fechaInicio' value='"+fechaInicio+"'/>"+
+						"<input type='hidden' name='fechaFin' value='"+fechaFin+"'/>"+
+						"<input type='hidden' name='nroPersonas' value='"+reserva.getnNroPersonas()+"'/>"+
+						"<input type='hidden' name='telefono' value='"+reserva.getcTelefono()+"'/>"+
 						"<input type='image' name='submit' border='0'"+
 		    			"src='https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'/>"+
 					"</form>"+
@@ -614,8 +526,7 @@ public class CEmail
 														"<strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaInicio+"</span></strong>"+
 														"<br />"+
 														"<strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaFin+"</span></strong>"+
-														"<br />"+
-														"<strong>"+etiqueta[249]+"</strong><strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaArribo+"</span></strong>"+
+														arribo+
 													"</span>"+
 													"<p>"+
 														"<strong style='text-decoration: underline;font-family: Titillium;'>"+etiqueta[81]+"</strong>"+
@@ -649,9 +560,6 @@ public class CEmail
 										"<p>"+etiqueta[130]+" <strong style='color:#F7653A;font-family: Titillium;'>"+reserva.getoPaquete().getTitulo()+"</strong>"+ 
 										"</strong> "+etiqueta[133]+" <strong> "+reserva.getnNroPersonas()+" </strong> "+etiqueta[134]+"<strong> "+etiqueta[135]+" </strong>"+
 										fechas+
-										"<br />"+
-										"<p><strong style='text-decoration: underline;font-family: Titillium;'>"+etiqueta[252]+"</strong><br />"+
-										"<p style='font-family: Titillium;'>"+reserva.getcInformacionAdicional()+"</p>"+
 										"<p><strong style='text-decoration: underline;font-family: Titillium;'>"+etiqueta[250]+"</strong><br />"+
 										"<p style='font-family: Titillium;'>"+reserva.getoPaquete().getDescripcion()+"</p>"+
 					
@@ -703,10 +611,10 @@ public class CEmail
 						    "<div align='left' width='100%'>"+
 							    "<table width='80%'>"+
 								    "<tr align='left'>"+
-							    		"<td><a href='"+etiqueta[214]+"'><img width='80' height='80' src='https://www.e-ranti.com/pricing_info/img/logo_facebook.png'/></a></td>"+
-							    		"<td><a href='"+etiqueta[215]+"'><img width='60' height='60' src='https://www.e-ranti.com/pricing_info/img/youtube.png'/></a></td>"+
-							    		"<td><a href='"+etiqueta[216]+"'><img width='60' height='60' src='https://www.e-ranti.com/pricing_info/img/logo_twitter.png'/></a></td>"+
-							    		"<td style='font-family:Titillium;display:flex;padding-top:17px;box-sizing:border-box;'><img width='50' height='50' src='https://www.e-ranti.com/pricing_info/img/wathsapp.png'/><p>"+etiqueta[151]+"</p></td>"+
+							    		"<td><a href='"+etiqueta[214]+"'><img width='80' height='80' src='https://www.e-ranti.com/pricing_demo/img/logo_facebook.png'/></a></td>"+
+							    		"<td><a href='"+etiqueta[215]+"'><img width='60' height='60' src='https://www.e-ranti.com/pricing_demo/img/youtube.png'/></a></td>"+
+							    		"<td><a href='"+etiqueta[216]+"'><img width='60' height='60' src='https://www.e-ranti.com/pricing_demo/img/logo_twitter.png'/></a></td>"+
+							    		"<td style='font-family:Titillium;display:flex;padding-top:17px;box-sizing:border-box;'><img width='50' height='50' src='https://www.e-ranti.com/pricing_demo/img/wathsapp.png'/><p>"+etiqueta[151]+"</p></td>"+
 							    	"</tr>"+
 							    "</table>"+
 						    "</div>"+
@@ -737,7 +645,8 @@ public class CEmail
 		/**OBTENEMOS LA FECHA DE ARRIBO**/
 		String arribo="";
 		if(reserva.getoPaquete().isConFechaArribo())
-			arribo="<p style='font-family:Titillium;'>"+etiqueta[243]+": "+fechaArribo+"</p>";
+			arribo="<br />"+
+		"<strong>Estadia en Cusco hasta: </strong><strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaArribo+"</span></strong>";
 		/*********************************************************/
 		String mensajeHTML=
 				"<html>"+
@@ -834,8 +743,7 @@ public class CEmail
 															"<strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaInicio+"</span></strong>"+
 															"<br />"+
 															"<strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaFin+"</span></strong>"+
-															"<br />"+
-															"<strong>Estadia en Cusco hasta: </strong><strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaArribo+"</span></strong>"+
+															arribo+
 														"</span>"+
 														"<p>"+
 															"<strong style='text-decoration: underline;font-family: Titillium;'>TOTAL PAGO</strong>"+
@@ -855,11 +763,8 @@ public class CEmail
 												"<p>Se efectuo una reserva de <strong style='color:#F7653A;font-family: Titillium;'>"+reserva.getoPaquete().getTitulo()+"</strong>"+ 
 												"</strong> para <strong> "+reserva.getnNroPersonas()+" </strong> persona(s)<strong></strong>"+
 												htmlFechasAlternas+
-												"<br />"+
 												"<p><strong style='text-decoration: underline;font-family: Titillium;'>INFORMACION ADICIONAL:</strong><br />"+
 												"<p style='font-family: Titillium;'>"+reserva.getcInformacionAdicional()+"</p>"+
-												"<p><strong style='text-decoration: underline;font-family: Titillium;'>DESCRIPCION DEL PAQUETE:</strong><br />"+
-												"<p style='font-family: Titillium;'>"+reserva.getoPaquete().getDescripcion()+"</p>"+
 												"<p><strong><span style='color:rgb(255, 0, 0);'><strong><span style='color:rgb(0, 0, 0);text-decoration: underline;font-family: Titillium;'>URL DE REFERENCIA DEL PAQUETE:</span></strong><br />"+
 												"<a href='"+reserva.getoPaquete().getcUrlReferenciaPaquete()+"' target='_blank'>"+reserva.getoPaquete().getcUrlReferenciaPaquete()+"</a></span></strong></p>"+
 											"</td>"+
@@ -1111,7 +1016,8 @@ public class CEmail
 		/**OBTENEMOS LA FECHA DE ARRIBO**/
 		String arribo="";
 		if(reserva.getoPaquete().isConFechaArribo())
-			arribo="<p style='font-family: Titillium;'>"+etiqueta[243]+": "+fechaArribo+"</p>";
+			arribo="<br />"+
+					"<strong>"+etiqueta[249]+"</strong><strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaArribo+"</span></strong>";
 		//Generando codigo QR
 		QRCode qr = new QRCode();
 		String nameImgQR=generarNombreQR();
@@ -1172,7 +1078,7 @@ public class CEmail
 														"<td style='font-family: Titillium;color:black;font-size:17px;font-weight:bold;' align='center' width='80%'>"+reserva.getoPaquete().getTitulo()+"</td>"+
 														"<td align='right' width='20%' style='padding:8px 20px 8px 20px;'>"+
 															"<a style='text-decoration:none;'>"+
-																"<img src='http://localhost:8080/pricing/img/QR/"+nameImgQR+"' width='100' height='80' border='0' />"+
+																"<img src='https://www.e-ranti.com/pricing_demo/img/QR/"+nameImgQR+"' width='100' height='80' border='0' />"+
 															"</a>"+
 														"</td>"+
 													"</tr>"+
@@ -1208,7 +1114,7 @@ public class CEmail
 											"<p style='color: #1a5276; margin-bottom: 30px;font-family: Titillium;'>"+
 												"<strong style='text-decoration: underline;'>"+etiqueta[123]+"</strong>"+
 											"</p>"+
-											"<span style='font-family: Titillium;background-color:rgb(204, 204, 204); border-radius:3px; border:1px solid rgb(217, 217, 217); color:rgb(47, 115, 186); font-family:arial,helvetica,sans-serif; font-size:24px; font-stretch:normal; line-height:24px; padding:10px'>"+
+											"<span style='font-family: Titillium;background-color:rgba(59, 183, 16,0.8); border-radius:3px; border:1px solid rgb(217, 217, 217); color:white; font-family:arial,helvetica,sans-serif; font-size:24px; font-stretch:normal; line-height:24px; padding:10px'>"+
 												"<strong>"+codTransaccion+"</strong>"+
 											"</span>"+
 										"</td>"+
@@ -1227,8 +1133,7 @@ public class CEmail
 												"<strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaInicio+"</span></strong>"+
 												"<br />"+
 												"<strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaFin+"</span></strong>"+
-												"<br />"+
-												"<strong>"+etiqueta[249]+"</strong><strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaArribo+"</span></strong>"+
+												arribo+
 											"</span>"+
 											"<p>"+
 												"<strong style='text-decoration: underline;font-family: Titillium;'>"+etiqueta[81]+"</strong>"+
@@ -1300,10 +1205,10 @@ public class CEmail
 								    "<div align='left' width='100%'>"+
 									    "<table width='80%'>"+
 										    "<tr align='left'>"+
-									    		"<td><a href='"+etiqueta[214]+"'><img width='80' height='80' src='https://www.e-ranti.com/pricing_info/img/logo_facebook.png'/></a></td>"+
-									    		"<td><a href='"+etiqueta[215]+"'><img width='60' height='60' src='https://www.e-ranti.com/pricing_info/img/youtube.png'/></a></td>"+
-									    		"<td><a href='"+etiqueta[216]+"'><img width='60' height='60' src='https://www.e-ranti.com/pricing_info/img/logo_twitter.png'/></a></td>"+
-									    		"<td style='font-family:Titillium;display:flex;padding-top:17px;box-sizing:border-box;'><img width='50' height='50' src='https://www.e-ranti.com/pricing_info/img/wathsapp.png'/><p>"+etiqueta[151]+"</p></td>"+
+									    		"<td><a href='"+etiqueta[214]+"'><img width='80' height='80' src='https://www.e-ranti.com/pricing_demo/img/logo_facebook.png'/></a></td>"+
+									    		"<td><a href='"+etiqueta[215]+"'><img width='60' height='60' src='https://www.e-ranti.com/pricing_demo/img/youtube.png'/></a></td>"+
+									    		"<td><a href='"+etiqueta[216]+"'><img width='60' height='60' src='https://www.e-ranti.com/pricing_demo/img/logo_twitter.png'/></a></td>"+
+									    		"<td style='font-family:Titillium;display:flex;padding-top:17px;box-sizing:border-box;'><img width='50' height='50' src='https://www.e-ranti.com/pricing_demo/img/wathsapp.png'/><p>"+etiqueta[151]+"</p></td>"+
 									    	"</tr>"+
 									    "</table>"+
 								    "</div>"+
@@ -1515,7 +1420,8 @@ public class CEmail
 		/**OBTENEMOS LA FECHA DE ARRIBO**/
 		String arribo="";
 		if(reserva.getoPaquete().isConFechaArribo())
-			arribo="<P>"+etiqueta[243]+": "+fechaArribo+"</P>";
+			arribo="<br />"+
+					"<strong>Estadia en Cusco hasta: </strong><strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaArribo+"</span></strong>";
 		//Generando codigo QR
 				QRCode qr = new QRCode();
 				String nameImgQR=generarNombreQR();
@@ -1576,7 +1482,7 @@ public class CEmail
 														"<td style='font-family: Titillium;color:black;font-size:17px;font-weight:bold;' align='center' width='80%'>"+reserva.getoPaquete().getTitulo()+"</td>"+
 														"<td align='right' width='20%' style='padding:8px 20px 8px 20px;'>"+
 															"<a href='"+etiqueta[212]+"' style='text-decoration:none;'>"+
-																"<img src='http://localhost:8080/pricing/img/QR/"+nameImgQR+"' width='100' height='80' border='0' />"+
+																"<img src='https://www.e-ranti.com/pricing_demo/img/QR/"+nameImgQR+"' width='100' height='80' border='0' />"+
 															"</a>"+
 														"</td>"+
 													"</tr>"+
@@ -1612,7 +1518,7 @@ public class CEmail
 														"<p style='color: #1a5276; margin-bottom: 30px;font-family: Titillium;'>"+
 															"<strong style='text-decoration: underline;'>CODIGO DE TRANSACCION</strong>"+
 														"</p>"+
-														"<span style='font-family: Titillium;background-color:rgb(204, 204, 204); border-radius:3px; border:1px solid rgb(217, 217, 217); color:rgb(47, 115, 186); font-family:arial,helvetica,sans-serif; font-size:24px; font-stretch:normal; line-height:24px; padding:10px'>"+
+														"<span style='font-family: Titillium;background-color:rgba(59, 183, 16,0.8); border-radius:3px; border:1px solid rgb(217, 217, 217); color:white; font-family:arial,helvetica,sans-serif; font-size:24px; font-stretch:normal; line-height:24px; padding:10px'>"+
 															"<strong>"+codTransaccion+"</strong>"+
 														"</span>"+
 													"</td>"+
@@ -1635,8 +1541,7 @@ public class CEmail
 															"<strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaInicio+"</span></strong>"+
 															"<br />"+
 															"<strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaFin+"</span></strong>"+
-															"<br />"+
-															"<strong>Estadia en Cusco hasta: </strong><strong><span style='color:rgb(102, 102, 102);font-family: Titillium;'>"+fechaArribo+"</span></strong>"+
+															arribo+
 														"</span>"+
 														"<p>"+
 															"<strong style='text-decoration: underline;font-family: Titillium;'>COSTO TOTAL DEL TOUR</strong>"+
@@ -1716,7 +1621,8 @@ public class CEmail
 		return sendMailToEmpresa(reserva.getcEmail(),titulo,mensajeHTML,imagenes);
 	}
 	public boolean enviarCorreoPagoReserva(String titulo,String[] etiqueta,String namePaquete,String mail,String contacto,
-			String codReserva,String porcentaje,String transac,String urlPdf,String textoParcial) throws IOException, DocumentException
+			String codReserva,String porcentaje,String transac,String urlPdf,String textoParcial,
+			String pago,String fechaInicio,String fechaFin,String nroPersonas,String telefono) throws IOException, DocumentException
 	{
 		this.etiqueta=etiqueta;
 		/**************************/
@@ -1731,6 +1637,23 @@ public class CEmail
 		String mensaje="";
 		if(porcentaje.equals(textoParcial))
 			mensaje="<p style='font-family: Titillium;'>"+etiqueta[160]+"</p>";
+		//Generando codigo QR
+				QRCode qr = new QRCode();
+				String nameImgQR=generarNombreQR();
+		        File f = new File(ScannUtil.getPathImagenQR()+nameImgQR);
+		        //FPP=yuri vladimir huallpa vargas=camino inka=01/06/2017=05/06/2017=5=300=931896923=yurihuallpavargas@gmail.com
+		        String text ="FPP="+contacto+"="+titulo+"="+
+		        			fechaInicio+"="+fechaFin+"="+nroPersonas+"="+pago+"="+
+		        			telefono+"="+mail;
+		 
+		        try {
+		 
+		            qr.generateQR(f, text, 300, 300);
+		 
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+				/******************************************/
 		String mensajeHTML=
 				"<html>"+
 						"<head>"+
@@ -1773,8 +1696,8 @@ public class CEmail
 														"</td>"+
 														"<td style='font-family: Titillium;color:black;font-size:17px;font-weight:bold;' align='center' width='80%'>"+namePaquete+"</td>"+
 														"<td align='right' width='20%' style='padding:8px 20px 8px 20px;'>"+
-															"<a href='"+etiqueta[212]+"' style='text-decoration:none;'>"+
-																"<img src='"+etiqueta[211]+"' width='100' height='80' border='0' />"+
+															"<a href='' style='text-decoration:none;'>"+
+																"<img src='https://www.e-ranti.com/pricing_demo/img/QR/"+nameImgQR+"' width='100' height='80' border='0' />"+
 															"</a>"+
 														"</td>"+
 													"</tr>"+
@@ -1810,7 +1733,7 @@ public class CEmail
 														"<p style='color: #1a5276; margin-bottom: 30px;font-family: Titillium;'>"+
 															"<strong style='text-decoration: underline;'>"+etiqueta[123]+"</strong>"+
 														"</p>"+
-														"<span style='font-family: Titillium;background-color:rgb(204, 204, 204); border-radius:3px; border:1px solid rgb(217, 217, 217); color:rgb(47, 115, 186); font-family:arial,helvetica,sans-serif; font-size:24px; font-stretch:normal; line-height:24px; padding:10px'>"+
+														"<span style='font-family: Titillium;background-color:rgba(59, 183, 16,0.8); border-radius:3px; border:1px solid rgb(217, 217, 217); color:white; font-family:arial,helvetica,sans-serif; font-size:24px; font-stretch:normal; line-height:24px; padding:10px'>"+
 															"<strong>"+transac+"</strong>"+
 														"</span>"+
 													"</td>"+
@@ -1858,7 +1781,8 @@ public class CEmail
 		return sendMail(mail,titulo,mensajeHTML,urlPdf,1);
 	}
 	public boolean enviarCorreoPagoReservaAEmpresa(String mailCliente,String titulo,String namePaquete,String contacto,
-			String codReserva,String porcentaje,String transac) throws IOException, DocumentException
+			String codReserva,String porcentaje,String transac,String pago,
+			String fechaInicio,String fechaFin,String nroPersonas,String telefono) throws IOException, DocumentException
 	{
 		Calendar cal=Calendar.getInstance();
 		String dia = Integer.toString(cal.get(Calendar.DATE));
@@ -1868,7 +1792,23 @@ public class CEmail
 		
 		String fechaActual=dia+" de "+mes+", "+annio;
 		/**Se obtiene el impuesto e importe total del totalPago**/
-		
+		//Generando codigo QR
+		QRCode qr = new QRCode();
+		String nameImgQR=generarNombreQR();
+        File f = new File(ScannUtil.getPathImagenQR()+nameImgQR);
+        //FPP=yuri vladimir huallpa vargas=camino inka=01/06/2017=05/06/2017=5=300=931896923=yurihuallpavargas@gmail.com
+        String text ="FPP="+contacto+"="+titulo+"="+
+        			fechaInicio+"="+fechaFin+"="+nroPersonas+"="+pago+"="+
+        			telefono+"="+mailCliente;
+ 
+        try {
+ 
+            qr.generateQR(f, text, 300, 300);
+ 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //*************************
 		String mensajeHTML=
 				"<html>"+
 						"<head>"+
@@ -1911,8 +1851,8 @@ public class CEmail
 														"</td>"+
 														"<td style='font-family: Titillium;color:black;font-size:17px;font-weight:bold;' align='center' width='80%'>"+namePaquete+"</td>"+
 														"<td align='right' width='20%' style='padding:8px 20px 8px 20px;'>"+
-															"<a href='"+etiqueta[212]+"' style='text-decoration:none;'>"+
-																"<img src='"+etiqueta[211]+"' width='100' height='80' border='0' />"+
+															"<a href='' style='text-decoration:none;'>"+
+																"<img src='https://www.e-ranti.com/pricing_demo/img/QR/"+nameImgQR+"' width='100' height='80' border='0' />"+
 															"</a>"+
 														"</td>"+
 													"</tr>"+
@@ -1948,7 +1888,7 @@ public class CEmail
 														"<p style='color: #1a5276; margin-bottom: 30px;font-family: Titillium;'>"+
 															"<strong style='text-decoration: underline;'>CODIGO DE TRANSACCION</strong>"+
 														"</p>"+
-														"<span style='font-family: Titillium;background-color:rgb(204, 204, 204); border-radius:3px; border:1px solid rgb(217, 217, 217); color:rgb(47, 115, 186); font-family:arial,helvetica,sans-serif; font-size:24px; font-stretch:normal; line-height:24px; padding:10px'>"+
+														"<span style='font-family: Titillium;background-color:rgba(59, 183, 16,0.8); border-radius:3px; border:1px solid rgb(217, 217, 217); color:white; font-family:arial,helvetica,sans-serif; font-size:24px; font-stretch:normal; line-height:24px; padding:10px'>"+
 															"<strong>"+transac+"</strong>"+
 														"</span>"+
 													"</td>"+

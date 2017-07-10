@@ -2,8 +2,7 @@
 <zk>
 	<style src="css/formas_Generales.css"></style>
 	<style src="css/estilos_Actividades.css"></style>
-	<div apply="org.zkoss.bind.BindComposer"
-		 viewModel="@id('vmActividad') @init('com.pricing.viewModel.actividadVM')">
+	<div viewModel="@id('vmActividad') @init('com.pricing.viewModel.actividadVM')">
 		<div zclass="div_contenedor_nuevo">
 			<div zclass="div_contendor_btn_nuevo" onClick="div_llenar_actividad.setVisible(true)">
 				<div zclass="div_btn_nuevo" width="150px">
@@ -197,7 +196,7 @@
 				    								value="Nombre:">
 				    							</label>
 				    						</div>
-				    						<textbox hflex="1"
+				    						<textbox hflex="min"
 				    							width="100%" height="30px" sclass="txt_llenar_datos"
 				    							value="@bind(each.cActividadIdioma4) @save(each.cActividadIdioma4,before='actualizarActividad')" />
 				    						<div width="100%">
@@ -216,7 +215,7 @@
 				    								value="Nombre:">
 				    							</label>
 				    						</div>
-				    						<textbox hflex="1"
+				    						<textbox hflex="min"
 				    							width="100%" height="30px" sclass="txt_llenar_datos"
 				    							value="@bind(each.cActividadIdioma5) @save(each.cActividadIdioma5,before='actualizarActividad')" />
 				    						<div width="100%">

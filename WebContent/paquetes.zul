@@ -3,8 +3,7 @@
 <zk>
 	<style src="css/formas_Generales.css"/>
 	<style src="css/estilos_Paquete.css"/>
-	<div apply="org.zkoss.bind.BindComposer"
-		 viewModel="@id('vmPaquete') @init('com.pricing.viewModel.paquetesVM')" width="100%">
+	<div viewModel="@id('vmPaquete') @init('com.pricing.viewModel.paquetesVM')" width="100%">
 		<div zclass="div_contenedor_nuevo">
 			<div zclass="div_contendor_btn_nuevo" onClick="div_llenar_paquetes.setVisible(true)">
 				<div zclass="div_btn_nuevo" width="180px">
@@ -692,7 +691,7 @@
 				    								value="Nombre:">
 				    							</label>
 				    						</div>
-				    						<textbox hflex="1"
+				    						<textbox hflex="min"
 				    							width="100%" height="30px" sclass="txt_llenar_datos"
 				    							value="@bind(each.cTituloIdioma4) @save(each.cTituloIdioma4,before='actualizarPaquete')" />
 				    					</div>
@@ -705,7 +704,7 @@
 				    								value="Nombre:">
 				    							</label>
 				    						</div>
-				    						<textbox hflex="1"
+				    						<textbox hflex="min"
 				    							width="100%" height="30px" sclass="txt_llenar_datos"
 				    							value="@bind(each.cTituloIdioma5) @save(each.cTituloIdioma5,before='actualizarPaquete')" />
 				    					</div>

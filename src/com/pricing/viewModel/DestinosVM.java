@@ -125,7 +125,7 @@ public class DestinosVM{
 	@Init
 	public void initVM()
 	{
-			Encryptar encrip= new Encryptar();
+//			Encryptar encrip= new Encryptar();
 //			System.out.println("Aqui esta la contraseña desencriptada-->"+encrip.decrypt("cyS249O3OHZTsG0ww1rYrw=="));
 			
 			destinoDao=new CDestinoDAO();

@@ -5,7 +5,6 @@
 		closable="true"
 		position="center"
 		sclass="win_hotelesPorDestino"
-		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.pricing.viewModel.hotelesPorCategoriaVM')">
 		<window height="450px"
 				contentStyle="overflow:auto;">

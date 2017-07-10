@@ -148,8 +148,13 @@ public class returnPaypalVM
 			String namePaquete=(String)seshttp.getAttribute("namePaquete");
 			String email=(String)seshttp.getAttribute("mail");
 			String contacto=(String)seshttp.getAttribute("contacto");
+			String fechaInicio=(String)seshttp.getAttribute("fechaInicio");
+			String fechaFin=(String)seshttp.getAttribute("fechaFin");
+			String nroPersonas=(String)seshttp.getAttribute("nroPersonas");
+			String telefono=(String)seshttp.getAttribute("telefono");
 			String porcentaje="";
 			String estado="";
+			String pago=""; 
 			//==RECUPERANDO EL PAQUETE==
 			CPaqueteDAO paqueteDao=new CPaqueteDAO();
 			paqueteDao.asignarPaquete(paqueteDao.recuperarPaqueteBD(codPaquete));
@@ -162,6 +167,7 @@ public class returnPaypalVM
 					porcentaje=textoParcial=paqueteDao.getoPaquete().getnPorcentajeCobro()+" %";
 				else
 					porcentaje=textoParcial=etiqueta[102];
+				pago=(String)seshttp.getAttribute("pago");
 			}
 			else//100%
 			{
@@ -170,13 +176,16 @@ public class returnPaypalVM
 					porcentaje="100 %";
 				else
 					porcentaje=etiqueta[103];
+				pago=(String)seshttp.getAttribute("pago");
 			}
 			boolean b=reservaDao.isCorrectOperation(reservaDao.modificarMetodoPago(codReserva, estado,"PAYPAL",codTransac));
 			String pdf=Util.getPathReservas()+"reservas.pdf";
 			CEmail mail=new CEmail();
-			boolean correct=mail.enviarCorreoPagoReserva(etiqueta[199],etiqueta,namePaquete, email, contacto, codReserva, porcentaje, codTransac, pdf,textoParcial);
+			boolean correct=mail.enviarCorreoPagoReserva(etiqueta[199],etiqueta,namePaquete, email, contacto, codReserva, porcentaje, codTransac, pdf,textoParcial,
+														pago,fechaInicio,fechaFin,nroPersonas,telefono);
 			/**Enviamos un correo a la empresa**/
-			boolean flag=mail.enviarCorreoPagoReservaAEmpresa(email,"Pago Efectuado", namePaquete, contacto, codReserva, porcentaje, codTransac);
+			boolean flag=mail.enviarCorreoPagoReservaAEmpresa(email,"Pago Efectuado", namePaquete, contacto, codReserva, porcentaje, codTransac,
+															pago,fechaInicio,fechaFin,nroPersonas,telefono);
 			/******************************************************************/
 		}
 		else

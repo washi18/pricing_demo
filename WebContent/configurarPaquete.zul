@@ -5,7 +5,6 @@
 		closable="true"
 		position="center"
 		sclass="win_imagenesHotel"
-		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.pricing.viewModel.configurarPaqueteVM')">
 		<div width="100%" sclass="div_content_config">
 			<div>

@@ -2,8 +2,7 @@
 <zk>
 	<style src="css/formas_Generales.css"/>
 	<style src="css/subServicios.css"/>
-	<div apply="org.zkoss.bind.BindComposer"
-		 viewModel="@id('vmServicio') @init('com.pricing.viewModel.subServicioVM')">
+	<div viewModel="@id('vmServicio') @init('com.pricing.viewModel.subServicioVM')">
 		<div zclass="div_contenedor_nuevo">
 			<div zclass="div_contendor_btn_nuevo" onClick="div_llenar_subservicios.setVisible(true)">
 				<div zclass="div_btn_nuevo" width="180px">
@@ -162,7 +161,7 @@
 			<button iconSclass="fa fa-search" height="30px" zclass="estilo_btn_buscar" onClick="@command('buscarSubServicios',nombre=txtNombre.value)"></button>
 		</div>
 		<space></space>
-		<listbox sclass="listados" model="@bind(vmServicio.listaSubServicios) @template((each.editable)? 'modeleditable':'noeditable')" height="auto" mold="paging" autopaging="true">
+		<listbox sclass="listados" model="@bind(vmServicio.listaSubServicios) @template((each.editable)? 'modeleditable':'noeditable')" vflex="true" mold="paging" pageSize="5" pagingPosition="both">
 			<listhead>
 				<listheader/>
 			</listhead>
@@ -329,7 +328,7 @@
 				    								value="Nombre:">
 				    							</label>
 				    						</div>
-				    						<textbox hflex="1"
+				    						<textbox hflex="min"
 				    							width="100%" height="30px" sclass="txt_llenar_datos"
 				    							value="@bind(each.cSubServicioIndioma4) @save(each.cSubServicioIndioma4,before='actualizarSubServicio')" />
 				    						<div width="100%">
@@ -338,7 +337,7 @@
 				    							</label>
 				    						</div>
 				    						<textbox multiline="true" sclass="txt_llenar_datos"
-				    							width="100%" hflex="1" height="100px"
+				    							width="100%" hflex="min" height="100px"
 				    							value="@bind(each.cDescripcionIdioma4) @save(each.cDescripcionIdioma4,before='actualizarSubServicio')" />
 				    					</div>
 				    				</div>
@@ -350,7 +349,7 @@
 				    								value="Nombre:">
 				    							</label>
 				    						</div>
-				    						<textbox hflex="1"
+				    						<textbox hflex="min"
 				    							width="100%" height="30px" sclass="txt_llenar_datos"
 				    							value="@bind(each.cSubServicioIndioma5) @save(each.cSubServicioIndioma5,before='actualizarSubServicio')" />
 				    						<div width="100%">
@@ -359,7 +358,7 @@
 				    							</label>
 				    						</div>
 				    						<textbox multiline="true"
-				    							width="100%" hflex="1" height="100px" sclass="txt_llenar_datos"
+				    							width="100%" hflex="min" height="100px" sclass="txt_llenar_datos"
 				    							value="@bind(each.cDescripcionIdioma5) @save(each.cDescripcionIdioma5,before='actualizarSubServicio')" />
 				    					</div>
 				    				</div>

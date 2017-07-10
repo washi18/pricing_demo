@@ -53,6 +53,10 @@ public class ExpressCheckoutTotalServlet extends HttpServlet implements javax.se
 		 String contacto=request.getParameter("contacto");
 		 String language=request.getParameter("language");
 		 String impuestoPaypal=request.getParameter("impuestoPaypal");
+		 String fechaInicio=request.getParameter("fechaInicio");
+		 String fechaFin=request.getParameter("fechaFin");
+		 String nroPersonas=request.getParameter("nroPersonas");
+		 String telefono=request.getParameter("telefono");
 		 //==OBTENER PAQUETE DE RESERVA==
 		 CPaqueteDAO paqueteDao=new CPaqueteDAO();
 		 paqueteDao.asignarPaquete(paqueteDao.recuperarPaqueteBD(codPaquete));
@@ -71,6 +75,7 @@ public class ExpressCheckoutTotalServlet extends HttpServlet implements javax.se
 		 String[] SECResult=paypal.setExpressCheckoutTest(montoTotalConImpuestoPaypal,namePaquete);
 		 
 		 String url=SECResult[0];
+		 seshttp.setAttribute("pago", montoTotal);
 		 seshttp.setAttribute("token",SECResult[1]);
 		 seshttp.setAttribute("formaPago",1);
 		 seshttp.setAttribute("codReserva", codReserva);
@@ -79,6 +84,10 @@ public class ExpressCheckoutTotalServlet extends HttpServlet implements javax.se
 		 seshttp.setAttribute("contacto", contacto);
 		 seshttp.setAttribute("namePaquete",namePaquete);
 		 seshttp.setAttribute("etiqueta",etiqueta);
+		 seshttp.setAttribute("telefono", telefono);
+		 seshttp.setAttribute("nroPersonas", nroPersonas);
+		 seshttp.setAttribute("fechaInicio", fechaInicio);
+		 seshttp.setAttribute("fechaFin", fechaFin);
 		 try(PrintWriter out=response.getWriter())
 		 {
 			 out.println("<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>");

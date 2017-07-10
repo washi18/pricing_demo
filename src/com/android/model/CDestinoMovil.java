@@ -111,8 +111,8 @@ public class CDestinoMovil {
 		// TODO Auto-generated constructor stub
 		this.cElementosCod=0;
 		this.cDestino="";
-		this.cLatitud="";
-		this.cLongitud="";
+		this.cLatitud="0";
+		this.cLongitud="0";
 		bEstado=false;
 		seleccionado=false;
 		update=false;

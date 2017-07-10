@@ -7,8 +7,7 @@
 	<style src="fonts/font-awesome.css"/>
 	<style src="css/Estilos_Panel_Admi.css"/>
 	<timer id="timerKeepAliveSession" repeats="true" delay="1800000" onTimer=""/>
-	<div apply="org.zkoss.bind.BindComposer"
-		 viewModel="@id('vmAdmin') @init('com.pricing.viewModel.panelAdminVM')"
+	<div viewModel="@id('vmAdmin') @init('com.pricing.viewModel.panelAdminVM')"
 		 zclass="contenedor_admin" visible="@bind(vmAdmin.cargarAdmin)">
 		<div sclass="contendor_cabezera" width="100%" height="90px">
 			<image src="img/logo_eddyonsoft.png" sclass="logoAdmi"/>

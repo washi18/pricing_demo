@@ -61,6 +61,9 @@ import org.zkoss.zul.Spinner;
 import org.zkoss.zul.Tabpanel;
 import org.zkoss.zul.Vbox;
 import org.zkoss.zul.Window;
+
+import com.pricing.dao.CNroAccesosDAO;
+import com.pricing.model.CNroAccesos;
 import com.lowagie.text.DocumentException;
 import com.pricing.MasterDiners.Signature;
 import com.pricing.dao.CActividadDAO;
@@ -126,7 +129,8 @@ public class pricingVM
 	@Wire
 	Button btn_reservar;
 	@Wire
-	Label lblFechaInicioPaso3,lblFechaFinPaso3,lblFechaArribo;
+	Label lblFechaInicioPaso3,lblFechaFinPaso3,lblFechaArribo,
+		lblFechaInicioPaso2,lblFechaFinPaso2,lblFechaArriboPaso2;
 	HttpSession seshttp;
 	@Wire
 	Html htmlPagoMasterdCard;
@@ -141,6 +145,7 @@ public class pricingVM
 	private DecimalFormatSymbols simbolos;
 	//====================
 	private ArrayList<String> listaCodPaquetes;
+	private CNroAccesos oNroAccesos;
 	//====================
 	private boolean paso1;
 	private boolean paso2;
@@ -318,6 +323,11 @@ public class pricingVM
 		}
 		if(codigoPaquete!=null)
 		{
+			//===Para saber en que punto se queda el pasajero===
+			oNroAccesos=new CNroAccesos();
+			CNroAccesosDAO nroAccesosDao=new CNroAccesosDAO();
+			long cod=nroAccesosDao.obtenerCodNroAcceso(nroAccesosDao.insertarNroAcceso(codigoPaquete));
+			oNroAccesos.setCod(cod);
 //			listaCodPaquetes.add(codigoPaquete);
 			oReservar=new CReserva(codigoPaquete);
 			codDisponibilidad=obtenerCodDisponibilidad(oReservar.getoPaquete());
@@ -991,6 +1001,10 @@ public class pricingVM
 		ArrayList<CPaqueteServicio> listaPaqueteServicios=new ArrayList<CPaqueteServicio>();
 		listaPaqueteServicios=oReservar.getoPaquete().obtenerListaPaqueteServicio(oReservar.getoPaquete().getcPaqueteCod());
 		mostrarCostoServicio=true;
+		//=============================
+				oNroAccesos.setbServicios(true);
+				CNroAccesosDAO nroAccesosDao=new CNroAccesosDAO();
+				nroAccesosDao.isCorrectOperation(nroAccesosDao.modificarNroAcceso(oNroAccesos));
 		if(opcion.toString().equals("0") || opcion.toString().equals("no"))
 		{
 			servicio.setbMostrarEnResumen(false);
@@ -1306,6 +1320,11 @@ public class pricingVM
 		oReservar.setdFechaArribo(calArribo.getTime());
 		//===============================
 		lblFechaArribo.setValue(dia+" "+etiqueta[158]+" "+obtenerMesText(Integer.parseInt(mes)-1)+", "+ anio);
+		//===Solo funciona para pricing con pasos===
+		ConfAltoNivelDAO conf=new ConfAltoNivelDAO();
+		conf.asignarListaConfAltoNivel(conf.recuperarconfAltoNivel("pricing"));
+		if(conf.getoConfAltoNivel().isbEstado())
+			lblFechaArriboPaso2.setValue(lblFechaArribo.getValue());
 		//==================
 	}
 	@Command
@@ -1336,8 +1355,15 @@ public class pricingVM
 		oReservar.setdFechaFin(calFin.getTime());
 		//===============================
 		lblFechaInicioPaso3.setValue(etiqueta[163]+" "+dia+" "+etiqueta[158]+" "+obtenerMesText(Integer.parseInt(mes)-1)+", "+ anio);
+		//===========================================
+		ConfAltoNivelDAO conf=new ConfAltoNivelDAO();
+		conf.asignarListaConfAltoNivel(conf.recuperarconfAltoNivel("pricing"));
+		if(conf.getoConfAltoNivel().isbEstado())
+			lblFechaInicioPaso2.setValue(lblFechaInicioPaso3.getValue());
 		//==================
 		lblFechaFinPaso3.setValue(etiqueta[164]+" "+calFin.getTime().getDate()+" "+etiqueta[158]+" "+obtenerMesText(calFin.getTime().getMonth())+", "+ (calFin.getTime().getYear()+1900));
+		if(conf.getoConfAltoNivel().isbEstado())
+			lblFechaFinPaso2.setValue(lblFechaFinPaso3.getValue());
 	}
 	@GlobalCommand
 	@NotifyChange({"disp","visibleDateReserva","lblDisp","listaFechasAlternas","fecha","fechaAlterna"})
@@ -1363,10 +1389,16 @@ public class pricingVM
 				oReservar.setdFechaFin(calFin.getTime());
 				//======================
 				lblFechaInicioPaso3.setValue(etiqueta[163]+" "+listaFechas.get(0)[0]+" "+etiqueta[158]+" "+convertirMesAidioma(listaFechas.get(0)[1])+", "+ listaFechas.get(0)[2]);
+				//===========================================
+				ConfAltoNivelDAO conf=new ConfAltoNivelDAO();
+				conf.asignarListaConfAltoNivel(conf.recuperarconfAltoNivel("pricing"));
+				if(conf.getoConfAltoNivel().isbEstado())
+					lblFechaInicioPaso2.setValue(lblFechaInicioPaso3.getValue());
 				fecha=listaFechas.get(0)[0]+" "+etiqueta[158]+" "+convertirMesAidioma(listaFechas.get(0)[1])+", "+ listaFechas.get(0)[2];
 				//==================
 				lblFechaFinPaso3.setValue(etiqueta[164]+" "+calFin.getTime().getDate()+" "+etiqueta[158]+" "+obtenerMesText(calFin.getTime().getMonth())+", "+ (calFin.getTime().getYear()+1900));
-				
+				if(conf.getoConfAltoNivel().isbEstado())
+					lblFechaFinPaso2.setValue(lblFechaFinPaso3.getValue());
 			}else{
 				if(listaFechas.get(1)[0].equals("")&& listaFechas.get(1)[1].equals("") && listaFechas.get(1)[2].equals(""))
 					return;
@@ -1633,6 +1665,10 @@ public class pricingVM
 			iniciarServicios();
 			iniciarActividades();
 			BindUtils.postNotifyChange(null, null, oReservar, "oPaquete");
+			//======================
+			oNroAccesos.setbNroPasajeros(true);
+			CNroAccesosDAO nroAccesosDao=new CNroAccesosDAO();
+			nroAccesosDao.isCorrectOperation(nroAccesosDao.modificarNroAcceso(oNroAccesos));
 		}
 		confAltoNivelDAO.asignarListaConfAltoNivel(confAltoNivelDAO.recuperarconfAltoNivel("pricing"));
 		setConfAltoNivel(confAltoNivelDAO.getoConfAltoNivel());
@@ -2287,6 +2323,10 @@ public class pricingVM
 	@NotifyChange({"acceptedTermsAndCond","txtTerminosCond","payment","mostrarPaypal"})
 	public void checkTermsAndCond()
 	{
+		//==============================
+		oNroAccesos.setbTerminos(true);
+		CNroAccesosDAO nroAccesosDao=new CNroAccesosDAO();
+		nroAccesosDao.isCorrectOperation(nroAccesosDao.modificarNroAcceso(oNroAccesos));
 		acceptedTermsAndCond=!acceptedTermsAndCond;
 	}
 	@Command
@@ -2307,6 +2347,10 @@ public class pricingVM
 			{
 				if(opcion==1)
 				{
+					//==============================
+					oNroAccesos.setbReserva(true);;
+					CNroAccesosDAO nroAccesosDao=new CNroAccesosDAO();
+					nroAccesosDao.isCorrectOperation(nroAccesosDao.modificarNroAcceso(oNroAccesos));
 					payment=false;
 					reservar=true;
 					if(oReservar.getoCupon().isOkCupon())
@@ -2319,6 +2363,11 @@ public class pricingVM
 					}
 				}else
 				{
+					//==============================
+					oNroAccesos.setbPago(true);
+					CNroAccesosDAO nroAccesosDao=new CNroAccesosDAO();
+					nroAccesosDao.isCorrectOperation(nroAccesosDao.modificarNroAcceso(oNroAccesos));
+					//================================
 					payment=true;
 					reservar=false;
 				}
@@ -2561,6 +2610,11 @@ public class pricingVM
 	@Command
 	public void changeApellido(@BindingParam("valor")String nombre,@BindingParam("idTbNombre")Component comp,@BindingParam("pasajero")CPasajero p)
 	{
+		//==============================
+				oNroAccesos.setbLlenadoPasajeros(true);
+				CNroAccesosDAO nroAccesosDao=new CNroAccesosDAO();
+				nroAccesosDao.isCorrectOperation(nroAccesosDao.modificarNroAcceso(oNroAccesos));
+				//================================
 		nombre=nombre.toUpperCase();
 		if(!nombreApellidoValido(nombre))
 		{
@@ -2576,6 +2630,11 @@ public class pricingVM
 	@Command
 	public void changeNombre(@BindingParam("valor")String nombre,@BindingParam("idTbNombre")Component comp,@BindingParam("pasajero")CPasajero p)
 	{
+		//==============================
+				oNroAccesos.setbLlenadoPasajeros(true);
+				CNroAccesosDAO nroAccesosDao=new CNroAccesosDAO();
+				nroAccesosDao.isCorrectOperation(nroAccesosDao.modificarNroAcceso(oNroAccesos));
+				//================================
 		nombre=nombre.toUpperCase();
 		if(!nombreApellidoValido(nombre))
 		{

@@ -1,7 +1,6 @@
 <?page title="PRICING" contentType="text/html;charset=UTF-8"?>
 <?page viewport="width=device-width, initial-scale=1.0,  user-scalable=no"?>
 <div sclass="div_contenedor_pricing" 
-		 apply="org.zkoss.bind.BindComposer"
 		 viewModel="@id('vmPricing') @init('com.pricing.viewModel.pricingVM')">
 		<!-- ======PASO 1======== -->
 <!-- 		<space></space> -->

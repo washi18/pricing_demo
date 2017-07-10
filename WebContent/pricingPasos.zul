@@ -1,7 +1,6 @@
 <?page title="PRICING" contentType="text/html;charset=UTF-8"?>
 <?page viewport="width=device-width, initial-scale=1.0,  user-scalable=no"?>
-<div sclass="div_contenedor_pricing" apply="org.zkoss.bind.BindComposer"
-	viewModel="@id('vmPricing') @init('com.pricing.viewModel.pricingVM')">
+<div sclass="div_contenedor_pricing" viewModel="@id('vmPricing') @init('com.pricing.viewModel.pricingVM')">
 	<div width="100%" zclass="contenedor_barra_progreso">
 	  <div zclass="subcontendor_barra_progreso">
 		<div width="100%" align="center"
@@ -120,89 +119,12 @@
 		<div sclass="div_requerimientos">
 			<div sclass="div_paso1"
 				visible="@bind(vmPricing.visiblePaso1)">
-<!-- 				<div sclass="div-logoPaises visible-small" width="100%" -->
-<!-- 					style="@bind(vmPricing.oInterfaz.style_div_FondoBanderas)"> -->
-<!-- 					<hbox style="float:right;"> -->
-<!-- 						<image src="img/Flag-of-Spain.png" -->
-<!-- 							sclass="style-flag" -->
-<!-- 							onClick="@command('cambiarIdioma',idioma=1) @global-command('cambiarIdiomaDispo',idioma=1)" /> -->
-<!-- 						<image src="img/en.png" sclass="style-flag" -->
-<!-- 							onClick="@command('cambiarIdioma',idioma=2) @global-command('cambiarIdiomaDispo',idioma=2)" /> -->
-<!-- 												  <image src="img/Flag_of_Brazil.png" sclass="style-flag" onClick="@command('cambiarIdioma',idioma=3) @global-command('cambiarIdiomaDispo',idioma=3)"/> -->
-<!-- 											  <image src="img/button-france.png" sclass="style-flag" onClick="@command('cambiarIdioma',idioma=4) @global-command('cambiarIdiomaDispo',idioma=4)"/> -->
-<!-- 					</hbox> -->
-<!-- 				</div> -->
 				<div width="100%">
 					<div sclass="div_fecha_pasajero" width="100%">
 						<div width="100%">
 							<groupbox
 								visible="@bind(vmPricing.mostrarCalendarZK)" width="100%"
 								mold="3d">
-								<!-- 								desde aqui-->
-								<!-- 								<caption sclass="caption_pasos" style="@bind(vmPricing.oInterfaz.style_caption_FondoPasos)"> -->
-								<!-- 									<label value="@bind(vmPricing.etiqueta[22])" sclass="titulo-pasos" style="@bind(vmPricing.oInterfaz.style_lbl_TextoFondoPasos)"/> -->
-								<!-- 									<label sclass="style_Step" value="1" style="@bind(vmPricing.oInterfaz.style_lbl_CirclePasos)"/> -->
-								<!-- 								</caption> -->
-								<!-- 								<div sclass="div_fechas"> -->
-								<!-- 									<div zclass="div_comentarios"> -->
-								<!-- 										<label value="@bind(vmPricing.etiqueta[46])"/> -->
-								<!-- 									</div> -->
-								<!-- 									<label value="@bind(vmPricing.etiqueta[1])" sclass="titulo-groupbox"/> -->
-								<!-- 									<hbox id="hbCal2" onClick='calendarPop2.open(self, "after_start");'> -->
-								<!-- 										<div zclass="div_content_icon_calendar_FP"> -->
-								<!-- 											<a iconSclass="icon-calendar" sclass="titulo-groupbox" -->
-								<!-- 												onClick='calendarPop2.open(hbCal2, "after_start");'/> -->
-								<!-- 										</div> -->
-								<!-- 										<textbox readonly="true" value="@bind(vmPricing.fecha)" -->
-								<!-- 												 sclass="txtFechaPrincipal"/> -->
-								<!-- 									</hbox> -->
-								<!-- 									<popup id="calendarPop2" sclass="popup_calendar"> -->
-								<!-- 										<space></space> -->
-								<!-- 										<include src="disponibilidad.zul" /> -->
-								<!-- 									</popup> -->
-								<!-- 									<space></space> -->
-								<!-- 									<label value="@bind(vmPricing.etiqueta[3])" sclass="titulo-groupbox"/> -->
-								<!-- 									<hbox id="hbCalAlt2" onClick='calendarAltPop2.open(self, "after_start");'> -->
-								<!-- 										<div zclass="div_content_icon_calendar_FP"> -->
-								<!-- 											<a iconSclass="icon-calendar" sclass="titulo-groupbox" -->
-								<!-- 												onClick='calendarAltPop2.open(hbCalAlt2, "after_start");'/> -->
-								<!-- 										</div> -->
-								<!-- 										<textbox readonly="true" value="@bind(vmPricing.fechaAlterna)" -->
-								<!-- 												 sclass="txtFechaPrincipal"/> -->
-								<!-- 									</hbox> -->
-								<!-- 									<popup id="calendarAltPop2" sclass="popup_calendar"> -->
-								<!-- 										<space></space> -->
-								<!-- 										<include src="calendarFechaAlterna.zul" /> -->
-								<!-- 									</popup> -->
-								<!-- 								</div> -->
-								<!-- 								<space></space> -->
-								<!-- 								<div zclass="div_comentarios"> -->
-								<!-- 									<label value="@bind(vmPricing.etiqueta[18])"/> -->
-								<!-- 								</div> -->
-								<!-- 								<div sclass="div_fechas"> -->
-								<!-- 									<div> -->
-								<!-- 										<label value="@bind(vmPricing.etiqueta[21])" sclass="titulo-groupbox"/> -->
-								<!-- 									</div> -->
-								<!-- 									<combobox readonly="true" width="60px" onSelect="@command('changeNroPersonas',nroPersonas=self.selectedItem.value)"> -->
-								<!-- 											<comboitem label="1" value="1" width="60px"/> -->
-								<!-- 											<comboitem label="2" value="2" width="60px"/> -->
-								<!-- 											<comboitem label="3" value="3" width="60px"/> -->
-								<!-- 											<comboitem label="4" value="4" width="60px"/> -->
-								<!-- 											<comboitem label="5" value="5" width="60px"/> -->
-								<!-- 											<comboitem label="6" value="6" width="60px"/> -->
-								<!-- 											<comboitem label="7" value="7" width="60px"/> -->
-								<!-- 											<comboitem label="8" value="8" width="60px"/> -->
-								<!-- 											<comboitem label="9" value="9" width="60px"/> -->
-								<!-- 											<comboitem label="10" value="10" width="60px"/> -->
-								<!-- 											<comboitem label="11" value="11" width="60px"/> -->
-								<!-- 											<comboitem label="12" value="12" width="60px"/> -->
-								<!-- 											<comboitem label="13" value="13" width="60px"/> -->
-								<!-- 											<comboitem label="14" value="14" width="60px"/> -->
-								<!-- 											<comboitem label="15" value="15" width="60px"/> -->
-								<!-- 											<comboitem label="16" value="16" width="60px"/> -->
-								<!-- 										</combobox> -->
-								<!-- 								</div> -->
-								<!-- 								hasta aqui -->
 								<caption sclass="caption_pasos"
 									style="@bind(vmPricing.oInterfaz.style_caption_FondoPasos)">
 									<label
@@ -418,6 +340,59 @@
 						<label sclass="style_Step" value="2"
 							style="@bind(vmPricing.oInterfaz.style_lbl_CirclePasos)" />
 					</caption>
+						<div zclass="div_comentarios" style="background:rgba(76, 175, 80,0.3);padding:10px;border-radius:5px;">
+							<div sclass="div_info_item">
+								<div sclass="div_info_item_der">
+									<div><label value="@bind(vmPricing.etiqueta[21])" sclass="div_info_item_label"/></div>
+									<separator bar="true"/>
+									<div><label value="@bind(vmPricing.oReservar.nNroPersonas)" style="font-weight:bold;font-size:18px;text-align:center;"/></div>
+								</div>
+							</div>
+							<separator bar="true"/>
+							<div sclass="div_info_item">
+								<div sclass="div_info_item_der">
+									<div><label value="@bind(vmPricing.etiqueta[1])" sclass="div_info_item_label"/></div>
+									<separator bar="true"/>
+									<div>
+										<vbox>
+											<label id="lblFechaInicioPaso2" style="font-size:18px;font-weight:bold;"/>
+											<label id="lblFechaFinPaso2" style="font-size:18px;font-weight:bold;"/>
+										</vbox>
+									</div>
+								</div>
+							</div>
+							<separator bar="true" visible="@bind(vmPricing.oReservar.oPaquete.conFechaArribo)"/>
+							<div sclass="div_info_item" visible="@bind(vmPricing.oReservar.oPaquete.conFechaArribo)">
+								<div sclass="div_info_item_der">
+									<div><label value="@bind(vmPricing.etiqueta[243])" sclass="div_info_item_label"/></div>
+									<separator bar="true"/>
+									<div>
+										<vbox>										
+											<label id="lblFechaArriboPaso2" style="font-size:18px;font-weight:bold;"/>
+										</vbox>
+									</div>
+								</div>
+							</div>
+							<separator bar="true"/>
+							<div sclass="div_info_item" visible="@bind(vmPricing.mostrarDispIncaTrail)">
+								<div sclass="div_info_item_der">
+									<label value="@bind(vmPricing.etiqueta[3])" sclass="div_info_item_label"/>
+									<separator bar="true"/>
+									<listbox model="@load(vmPricing.listaFechasAlternas)" width="200px" style="border:1px solid black;border-radius:5px;">
+										<listhead>
+											<listheader label=""/>
+										</listhead>
+										<template name="model" var="fecha">
+											<listitem style="background:rgba(0,0,0,0.1);">
+												<listcell style="background:transparent;">
+													<label hflex="1" value="@bind(fecha)" sclass="AltDate_info_label"/>
+												</listcell>
+											</listitem>
+										</template>
+									</listbox>
+								</div>
+							</div>
+						</div>
 					<groupbox visible="@bind(vmPricing.oReservar.oPaquete.conDestino)">
 						<caption>
 							<a iconSclass="icon-office"

@@ -1011,6 +1011,7 @@ public class CDisponibilidadYourselfVM {
 	
 	public void mostrarCalendarDispAnioActual(String anio,String mes) throws IOException
 	{
+		System.out.println("Mes-> "+mes+" anio-> "+anio);
 		//Inicializamos los dias y nro disponibilidades en el grid todos en vacio
 		iniDiasYNumDisp();
 		//==================
@@ -1149,6 +1150,7 @@ public class CDisponibilidadYourselfVM {
 	 */
 	public void mostrarCalendarDispAnioSiguiente(String anio,String mes)
 	{
+		System.out.println("Mes-> "+mes+" anio-> "+anio);
 		//Inicializamos los dias y nro disponibilidades en el grid todos en vacio
 		//==================
 		int m=nMesAnio(mes);

@@ -1,8 +1,7 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
 	<style src="css/menu.css"/>
-	<div apply="org.zkoss.bind.BindComposer"
-		 viewModel="@id('vmMenu') @init('com.android.viewModel.menuVM')">
+	<div viewModel="@id('vmMenu') @init('com.android.viewModel.menuVM')">
 		 <div zclass="div_contenedor_nuevo">
 			<div zclass="div_contendor_btn_nuevo" onClick="@command('mostrarNuevoMenu')">
 				<div zclass="div_btn_nuevo" width="180px">

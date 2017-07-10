@@ -152,8 +152,8 @@ public class CDestino
 		bEstado=false;
 		seleccionado=false;
 		nCodPostal=0;
-		latitud="";
-		longitud="";
+		latitud="0";
+		longitud="0";
 		urlImagen="img/destinos/destinoxdefecto.png";
 	}
 	public CDestino(String cDestino){
