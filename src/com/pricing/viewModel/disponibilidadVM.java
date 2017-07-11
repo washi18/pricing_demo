@@ -343,7 +343,7 @@ public class disponibilidadVM
 		String mesAux=mesAnio(mes-1);
 		//=====Leemos el archivo del mes correspondiente=====
 		String nameFileMes=txtMesCorrespondiente(mesAux);
-		boolean correcto=leerPdfDesdeUrl(mes);
+		boolean correcto=leerPdfDesdeUrl(mes,anio);
 		if(correcto)
 		{
 			System.out.println("Es correcto: "+nameFileMes);
@@ -377,7 +377,7 @@ public class disponibilidadVM
 		}
 		return listaDispoMes;
 	}
-	public boolean leerPdfDesdeUrl(int mes){
+	public boolean leerPdfDesdeUrl(int mes,int anio){
 		String mesTxt="";
 		if(mes<10)
 			mesTxt="0"+mes;
@@ -387,7 +387,7 @@ public class disponibilidadVM
 		System.out.println("================================");
 		Calendar cal=Calendar.getInstance();
 		try {
-			lectorPDF.descargarPdf("http://operadores.machupicchu.gob.pe/BoletoExtranet/servletReporteBoleto?reporte=600&idRuta=1&fechaIngreso=01-"+mesTxt+"-"+cal.get(Calendar.YEAR)+"&tipoRegistro=001",
+			lectorPDF.descargarPdf("http://operadores.machupicchu.gob.pe/BoletoExtranet/servletReporteBoleto?reporte=600&idRuta=1&fechaIngreso=01-"+mesTxt+"-"+anio+"&tipoRegistro=001",
 					new lectorPDF().getPath()+"auxPdf.pdf");
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block

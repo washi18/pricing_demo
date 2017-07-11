@@ -2409,7 +2409,7 @@ public class pricingVM
 		oReservaPaquete.setcReservaCod(oReservar.getcReservaCod());
 		oReservaPaquete.setcPaqueteCod(codigoPaquete);
 		oReservaPaquete.setNroPasajerosPaquete(nroPasajeros);
-		oReservaPaquete.setnMontoTotalPaquete(TotalPaquete);
+		oReservaPaquete.setnMontoTotalPaquete(montoTotal);
 		
 		CReservaPaqueteDAO reservaPaqueteDao=new CReservaPaqueteDAO();
 		Number codRP=reservaPaqueteDao.obtenerCodigoReservaPaquete(reservaPaqueteDao.insertarReservaPaquete(oReservaPaquete));

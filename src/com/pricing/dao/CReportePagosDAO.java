@@ -135,7 +135,6 @@ public class CReportePagosDAO  extends CConexion{
 		String[] values={anio};
 		return getEjecutorSQL().ejecutarProcedimiento("pricing_sp_listaFormaPagos",values);
 	}
-	
 	public List recuperarHotelesReservaBD(String codReserva,int codCategoriaHotel)
 	{
 		Object[] values={codReserva,codCategoriaHotel};

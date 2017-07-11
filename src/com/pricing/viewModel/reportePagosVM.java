@@ -224,8 +224,8 @@ public class reportePagosVM {
 //		reportePagosDAO.asignarValoresImpuesto(reporteReservaDAO.recuperarModoPago());
 //		setImpuesto(reporteReservaDAO.getImpuesto());
 		
-//		reportePagosDAO.asignarListaReportePagos(reportePagosDAO.recuperarReportePagosInicialBD(fechaActual));
-//		this.setListaReportePagos(reportePagosDAO.getListaReportePagos());
+		reportePagosDAO.asignarListaReportePagos(reportePagosDAO.recuperarReportePagosInicialBD(fechaActual));
+		this.setListaReportePagos(reportePagosDAO.getListaReportePagos());
 
 //		if(impuesto.isModoPorcentual()){
 //			valorParcial=impuesto.getPorcentajeCobro()+"%";

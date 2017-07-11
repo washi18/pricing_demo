@@ -3,6 +3,8 @@ package com.pricing.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.pricing.dao.CReportePagosDAO;
+
 public class CReportePagos {
 	//=======atributos======
 	private String codPago;
@@ -408,7 +410,7 @@ public class CReportePagos {
 			String codTransaccion,
 			String apellidos, String nombres, String sexo,
 			String tipoDocumento,String nroDoc, String nombrePais,String estadoReserva,Number nPrecioPaquetePersona) {
-		super();
+		
 		this.codReserva = codReserva;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
@@ -426,7 +428,7 @@ public class CReportePagos {
 		this.nombrePais = nombrePais;
 		this.estadoReserva=estadoReserva;
 		this.nPrecioPaquetePersona=nPrecioPaquetePersona;
-		this.montoTotal=nroPersonas*nPrecioPaquetePersona.doubleValue();
+		this.montoTotal=nPrecioPaquetePersona.doubleValue();
 		if(estadoReserva.equals("PAGO PARCIAL")){
 			isParcial=true;
 			isTotal=false;
@@ -436,7 +438,7 @@ public class CReportePagos {
 		}
 //		this.valorImpuesto=(Double.valueOf(impuesto)*importe.doubleValue())/100;
 //	    this.montoTotal=importe.doubleValue()+this.valorImpuesto;
-	}
-	
-	
+		/**Calculando los costos del hotel**/
+		
+	}	
 }

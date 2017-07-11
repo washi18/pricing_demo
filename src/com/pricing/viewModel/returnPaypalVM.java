@@ -229,9 +229,9 @@ public class returnPaypalVM
 	public void reservar() throws IOException, DocumentException
 	{
 		String[] resultado=reservaDao.recuperarResultados(reservaDao.registrarReserva(oReserva));
+		String estado="";
 		if(resultado[0].equals("correcto"))
 		{
-			String estado="";
 			if(porcentajePago.equals("1"))
 				estado="PAGO PARCIAL";
 			else//100%
@@ -250,9 +250,10 @@ public class returnPaypalVM
 		//Se asigna el codigo de reserva al objeto oReserva
 		oReserva.setcReservaCod(resultado[1]);
 		//===================
+		boolean b=reservaDao.isCorrectOperation(reservaDao.modificarMetodoPago(oReserva.getcReservaCod(), estado,"PAYPAL",codTransac));
 		String pdf=Util.getPathReservas()+"reservas.pdf";
 		CEmail mail=new CEmail();
-		boolean b=mail.enviarCorreoConPago(etiqueta[200],etiqueta,oImpuesto,oReservaPaqueteCategoriaHotel,fechaInicio,fechaFin,fechaArribo,oReserva,listacFechasAlternas,montoTotalSinImpuesto,montoPagarSinImpuesto,pdf,codTransac,porcentajePago,listaPasajeros,pagos);
+		b=mail.enviarCorreoConPago(etiqueta[200],etiqueta,oImpuesto,oReservaPaqueteCategoriaHotel,fechaInicio,fechaFin,fechaArribo,oReserva,listacFechasAlternas,montoTotalSinImpuesto,montoPagarSinImpuesto,pdf,codTransac,porcentajePago,listaPasajeros,pagos);
 		/**REGISTRAR CUPON**/
 		if(oReserva.getoCupon().isOkCupon())
 		{
@@ -278,7 +279,7 @@ public class returnPaypalVM
 		oReservaPaquete.setcReservaCod(oReserva.getcReservaCod());
 		oReservaPaquete.setcPaqueteCod((String)seshttp.getAttribute("codigoPaquete"));
 		oReservaPaquete.setNroPasajerosPaquete(oReserva.getnNroPersonas());
-		oReservaPaquete.setnMontoTotalPaquete((Double)seshttp.getAttribute("TotalPaquete"));
+		oReservaPaquete.setnMontoTotalPaquete((Double)seshttp.getAttribute("montoTotalSinImpuesto"));
 		
 		CReservaPaqueteDAO reservaPaqueteDao=new CReservaPaqueteDAO();
 		Number codRP=reservaPaqueteDao.obtenerCodigoReservaPaquete(reservaPaqueteDao.insertarReservaPaquete(oReservaPaquete));
