@@ -55,18 +55,18 @@
 								onClick="@command('insertarDestino',componente=self) @global-command('actualizarDestinoInsertado')"/>
 					</div>
 					<window mode="modal" sclass="win_imagenesHotel" visible="@load(vmDestino.mostrarImagenesExistentes)" position="center">
-								<div zclass="div_cerrar_descHotel">
-									<label value="Escogio una imagen" 
-											visible="@bind(vmDestino.mostrarTextImgSeleccionado)"
-											style="color:#3BB710;font-size:15px;"/>
-									<label value="✔" zclass="lbl_ok" visible="@bind(vmDestino.mostrarTextImgSeleccionado)"/>
-									<label value="No escogio ninguna imagen" 
-											visible="@bind(!vmDestino.mostrarTextImgSeleccionado)"
-											style="color:red;font-size:15px;"/>
-									<label value="X" zclass="lbl_X" visible="@bind(!vmDestino.mostrarTextImgSeleccionado)"/>
-									<space></space>
-									<button label="X" onClick="@command('cerrarImagenesExistentes')" zclass="btn_cerrar_descHotel"/>
-								</div>
+<!-- 								<div zclass="div_cerrar_descHotel"> -->
+<!-- 									<label value="Escogio una imagen"  -->
+<!-- 											visible="@bind(vmDestino.mostrarTextImgSeleccionado)" -->
+<!-- 											style="color:#3BB710;font-size:15px;"/> -->
+<!-- 									<label value="✔" zclass="lbl_ok" visible="@bind(vmDestino.mostrarTextImgSeleccionado)"/> -->
+<!-- 									<label value="No escogio ninguna imagen"  -->
+<!-- 											visible="@bind(!vmDestino.mostrarTextImgSeleccionado)" -->
+<!-- 											style="color:red;font-size:15px;"/> -->
+<!-- 									<label value="X" zclass="lbl_X" visible="@bind(!vmDestino.mostrarTextImgSeleccionado)"/> -->
+<!-- 									<space></space> -->
+<!-- 									<button label="X" onClick="@command('cerrarImagenesExistentes')" zclass="btn_cerrar_descHotel"/> -->
+<!-- 								</div> -->
 								<div sclass="div_contenido_descHotel">
 											<div width="100%">
 												<label value="Imagen:" sclass="lbl_llenar_datos"/>
@@ -243,18 +243,18 @@
 								</div>
 							</div>
 							<window mode="modal" sclass="win_imagenesHotel" visible="@load(vmDestino.mostrarImagenesExistentesUpdate)" position="center">
-								<div zclass="div_cerrar_descHotel">
-									<label value="Escogio una imagen" 
-											visible="@bind(vmDestino.mostrarTextImgSeleccionado)"
-											style="color:#3BB710;font-size:15px;"/>
-									<label value="✔" zclass="lbl_ok" visible="@bind(vmDestino.mostrarTextImgSeleccionado)"/>
-									<label value="No escogio ninguna imagen" 
-											visible="@bind(!vmDestino.mostrarTextImgSeleccionado)"
-											style="color:red;font-size:15px;"/>
-									<label value="X" zclass="lbl_X" visible="@bind(!vmDestino.mostrarTextImgSeleccionado)"/>
-									<space></space>
-									<button label="X" onClick="@command('cerrarImagenesExistentes')" zclass="btn_cerrar_descHotel"/>
-								</div>
+<!-- 								<div zclass="div_cerrar_descHotel"> -->
+<!-- 									<label value="Escogio una imagen"  -->
+<!-- 											visible="@bind(vmDestino.mostrarTextImgSeleccionado)" -->
+<!-- 											style="color:#3BB710;font-size:15px;"/> -->
+<!-- 									<label value="✔" zclass="lbl_ok" visible="@bind(vmDestino.mostrarTextImgSeleccionado)"/> -->
+<!-- 									<label value="No escogio ninguna imagen"  -->
+<!-- 											visible="@bind(!vmDestino.mostrarTextImgSeleccionado)" -->
+<!-- 											style="color:red;font-size:15px;"/> -->
+<!-- 									<label value="X" zclass="lbl_X" visible="@bind(!vmDestino.mostrarTextImgSeleccionado)"/> -->
+<!-- 									<space></space> -->
+<!-- 									<button label="X" onClick="@command('cerrarImagenesExistentes')" zclass="btn_cerrar_descHotel"/> -->
+<!-- 								</div> -->
 								<div sclass="div_contenido_descHotel">
 											<div width="100%">
 												<label value="Imagen:" sclass="lbl_llenar_datos"/>

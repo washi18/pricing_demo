@@ -279,7 +279,7 @@ public class returnPaypalVM
 		oReservaPaquete.setcReservaCod(oReserva.getcReservaCod());
 		oReservaPaquete.setcPaqueteCod((String)seshttp.getAttribute("codigoPaquete"));
 		oReservaPaquete.setNroPasajerosPaquete(oReserva.getnNroPersonas());
-		oReservaPaquete.setnMontoTotalPaquete((Double)seshttp.getAttribute("montoTotalSinImpuesto"));
+		oReservaPaquete.setnMontoTotalPaquete(Double.parseDouble(montoTotalSinImpuesto));
 		
 		CReservaPaqueteDAO reservaPaqueteDao=new CReservaPaqueteDAO();
 		Number codRP=reservaPaqueteDao.obtenerCodigoReservaPaquete(reservaPaqueteDao.insertarReservaPaquete(oReservaPaquete));

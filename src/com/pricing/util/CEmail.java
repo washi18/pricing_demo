@@ -1153,8 +1153,6 @@ public class CEmail
 											"<p>"+etiqueta[130]+" <strong style='color:#F7653A;font-family: Titillium;'>"+reserva.getoPaquete().getTitulo()+"</strong>"+ 
 											"<strong> "+etiqueta[133]+" </strong> "+reserva.getnNroPersonas()+" <strong> "+etiqueta[134]+"</strong> "+etiqueta[135]+"</p>"+
 											fechas+
-											"<p style='font-family: Titillium;'><strong style='text-decoration: underline;font-family: Titillium;'>"+etiqueta[252]+"</strong><br/>"+
-											reserva.getcInformacionAdicional()+"</p>"+
 											"<p style='font-family: Titillium;'><strong style='text-decoration: underline;font-family: Titillium;'>"+etiqueta[250]+"</strong><br />"+
 											reserva.getoPaquete().getDescripcion()+"</p>"+
 						
@@ -1921,6 +1919,8 @@ public class CEmail
 	}
 	public boolean enviarCorreoNuevoUser(String destinatario,String usuario,String contrasenia)
 	{
+		CConfigUrlDAO configUrlDAO=new CConfigUrlDAO();
+		configUrlDAO.asignarConfigUrl(configUrlDAO.recuperarConfigUrlDB());
 		String mensajeHTMl=
 				"<html>"+
 					"<head></head>"+
@@ -1937,7 +1937,7 @@ public class CEmail
 								"</tr>"+
 								"<tr>"+
 									"<td style='font-family: Titillium;'>URL DEL PANEL DE ADMINISTRACION: </td>"+
-									"<td style='font-family: Titillium;'>https://www.e-ranti.com/pricing_demo/panelAdmin.zul</td>"+
+									"<td style='font-family: Titillium;'>"+configUrlDAO.getoConfigUrl().getUrlTerminosYCondiciones()+"</td>"+
 								"</tr>"+
 							"</table>"+
 						"</div>"+

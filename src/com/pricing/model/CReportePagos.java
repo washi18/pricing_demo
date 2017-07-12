@@ -38,6 +38,7 @@ public class CReportePagos {
 	private ArrayList<CSubServicio> listasubServicios;
 	private ArrayList<CActividad> listaActividades;
 	private Double montoTotal;
+	private Double montoTotalOtros;
 	private Double valorImpuesto;
 	private boolean visiblepasajerospop=false;
 	private boolean visibleDestinospop=false;
@@ -51,6 +52,7 @@ public class CReportePagos {
 	private boolean isTotal;
 	private boolean visibleMarcarPagado;
 	private Number nPrecioPaquetePersona;
+	private CReservaPaquete oReservaPaquete;
 	//===============getter and setter=======
 	
 	public String getCodPago() {
@@ -168,6 +170,14 @@ public class CReportePagos {
 	public void setNroPersonas(int nroPersonas) {
 		this.nroPersonas = nroPersonas;
 	}
+	public Double getMontoTotalOtros() {
+		return montoTotalOtros;
+	}
+
+	public void setMontoTotalOtros(Double montoTotalOtros) {
+		this.montoTotalOtros = montoTotalOtros;
+	}
+
 	public String getFormaPago() {
 		return formaPago;
 	}
@@ -382,6 +392,14 @@ public class CReportePagos {
 		this.colornoExisteListaActividades = colornoExisteListaActividades;
 	}
 
+	public CReservaPaquete getoReservaPaquete() {
+		return oReservaPaquete;
+	}
+
+	public void setoReservaPaquete(CReservaPaquete oReservaPaquete) {
+		this.oReservaPaquete = oReservaPaquete;
+	}
+
 	//==================constructores==================
 	public CReportePagos()
 	{
@@ -438,7 +456,11 @@ public class CReportePagos {
 		}
 //		this.valorImpuesto=(Double.valueOf(impuesto)*importe.doubleValue())/100;
 //	    this.montoTotal=importe.doubleValue()+this.valorImpuesto;
-		/**Calculando los costos del hotel**/
-		
+		/**Recuperando la reserva del paquete para ver el monto total de la reserva del paquete**/
+		CReportePagosDAO reservaPaqueteDao=new CReportePagosDAO();
+		reservaPaqueteDao.asignarReservaPaquete(reservaPaqueteDao.recuperarReservaPaquete(codReserva));
+		setoReservaPaquete(reservaPaqueteDao.getoReservaPaquete());
+		if(oReservaPaquete.getnMontoTotalPaquete()!=null)
+			this.montoTotalOtros=oReservaPaquete.getnMontoTotalPaquete().doubleValue()-nPrecioPaquetePersona.doubleValue();
 	}	
 }

@@ -216,6 +216,11 @@ public class CElementosDAO extends CConexion{
 			}
 		}
 	}
+	public List eliminarElemento(int codElemento)
+	{
+		Object[] values={codElemento};
+		return getEjecutorSQL().ejecutarProcedimiento("Android_sp_EliminarElemento",values);
+	}
 	public boolean isOperationCorrect(List lista)
 	{
 		Map row=(Map)lista.get(0);

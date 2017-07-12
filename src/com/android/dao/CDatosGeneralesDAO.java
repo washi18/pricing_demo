@@ -83,6 +83,11 @@ public class CDatosGeneralesDAO extends CConexion{
 			}
 		}
 	}
+	public List eliminarDatoGeneral(int codDatoGeneral)
+	{
+		Object[] values={codDatoGeneral};
+		return getEjecutorSQL().ejecutarProcedimiento("Android_sp_EliminarDatoGeneral", values);
+	}
 	public boolean isOperationCorrect(List lista)
 	{
 		Map row=(Map)lista.get(0);

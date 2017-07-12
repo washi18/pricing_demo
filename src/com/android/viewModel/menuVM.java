@@ -14,6 +14,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.Selectors;
@@ -32,6 +33,7 @@ import com.android.model.CElementos;
 import com.android.model.CItems;
 import com.android.model.CMenu;
 import com.android.model.CSubMenu;
+import com.pricing.dao.CHotelDAO;
 import com.pricing.extras.KMP;
 import com.pricing.model.CGaleriaImageExist;
 import com.pricing.model.CGaleriaImageExist4;
@@ -345,7 +347,7 @@ public class menuVM {
 		}
 	}
 	@Command
-	@NotifyChange({"mostrarTextImgSeleccionado"})
+	@NotifyChange({"mostrarTextImgSeleccionado","mostrarImagenesExistentes"})
 	public void selectImagenExist(@BindingParam("galeria4")CGaleriaImageExist4 galeria4,
 			@BindingParam("galeria")CGaleriaImageExist galeria)
 	{
@@ -444,6 +446,7 @@ public class menuVM {
 		if(Nro.nroImagenes>0)mostrarTextImgSeleccionado=true;
 		else if(Nro.nroImagenes==0)mostrarTextImgSeleccionado=false;
 		refrescarSelect(galeria4);
+		mostrarImagenesExistentes=false;
 	}
 	@Command
 	public void selectTipoImagenExistente(@BindingParam("tipo")String tipo)
@@ -591,7 +594,7 @@ public class menuVM {
 			oMenu=new CMenu();
 			menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
 			setListaMenu(menuDao.getListaMenu());
-			Clients.showNotification("El registro del menu fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
+			Clients.showNotification("El registro del elemento fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
 		}
 	}
 	@Command
@@ -608,7 +611,7 @@ public class menuVM {
 			oSubMenu=new CSubMenu();
 			menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
 			setListaMenu(menuDao.getListaMenu());
-			Clients.showNotification("El registro del submenu fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
+			Clients.showNotification("El registro del sub-elemento fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
 		}
 	}
 	@Command
@@ -642,7 +645,7 @@ public class menuVM {
 			oDatoGeneral=new CDatosGenerales();
 			menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
 			setListaMenu(menuDao.getListaMenu());
-			Clients.showNotification("El registro del dato general fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
+			Clients.showNotification("El registro de la caracteristica de la galeria fue correcta",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
 		}
 	}
 	@Command
@@ -659,7 +662,7 @@ public class menuVM {
 			oElemento=new CElementos();
 			menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
 			setListaMenu(menuDao.getListaMenu());
-			Clients.showNotification("El registro del elemento fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
+			Clients.showNotification("El registro de la galeria fue correcta",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
 		}
 	}
 	@Command
@@ -676,7 +679,7 @@ public class menuVM {
 			oElemento=new CElementos();
 			menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
 			setListaMenu(menuDao.getListaMenu());
-			Clients.showNotification("El registro del elemento fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
+			Clients.showNotification("El registro de la galeria fue correcta",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
 		}
 	}
 	@Command
@@ -693,7 +696,7 @@ public class menuVM {
 			oDestino=new CDestinoMovil();
 			menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
 			setListaMenu(menuDao.getListaMenu());
-			Clients.showNotification("El Destino se inserto correctamente", Clients.NOTIFICATION_TYPE_INFO, comp,"before_start", 2700);
+			Clients.showNotification("La ubicacion se inserto correctamente", Clients.NOTIFICATION_TYPE_INFO, comp,"before_start", 2700);
 		}
 	}
 	public boolean validoParaInsertar_menu(Component comp)
@@ -702,15 +705,15 @@ public class menuVM {
 		if(oMenu.getcNombreIdioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El menu debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("El elemento debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oMenu.getcImagenIcono().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El menu debe de contar con un icono",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("El elemento debe de contar con un icono",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oMenu.getcImagenFondo().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El menu debe de contar con una imagen de fondo",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("El elemento debe de contar con una imagen de fondo",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}
 		return valido;
 	}
@@ -720,15 +723,15 @@ public class menuVM {
 		if(oSubMenu.getcMenuCod()==0)
 		{
 			valido=false;
-			Clients.showNotification("Es necesario que seleccione a que menu correspondera el submenu",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("Es necesario que seleccione a que elemento correspondera el sub-elemento",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oSubMenu.getcNombreIdioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El submenu debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("El sub-elemento debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oSubMenu.getcImagen().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El submenu debe de contar con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("El sub-elemento debe de contar con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}
 		return valido;
 	}
@@ -756,15 +759,15 @@ public class menuVM {
 		if(oDatoGeneral.getcElementosCod()==0)
 		{
 			valido=false;
-			Clients.showNotification("Es necesario que seleccione a que item correspondera el item",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("Es necesario que seleccione a que galeria correspondera la carateristica",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oDatoGeneral.getcTituloIdioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El dato general debe de tener un titulo o nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La caracteristica debe de tener un titulo o nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oDatoGeneral.getcImagen().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El dato general debe de contar con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La caracteristica debe de contar con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}
 		return valido;
 	}
@@ -774,19 +777,19 @@ public class menuVM {
 		if(oElemento.getcItemsCod()==0)
 		{
 			valido=false;
-			Clients.showNotification("Es necesario que seleccione a que item correspondera el elemento",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("Es necesario que seleccione a que item correspondera la galeria",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oElemento.getcNombre1Idioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El elemento debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La galeria debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oElemento.getcImagen1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El elemento debe de contar al menos con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La galeria debe de contar al menos con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oElemento.getcDirigidoIdioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El elemento debe de contar una descripcion a que tipo de cliente esta dirigido",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La galeria debe de contar una descripcion a que tipo de cliente esta dirigido",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}
 		return valido;
 	}
@@ -796,19 +799,19 @@ public class menuVM {
 		if(oElemento.getcSubMenuCod()==0)
 		{
 			valido=false;
-			Clients.showNotification("Es necesario que seleccione a que submenu correspondera el elemento",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("Es necesario que seleccione a que submenu correspondera la galeria",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oElemento.getcNombre1Idioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El elemento debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La galeria debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oElemento.getcImagen1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El elemento debe de contar al menos con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La galeria debe de contar al menos con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(oElemento.getcDirigidoIdioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El elemento debe de contar una descripcion a que tipo de cliente esta dirigido",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La galeria debe de contar una descripcion a que tipo de cliente esta dirigido",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}
 		return valido;
 	}
@@ -818,7 +821,7 @@ public class menuVM {
 		if(oDestino.getcDestino().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El Destino siempre debe de tener un nombre", Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start", 2700);
+			Clients.showNotification("La ubicacion siempre debe de tener un nombre", Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start", 2700);
 		}
 		return valido;
 	}
@@ -833,7 +836,7 @@ public class menuVM {
 		{
 			menu.setEditable(false);
 			refrescaFilaTemplate(menu);
-			Clients.showNotification("La modificacion del menu fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
+			Clients.showNotification("La modificacion del elemento fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
 		}
 	}
 	@Command
@@ -845,7 +848,7 @@ public class menuVM {
 		boolean correcto=subMenuDao.isOperationCorrect(subMenuDao.modificarSubMenu(submenu));
 		if(correcto)
 		{
-			Clients.showNotification("La modificacion del submenu fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
+			Clients.showNotification("La modificacion del sub-elemento fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
 		}
 	}
 	@Command
@@ -874,7 +877,7 @@ public class menuVM {
 		boolean correcto=datosGeneralesDao.isOperationCorrect(datosGeneralesDao.modificarDatoGeneral(datoGeneral));
 		if(correcto)
 		{
-			Clients.showNotification("La modificacion del dato general fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
+			Clients.showNotification("La modificacion de la caracteristica de la galeria fue correcta",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
 		}
 	}
 	@Command
@@ -886,7 +889,7 @@ public class menuVM {
 		boolean correcto=elementoDao.isOperationCorrect(elementoDao.modificarElemento_Item(elemento));
 		if(correcto)
 		{
-			Clients.showNotification("La modificacion del elemento fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
+			Clients.showNotification("La modificacion de la galeria fue correcta",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
 		}
 	}
 	@Command
@@ -898,7 +901,7 @@ public class menuVM {
 		boolean correcto=elementoDao.isOperationCorrect(elementoDao.modificarElemento_Submenu(elemento));
 		if(correcto)
 		{
-			Clients.showNotification("La modificacion del elemento fue correcto",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
+			Clients.showNotification("La modificacion de la galeria fue correcta",Clients.NOTIFICATION_TYPE_INFO, comp,"before_start",3000);
 		}
 	}
 	@Command
@@ -910,7 +913,7 @@ public class menuVM {
 		boolean correcto=destinoMovilDao.isOperationCorrect(destinoMovilDao.modificarDestinoMovil(destino));
 		if(correcto)
 		{
-			Clients.showNotification("El Destino se actualizo correctamente", Clients.NOTIFICATION_TYPE_INFO, comp,"before_start", 2700);
+			Clients.showNotification("La ubicacion se actualizo correctamente", Clients.NOTIFICATION_TYPE_INFO, comp,"before_start", 2700);
 		}
 	}
 	public boolean validoParaActualizar_menu(Component comp,CMenu menu)
@@ -919,15 +922,15 @@ public class menuVM {
 		if(menu.getcNombreIdioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El menu debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("El elemento debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(menu.getcImagenIcono().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El menu debe de contar con un icono",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("El elemento debe de contar con un icono",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(menu.getcImagenFondo().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El menu debe de contar con una imagen de fondo",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("El elemento debe de contar con una imagen de fondo",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}
 		return valido;
 	}
@@ -937,11 +940,11 @@ public class menuVM {
 		if(submenu.getcNombreIdioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El submenu debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("El sub-elemento debe de tener un nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(submenu.getcImagen().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El submenu debe de contar con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("El sub-elemento debe de contar con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}
 		return valido;
 	}
@@ -965,11 +968,11 @@ public class menuVM {
 		if(datoGeneral.getcTituloIdioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El dato general debe de tener un titulo o nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La caractristica de la galeria debe de tener un titulo o nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(datoGeneral.getcImagen().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El dato general debe de contar con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La caracteristica de la galeria debe de contar con una imagen",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}
 		return valido;
 	}
@@ -979,7 +982,7 @@ public class menuVM {
 		if(elemento.getcNombre1Idioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El elemento debe de tener un titulo o nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La Galeria debe de tener un titulo o nombre",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}else if(elemento.getcImagen1().equals(""))
 		{
 			valido=false;
@@ -987,7 +990,7 @@ public class menuVM {
 		}else if(elemento.getcDirigidoIdioma1().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El elemento debe de contar una descripcion a que tipo de cliente esta dirigido",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
+			Clients.showNotification("La Galeria debe de contar una descripcion de a que tipo de cliente esta dirigido",Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start",3000);
 		}
 		return valido;
 	}
@@ -998,9 +1001,168 @@ public class menuVM {
 		if(destino.getcDestino().equals(""))
 		{
 			valido=false;
-			Clients.showNotification("El Destino siempre debe de tener un nombre", Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start", 2700);
+			Clients.showNotification("La Ubicacion siempre debe de tener un nombre", Clients.NOTIFICATION_TYPE_ERROR, comp,"before_start", 2700);
 		}
 		return valido;
+	}
+	@Command
+	public void eliminarMenu()
+	{
+		Messagebox.show("Esta seguro de eliminar este Elemento?", "Question", Messagebox.OK|Messagebox.CANCEL,
+				Messagebox.QUESTION, new EventListener<Event>(){
+					
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(event.getName()))
+						{
+							CMenuDAO menuDao=new CMenuDAO();
+							menuDao.isOperationCorrect(menuDao.eliminarMenu(oMenu.getcMenuCod()));
+							/***********************************/
+							menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
+							setListaMenu(menuDao.getListaMenu());
+							refrescarListaMenu();
+						}
+						else if(Messagebox.ON_CANCEL.equals(event.getName()))
+						{
+							
+						}
+					}
+				});
+	}
+	@Command
+	public void eliminarSubMenu()
+	{
+		Messagebox.show("Esta seguro de eliminar este Sub-Elemento?", "Question", Messagebox.OK|Messagebox.CANCEL,
+				Messagebox.QUESTION, new EventListener<Event>(){
+					
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(event.getName()))
+						{
+							CSubMenuDAO submenuDao=new CSubMenuDAO();
+							submenuDao.isOperationCorrect(submenuDao.eliminarSubMenu(oSubMenu.getcSubMenuCod()));
+							/***********************************/
+							CMenuDAO menuDao=new CMenuDAO();
+							menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
+							setListaMenu(menuDao.getListaMenu());
+							refrescarListaMenu();
+						}
+						else if(Messagebox.ON_CANCEL.equals(event.getName()))
+						{
+							
+						}
+					}
+				});
+	}
+	@Command
+	public void eliminarItem()
+	{
+		Messagebox.show("Esta seguro de eliminar este Item?", "Question", Messagebox.OK|Messagebox.CANCEL,
+				Messagebox.QUESTION, new EventListener<Event>(){
+					
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(event.getName()))
+						{
+							CItemsDAO itemDao=new CItemsDAO();
+							itemDao.isOperationCorrect(itemDao.eliminarItem(oItem.getcItemsCod()));
+							/***********************************/
+							CMenuDAO menuDao=new CMenuDAO();
+							menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
+							setListaMenu(menuDao.getListaMenu());
+							refrescarListaMenu();
+						}
+						else if(Messagebox.ON_CANCEL.equals(event.getName()))
+						{
+							
+						}
+					}
+				});
+	}
+	@Command
+	public void eliminarElemento()
+	{
+		Messagebox.show("Esta seguro de eliminar esta Galeria de Elementos?", "Question", Messagebox.OK|Messagebox.CANCEL,
+				Messagebox.QUESTION, new EventListener<Event>(){
+					
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(event.getName()))
+						{
+							CElementosDAO elementoDao=new CElementosDAO();
+							elementoDao.isOperationCorrect(elementoDao.eliminarElemento(oElemento.getcElementosCod()));
+							/***********************************/
+							CMenuDAO menuDao=new CMenuDAO();
+							menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
+							setListaMenu(menuDao.getListaMenu());
+							refrescarListaMenu();
+						}
+						else if(Messagebox.ON_CANCEL.equals(event.getName()))
+						{
+							
+						}
+					}
+				});
+	}
+	@Command
+	public void eliminarDatoGeneral()
+	{
+		Messagebox.show("Esta seguro de eliminar esta Caracteristica de Galeria?", "Question", Messagebox.OK|Messagebox.CANCEL,
+				Messagebox.QUESTION, new EventListener<Event>(){
+					
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(event.getName()))
+						{
+							CDatosGeneralesDAO datoGeneralDao=new CDatosGeneralesDAO();
+							datoGeneralDao.isOperationCorrect(datoGeneralDao.eliminarDatoGeneral(oDatoGeneral.getcDatosGeneralesCod()));
+							/***********************************/
+							CMenuDAO menuDao=new CMenuDAO();
+							menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
+							setListaMenu(menuDao.getListaMenu());
+							refrescarListaMenu();
+						}
+						else if(Messagebox.ON_CANCEL.equals(event.getName()))
+						{
+							
+						}
+					}
+				});
+	}
+	@Command
+	public void eliminarDestinoMovil()
+	{
+		Messagebox.show("Esta seguro de eliminar esta Ubicacion?", "Question", Messagebox.OK|Messagebox.CANCEL,
+				Messagebox.QUESTION, new EventListener<Event>(){
+					
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						if(Messagebox.ON_OK.equals(event.getName()))
+						{
+							CDestinosMovilDAO destinoDao=new CDestinosMovilDAO();
+							destinoDao.isOperationCorrect(destinoDao.eliminarDestino(oDestino.getnDestinoCod()));
+							/***********************************/
+							CMenuDAO menuDao=new CMenuDAO();
+							menuDao.asignarListaMenu(menuDao.recuperarListaMenuBD());
+							setListaMenu(menuDao.getListaMenu());
+							refrescarListaMenu();
+						}
+						else if(Messagebox.ON_CANCEL.equals(event.getName()))
+						{
+							
+						}
+					}
+				});
+	}
+	public void refrescarListaMenu()
+	{
+		BindUtils.postNotifyChange(null, null, this,"listaMenu");
 	}
 	@Command
 	public void uploadImagenes_menu(@BindingParam("menu")final CMenu menu,@BindingParam("componente")final Component comp,

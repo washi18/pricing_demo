@@ -303,7 +303,7 @@ public class servicioVM {
 		}
 	}
 	@Command
-	@NotifyChange({"mostrarTextImgSeleccionado"})
+	@NotifyChange({"mostrarTextImgSeleccionado","mostrarImagenesExistentesUpdate","mostrarImagenesExistentes"})
 	public void selectImagenExist(@BindingParam("galeria4")CGaleriaImageExist4 galeria4,
 			@BindingParam("galeria")CGaleriaImageExist galeria,@BindingParam("servicio")CServicio servicio)
 	{
@@ -373,6 +373,8 @@ public class servicioVM {
 		}
 		if(Nro.nroImagenes>0)mostrarTextImgSeleccionado=true;
 		else if(Nro.nroImagenes==0)mostrarTextImgSeleccionado=false;
+		mostrarImagenesExistentes=false;
+		mostrarImagenesExistentesUpdate=false;
 		refrescarSelect(galeria4);
 	}
 	@Command

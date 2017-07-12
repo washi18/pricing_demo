@@ -83,6 +83,11 @@ public class CMenuDAO extends CConexion{
 			}
 		}
 	}
+	public List eliminarMenu(int codMenu)
+	{
+		Object[] values={codMenu};
+		return getEjecutorSQL().ejecutarProcedimiento("Android_sp_EliminarMenu", values);
+	}
 	public boolean isOperationCorrect(List lista)
 	{
 		Map row=(Map)lista.get(0);

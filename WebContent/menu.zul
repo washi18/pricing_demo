@@ -7,7 +7,7 @@
 				<div zclass="div_btn_nuevo" width="180px">
 					<span sclass="icon-plus"/>
 					<space></space>
-					<label value="NUEVO MENU"/>
+					<label value="NUEVO ELEMENTO"/>
 				</div>
 			</div>
 			<div width="100%" sclass="content_android_menu">
@@ -174,13 +174,13 @@
 							txtPortuName.setVisible(true)"/>
 					</div>
 					<div>
-						<label value="NOMBRE MENU: " zclass="lbl_llenar_datos"/>
+						<label value="NOMBRE ELEMENTO: " zclass="lbl_llenar_datos"/>
 						<textbox value="@bind(vmMenu.oMenu.cNombreIdioma1)" zclass="txt_llenar_datos" id="txtSpainName" placeholder="ESPAÑOL" width="100%" visible="true"/>
 						<textbox value="@bind(vmMenu.oMenu.cNombreIdioma2)" zclass="txt_llenar_datos" id="txtInglesName" placeholder="INGLES" width="100%" visible="false"/>
 						<textbox value="@bind(vmMenu.oMenu.cNombreIdioma3)" zclass="txt_llenar_datos" id="txtPortuName" placeholder="PORTUGUES" width="100%" visible="false"/>
 					</div>
 					<div zclass="div_space_entre_botones">
-						<button label="Subir Icono del Menu 40x40" 
+						<button label="Subir Icono 40x40" 
 							onClick="@command('uploadImagenes_menu',menu=vmMenu.oMenu,componente=self,opcion=1)"
 							zclass="btn_guardar"/>
 						<window mode="modal" sclass="win_imagenesHotel" visible="@load(vmMenu.oMenu.vistaMobil)" 
@@ -200,7 +200,7 @@
 					</div>
 					<separator bar="true"/>
 					<div zclass="div_space_entre_botones">
-						<button label="Subir Imagen de Fondo del Menu" 
+						<button label="Subir Imagen de Fondo" 
 								onClick="@command('uploadImagenes_menu',menu=vmMenu.oMenu,componente=self,opcion=2)"
 								zclass="btn_guardar"/>
 					</div>
@@ -234,18 +234,27 @@
 						<div zclass="div_btn_nuevo" width="100%">
 							<span sclass="icon-plus"/>
 							<space></space>
-							<label value="NUEVO SUB-MENU"/>
+							<label value="NUEVO SUB-ELEMENTO"/>
+						</div>
+					</div>
+					<div zclass="div_contendor_btn_nuevo" 
+						 onClick="@command('eliminarMenu')"
+						 visible="@bind(vmMenu.oMenu.update)">
+						<div zclass="div_btn_nuevo" width="100%">
+							<span sclass="icon-bin"/>
+							<space></space>
+							<label value="ELIMINAR ELEMENTO"/>
 						</div>
 					</div>
 				</div>
 				<!-- SUB-MENU -->
 				<div zclass="div_content_datos_menu" visible="@bind(vmMenu.visibleSubMenu)">
 					<div visible="@bind(!vmMenu.oSubMenu.update)">
-						<label value="MENU: " zclass="lbl_llenar_datos"/>
+						<label value="ELEMENTO: " zclass="lbl_llenar_datos"/>
 						<label value="@bind(vmMenu.oMenu.cNombreIdioma1)" zclass="lbl_llenar_name_datos"/>
 					</div>
 					<div visible="@bind(vmMenu.oSubMenu.update)">
-						<label value="MENU: " zclass="lbl_llenar_datos"/>
+						<label value="ELEMENTO: " zclass="lbl_llenar_datos"/>
 						<label value="@bind(vmMenu.oSubMenu.nameMenu)" zclass="lbl_llenar_name_datos"/>
 					</div>
 					<div zclass="div_contiene_banderas">
@@ -260,13 +269,13 @@
 							txt1PortuName.setVisible(true)"/>
 					</div>
 					<div>
-						<label value="NOMBRE SUB-MENU: " zclass="lbl_llenar_datos"/>
+						<label value="NOMBRE SUB-ELEMENTO: " zclass="lbl_llenar_datos"/>
 						<textbox value="@bind(vmMenu.oSubMenu.cNombreIdioma1)" zclass="txt_llenar_datos" id="txt1SpainName" placeholder="ESPAÑOL" width="100%" visible="true"/>
 						<textbox value="@bind(vmMenu.oSubMenu.cNombreIdioma2)" zclass="txt_llenar_datos" id="txt1InglesName" placeholder="INGLES" width="100%" visible="false"/>
 						<textbox value="@bind(vmMenu.oSubMenu.cNombreIdioma3)" zclass="txt_llenar_datos" id="txt1PortuName" placeholder="PORTUGUES" width="100%" visible="false"/>
 					</div>
 					<div zclass="div_space_entre_botones">
-						<button label="Subir Imagen del Sub-Menu" 
+						<button label="Subir Imagen" 
 								onClick="@command('uploadImagenes_submenu',submenu=vmMenu.oSubMenu,componente=self)"
 								zclass="btn_guardar"/>
 						<separator bar="true"/>
@@ -294,8 +303,8 @@
 					</div>
 					<div>
 						<radiogroup sclass="style_restricciones_conDestino" onCheck="@command('select_submenu_conElemento',opcion=self.selectedItem.value,submenu=vmMenu.oSubMenu)">
-							<radio label="CON ELEMENTOS" checked="@bind(vmMenu.oSubMenu.conElemento)" value="con_elemento"/>
-							<radio label="SIN ELEMENTOS" checked="@bind(vmMenu.oSubMenu.sinElemento)" value="sin_elemento"/>
+							<radio label="GALERIA DE ELEMENTOS" checked="@bind(vmMenu.oSubMenu.conElemento)" value="con_elemento"/>
+							<radio label="CON ITEMS" checked="@bind(vmMenu.oSubMenu.sinElemento)" value="sin_elemento"/>
 						</radiogroup>
 					</div>
 					<div zclass="div_content_datos" visible="@bind(!vmMenu.oSubMenu.update)">
@@ -332,7 +341,15 @@
 							<div zclass="div_btn_nuevo" width="100%">
 								<span sclass="icon-plus"/>
 								<space></space>
-								<label value="NUEVO ELEMENTO"/>
+								<label value="NUEVA GALERIA DE ELEMENTOS"/>
+							</div>
+						</div>
+						<div zclass="div_contendor_btn_nuevo" 
+							 onClick="@command('eliminarSubMenu')">
+							<div zclass="div_btn_nuevo" width="100%">
+								<span sclass="icon-bin"/>
+								<space></space>
+								<label value="ELIMINAR SUB-ELEMENTO"/>
 							</div>
 						</div>
 					</div>
@@ -340,11 +357,11 @@
 				<!-- ITEM -->
 				<div zclass="div_content_datos_menu" visible="@bind(vmMenu.visibleItem)">
 					<div visible="@bind(!vmMenu.oItem.update)">
-						<label value="SUB-MENU: " zclass="lbl_llenar_datos"/>
+						<label value="SUB-ELEMENTO: " zclass="lbl_llenar_datos"/>
 						<label value="@bind(vmMenu.oSubMenu.cNombreIdioma1)" zclass="lbl_llenar_name_datos"/>
 					</div>
 					<div visible="@bind(vmMenu.oItem.update)">
-						<label value="SUB-MENU: " zclass="lbl_llenar_datos"/>
+						<label value="SUB-ELEMENTO: " zclass="lbl_llenar_datos"/>
 						<label value="@bind(vmMenu.oItem.nameSubMenu)" zclass="lbl_llenar_name_datos"/>
 					</div>
 					<div zclass="div_contiene_banderas">
@@ -397,15 +414,15 @@
 								</div>
 							</window>
 						<div zclass="div_space_entre_botones">
-							<button label="Subir Imagen del Item" 
+							<button label="Subir Imagen" 
 									onClick="@command('uploadImagenes_item',item=vmMenu.oItem,componente=self)"
 									zclass="btn_guardar"/>
 							<separator bar="true"/>
-							<button label="Asignar imagenes existentes" 
+							<button label="Asignar imagen existente" 
 										visible="@bind(!vmMenu.oItem.update)"
 										onClick="@command('invocaImagenesExistentes',opcionImgExist=2,nroImgElemento=0)"
 										zclass="btn_guardar"/>
-							<button label="Asignar imagenes existentes"
+							<button label="Asignar imagen existente"
 										visible="@bind(vmMenu.oItem.update)" 
 										onClick="@command('invocaImagenesExistentes',opcionImgExist=2,nroImgElemento=0)"
 										zclass="btn_guardar"/>
@@ -432,12 +449,21 @@
 					    			zclass="btn_actualizar" width="100%"/>
 						</div>
 						<div zclass="div_contendor_btn_nuevo" 
-							 onClick="@command('mostrarNuevoElementoItem',item=vmMenu.oItem)"
-							 visible="@bind(vmMenu.oItem.bCrearElemento)">
+							 onClick="@command('eliminarItem')"
+							 visible="@bind(vmMenu.oItem.update)">
 							<div zclass="div_btn_nuevo" width="100%">
 								<span sclass="icon-plus"/>
 								<space></space>
-								<label value="NUEVO ELEMENTO"/>
+								<label value="ELIMINAR ITEM"/>
+							</div>
+						</div>
+						<div zclass="div_contendor_btn_nuevo" 
+							 onClick="@command('mostrarNuevoElementoItem',item=vmMenu.oItem)"
+							 visible="@bind(vmMenu.oItem.bCrearElemento)">
+							<div zclass="div_btn_nuevo" width="100%">
+								<span sclass="icon-bin"/>
+								<space></space>
+								<label value="NUEVA GALERIA DE ELEMENTOS"/>
 							</div>
 						</div>
 				</div>
@@ -449,7 +475,7 @@
 							<label value="@bind(vmMenu.oItem.cTituloIdioma1)" zclass="lbl_llenar_name_datos"/>
 						</div>
 						<div visible="@bind(vmMenu.oElemento.modoSubMenu)">
-							<label value="SUB-MENU: " zclass="lbl_llenar_datos"/>
+							<label value="SUB-ELEMENTO: " zclass="lbl_llenar_datos"/>
 							<label value="@bind(vmMenu.oSubMenu.cNombreIdioma1)" zclass="lbl_llenar_name_datos"/>
 						</div>
 					</div>
@@ -459,7 +485,7 @@
 							<label value="@bind(vmMenu.oElemento.nameItem)" zclass="lbl_llenar_name_datos"/>
 						</div>
 						<div visible="@bind(vmMenu.oElemento.modoSubMenu)">
-							<label value="SUB-MENU: " zclass="lbl_llenar_datos"/>
+							<label value="SUB-ELEMENTO: " zclass="lbl_llenar_datos"/>
 							<label value="@bind(vmMenu.oElemento.nameSubMenu)" zclass="lbl_llenar_name_datos"/>
 						</div>
 					</div>
@@ -495,15 +521,15 @@
 								<image src="img/android/elemento.png" width="100%" height="100%"/>
 						</window>
 						<div zclass="div_space_entre_botones">
-							<button label="Subir Imagen1 del elemento" 
+							<button label="Subir Imagen 1" 
 									onClick="@command('uploadImagenes_elemento',elemento=vmMenu.oElemento,componente=self,opcion=1)"
 									zclass="btn_guardar"/>
 							<separator bar="true"/>
-							<button label="Asignar imagenes existentes elemento 1" 
+							<button label="Asignar imagen existente 1" 
 										visible="@bind(!vmMenu.oElemento.update)"
 										onClick="@command('invocaImagenesExistentes',opcionImgExist=3,nroImgElemento=1)"
 										zclass="btn_guardar"/>
-							<button label="Asignar imagenes existentes elemento 1"
+							<button label="Asignar imagen existente 1"
 										visible="@bind(vmMenu.oElemento.update)" 
 										onClick="@command('invocaImagenesExistentes',opcionImgExist=3,nroImgElemento=1)"
 										zclass="btn_guardar"/>
@@ -515,11 +541,11 @@
 							<textbox value="@bind(vmMenu.oElemento.cNombre1Idioma3)" zclass="txt_llenar_datos" id="txt3PortuName" placeholder="PORTUGUES" width="100%" visible="false"/>
 						</div>
 						<div zclass="div_space_entre_botones">
-							<button label="Subir Imagen2 del elemento" 
+							<button label="Subir Imagen 2" 
 									onClick="@command('uploadImagenes_elemento',elemento=vmMenu.oElemento,componente=self,opcion=2)"
 									zclass="btn_guardar"/>
 							<separator bar="true"/>
-							<button label="Asignar imagenes existentes elemento 2" 
+							<button label="Asignar imagen existente 2" 
 										onClick="@command('invocaImagenesExistentes',opcionImgExist=3,nroImgElemento=2)"
 										zclass="btn_guardar"/>
 						</div>
@@ -530,11 +556,11 @@
 							<textbox value="@bind(vmMenu.oElemento.cNombre2Idioma3)" zclass="txt_llenar_datos" id="txt31PortuName" placeholder="PORTUGUES" width="100%" visible="false"/>
 						</div>
 						<div zclass="div_space_entre_botones">
-							<button label="Subir Imagen3 del elemento" 
+							<button label="Subir Imagen 3" 
 									onClick="@command('uploadImagenes_elemento',elemento=vmMenu.oElemento,componente=self,opcion=3)"
 									zclass="btn_guardar"/>
 							<separator bar="true"/>
-							<button label="Asignar imagenes existentes elemento 3" 
+							<button label="Asignar imagen existente 3" 
 										onClick="@command('invocaImagenesExistentes',opcionImgExist=3,nroImgElemento=3)"
 										zclass="btn_guardar"/>
 						</div>
@@ -632,7 +658,7 @@
 							<div zclass="div_btn_nuevo" width="100%">
 								<span sclass="icon-plus"/>
 								<space></space>
-								<label value="NUEVO DATO GENERAL"/>
+								<label value="NUEVA CARACTERISTICA DE GALERIA"/>
 							</div>
 						</div>
 						<div zclass="div_contendor_btn_nuevo" 
@@ -641,18 +667,27 @@
 							<div zclass="div_btn_nuevo" width="100%">
 								<span sclass="icon-plus"/>
 								<space></space>
-								<label value="NUEVO DESTINO MOVIL"/>
+								<label value="NUEVA UBICACION"/>
+							</div>
+						</div>
+						<div zclass="div_contendor_btn_nuevo" 
+							 onClick="@command('eliminarElemento')"
+							 visible="@bind(vmMenu.oElemento.update)">
+							<div zclass="div_btn_nuevo" width="100%">
+								<span sclass="icon-bin"/>
+								<space></space>
+								<label value="ELIMINAR GALERIA"/>
 							</div>
 						</div>
 				</div>
 				<!-- DATOS GENERALES -->
 				<div zclass="div_content_datos_menu" visible="@bind(vmMenu.visibleDatoGeneral)">
 					<div visible="@bind(!vmMenu.oDatoGeneral.update)">
-						<label value="ELEMENTO: " zclass="lbl_llenar_datos"/>
+						<label value="GALERIA DE ELEMENTOS: " zclass="lbl_llenar_datos"/>
 						<label value="@bind(vmMenu.oElemento.cNombre1Idioma1)" zclass="lbl_llenar_name_datos"/>
 					</div>
 					<div visible="@bind(vmMenu.oDatoGeneral.update)">
-						<label value="ELEMENTO: " zclass="lbl_llenar_datos"/>
+						<label value="GALERIA DE ELEMENTOS: " zclass="lbl_llenar_datos"/>
 						<label value="@bind(vmMenu.oDatoGeneral.nameElemento)" zclass="lbl_llenar_name_datos"/>
 					</div>
 					<div zclass="div_contiene_banderas">
@@ -667,7 +702,7 @@
 								txt4PortuName.setVisible(true);"/>
 						</div>
 						<div>
-							<label value="NOMBRE DATO GENERAL: " zclass="lbl_llenar_datos"/>
+							<label value="CARACTERISTICA DE GALERIA: " zclass="lbl_llenar_datos"/>
 							<textbox value="@bind(vmMenu.oDatoGeneral.cTituloIdioma1)" zclass="txt_llenar_datos" id="txt4SpainName" placeholder="ESPAÑOL" width="100%" visible="true"/>
 							<textbox value="@bind(vmMenu.oDatoGeneral.cTituloIdioma2)" zclass="txt_llenar_datos" id="txt4InglesName" placeholder="INGLES" width="100%" visible="false"/>
 							<textbox value="@bind(vmMenu.oDatoGeneral.cTituloIdioma3)" zclass="txt_llenar_datos" id="txt4PortuName" placeholder="PORTUGUES" width="100%" visible="false"/>
@@ -705,15 +740,15 @@
 								</div>
 							</window>
 						<div zclass="div_space_entre_botones">
-							<button label="Subir Imagen del dato general" 
+							<button label="Subir Imagen" 
 									onClick="@command('uploadImagenes_datoGeneral',datoGeneral=vmMenu.oDatoGeneral,componente=self)"
 									zclass="btn_guardar"/>
 							<separator bar="true"/>
-							<button label="Asignar imagenes existentes" 
+							<button label="Asignar imagen existente" 
 										visible="@bind(!vmMenu.oDatoGeneral.update)"
 										onClick="@command('invocaImagenesExistentes',opcionImgExist=4,nroImgElemento=0)"
 										zclass="btn_guardar"/>
-							<button label="Asignar imagenes existentes"
+							<button label="Asignar imagen existente"
 										visible="@bind(vmMenu.oDatoGeneral.update)" 
 										onClick="@command('invocaImagenesExistentes',opcionImgExist=4,nroImgElemento=0)"
 										zclass="btn_guardar"/>
@@ -739,24 +774,33 @@
 					    			onClick="@command('actualizarDatoGeneral',datoGeneral=vmMenu.oDatoGeneral,componente=self)"
 					    			zclass="btn_actualizar" width="100%"/>
 						</div>
+						<div zclass="div_contendor_btn_nuevo" 
+							 onClick="@command('eliminarDatoGeneral')"
+							 visible="@bind(vmMenu.oDatoGeneral.update)">
+							<div zclass="div_btn_nuevo" width="100%">
+								<span sclass="icon-bin"/>
+								<space></space>
+								<label value="ELIMINAR CARATERISTICA"/>
+							</div>
+						</div>
 				</div>
 				<!-- DESTINOS MOBILE -->
 				<div zclass="div_content_datos_menu" visible="@bind(vmMenu.visibleDestino)">
 					<div zclass="div_contenedor_nuevo_subServicio" width="100%">
 						<div zclass="div_content_datos">
 							<div visible="@bind(!vmMenu.oDestino.update)">
-								<label value="ELEMENTO: " zclass="lbl_llenar_datos"/>
+								<label value="GALERIA DE ELEMENTOS: " zclass="lbl_llenar_datos"/>
 								<label value="@bind(vmMenu.oElemento.cNombre1Idioma1)" zclass="lbl_llenar_name_datos"/>
 							</div>
 							<div visible="@bind(vmMenu.oDestino.update)">
-								<label value="ELEMENTO: " zclass="lbl_llenar_datos"/>
+								<label value="GALERIA DE ELEMENTOS: " zclass="lbl_llenar_datos"/>
 								<label value="@bind(vmMenu.oDestino.nameElemento)" zclass="lbl_llenar_name_datos"/>
 							</div>
 							<separator bar="true"/>
 							<div>
-								<label value="DESTINO: " zclass="lbl_llenar_datos"/>
+								<label value="UBICACION: " zclass="lbl_llenar_datos"/>
 								<textbox value="@bind(vmMenu.oDestino.cDestino)" zclass="txt_llenar_datos"
-										placeholder="NOMBRE DESTINO" width="100%" style="text-transform: uppercase;"/>
+										placeholder="NOMBRE UBICACION" width="100%" style="text-transform: uppercase;"/>
 							</div>
 							<label value="CLICK EN MAPA PARA LATITUD / LONGITUD ->" style="color:red; font-size:15px; font-weight:bold;"></label>
 							<div>
@@ -786,6 +830,15 @@
 									visible="@bind(vmMenu.oDestino.update)"
 				    				onClick="@command('actualizarDestinoMovil',destino=vmMenu.oDestino,componente=self)"
 				    				zclass="btn_actualizar" width="100%"/>
+				    		<div zclass="div_contendor_btn_nuevo" 
+								 onClick="@command('eliminarDestinoMovil')"
+								 visible="@bind(vmMenu.oDestino.update)">
+								<div zclass="div_btn_nuevo" width="100%">
+									<span sclass="icon-bin"/>
+									<space></space>
+									<label value="ELIMINAR UBICACION"/>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -798,18 +851,18 @@
 				</div>
 				<!-- IMAGENES EXISTENTES -->
 						<window mode="modal" sclass="win_imagenesHotel" visible="@load(vmMenu.mostrarImagenesExistentes)" position="center">
-								<div zclass="div_cerrar_descHotel">
-									<label value="Escogio una imagen" 
-											visible="@bind(vmMenu.mostrarTextImgSeleccionado)"
-											style="color:#3BB710;font-size:15px;"/>
-									<label value="✔" zclass="lbl_ok" visible="@bind(vmMenu.mostrarTextImgSeleccionado)"/>
-									<label value="No escogio ninguna imagen" 
-											visible="@bind(!vmMenu.mostrarTextImgSeleccionado)"
-											style="color:red;font-size:15px;"/>
-									<label value="X" zclass="lbl_X" visible="@bind(!vmMenu.mostrarTextImgSeleccionado)"/>
-									<space></space>
-									<button label="X" onClick="@command('cerrarImagenesExistentes')" zclass="btn_cerrar_descHotel"/>
-								</div>
+<!-- 								<div zclass="div_cerrar_descHotel"> -->
+<!-- 									<label value="Escogio una imagen"  -->
+<!-- 											visible="@bind(vmMenu.mostrarTextImgSeleccionado)" -->
+<!-- 											style="color:#3BB710;font-size:15px;"/> -->
+<!-- 									<label value="✔" zclass="lbl_ok" visible="@bind(vmMenu.mostrarTextImgSeleccionado)"/> -->
+<!-- 									<label value="No escogio ninguna imagen"  -->
+<!-- 											visible="@bind(!vmMenu.mostrarTextImgSeleccionado)" -->
+<!-- 											style="color:red;font-size:15px;"/> -->
+<!-- 									<label value="X" zclass="lbl_X" visible="@bind(!vmMenu.mostrarTextImgSeleccionado)"/> -->
+<!-- 									<space></space> -->
+<!-- 									<button label="X" onClick="@command('cerrarImagenesExistentes')" zclass="btn_cerrar_descHotel"/> -->
+<!-- 								</div> -->
 								<div sclass="div_contenido_descHotel">
 											<div width="100%">
 												<label value="Imagen:" sclass="lbl_llenar_datos"/>

@@ -77,6 +77,11 @@ public class CDestinosMovilDAO extends CConexion{
 			setNameElemento((String)row.get("nombre"));
 		}
 	}
+	public List eliminarDestino(int codDestino)
+	{
+		Object[] values={codDestino};
+		return getEjecutorSQL().ejecutarProcedimiento("Android_sp_EliminarDestinoMovil", values);
+	}
 	public boolean isOperationCorrect(List lista)
 	{
 		Map row=(Map)lista.get(0);

@@ -122,6 +122,11 @@ public class CItemsDAO extends CConexion{
 			}
 		}
 	}
+	public List eliminarItem(int codItem)
+	{
+		Object[] values={codItem};
+		return getEjecutorSQL().ejecutarProcedimiento("Android_sp_EliminarItem", values);
+	}
 	public boolean isOperationCorrect(List lista)
 	{
 		Map row=(Map)lista.get(0);

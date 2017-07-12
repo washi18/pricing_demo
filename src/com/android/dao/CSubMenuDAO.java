@@ -154,6 +154,11 @@ public class CSubMenuDAO extends CConexion{
 			}
 		}
 	}
+	public List eliminarSubMenu(int codSubMenu)
+	{
+		Object[] values={codSubMenu};
+		return getEjecutorSQL().ejecutarProcedimiento("Android_sp_EliminarSubMenu", values);
+	}
 	public boolean isOperationCorrect(List lista)
 	{
 		Map row=(Map)lista.get(0);

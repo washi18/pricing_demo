@@ -3,6 +3,7 @@ package com.pricing.model;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.pricing.dao.CReportePagosDAO;
 import com.pricing.dao.CReporteReservaDAO;
 
 public class CReporteReserva {
@@ -33,6 +34,7 @@ public class CReporteReserva {
 	private ArrayList<CSubServicio> listasubServicios;
 	private ArrayList<CActividad> listaActividades;
 	private Double PrecioTotal;
+	private Double montoTotalOtros;
 	private String colornoExisteListaDestinos;
 	private String colornoExisteListaHoteles;
 	private String colornoExisteListaServicios;
@@ -51,6 +53,7 @@ public class CReporteReserva {
 	private String porcentajeCobro;
 	private String pagoMinimo;
 	private boolean modoPorcentual;
+	private CReservaPaquete oReservaPaquete;
 	//=======getter and setter===========
 	
 	public String getCodReserva() {
@@ -167,6 +170,12 @@ public class CReporteReserva {
 	}
 	public void setNroPersonas(int nroPersonas) {
 		this.nroPersonas = nroPersonas;
+	}
+	public Double getMontoTotalOtros() {
+		return montoTotalOtros;
+	}
+	public void setMontoTotalOtros(Double montoTotalOtros) {
+		this.montoTotalOtros = montoTotalOtros;
 	}
 	public String getEstado() {
 		return estado;
@@ -331,6 +340,12 @@ public class CReporteReserva {
 	public void setImpuesto(CImpuesto impuesto) {
 		this.impuesto = impuesto;
 	}
+	public CReservaPaquete getoReservaPaquete() {
+		return oReservaPaquete;
+	}
+	public void setoReservaPaquete(CReservaPaquete oReservaPaquete) {
+		this.oReservaPaquete = oReservaPaquete;
+	}
 	//=============metodos constructores===============
 	public CReporteReserva()
 	{
@@ -388,6 +403,12 @@ public class CReporteReserva {
 		}else{
 			montoParcial=Integer.parseInt(this.pagoMinimo)*this.nroPersonas;
 		}
+		/**Recuperando la reserva del paquete para ver el monto total de la reserva del paquete**/
+		CReportePagosDAO reservaPaqueteDao=new CReportePagosDAO();
+		reservaPaqueteDao.asignarReservaPaquete(reservaPaqueteDao.recuperarReservaPaquete(codReserva));
+		setoReservaPaquete(reservaPaqueteDao.getoReservaPaquete());
+		if(oReservaPaquete.getnMontoTotalPaquete()!=null)
+			this.montoTotalOtros=oReservaPaquete.getnMontoTotalPaquete().doubleValue()-precioTotal;
 	}
 	//=================otros metodos======================
 	

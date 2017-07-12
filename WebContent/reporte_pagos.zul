@@ -377,16 +377,18 @@
 						    				<div sclass="estilo_columnas_precios_etiqueta">
 						    					<label value="Nro Pasajeros:" style="font-size: 12px; color: black; font-weight: bold;"></label>
 						    					<space orient="horizontal"/>
-						    					<label value="Precio Paquete($):" style="font-size: 12px; color: black; font-weight: bold;"></label>
-						    					
-<!-- 						    					<label value="Total ($):" style="color: black; font-weight:bold;"></label> -->
+						    					<label value="Total Paquete($):" style="font-size: 12px; color: black; font-weight: bold;"></label>
+						    					<label value="Total Extras($):" style="font-size: 12px; color: black; font-weight: bold;"></label>
+						    					<separator bar="true"/>
+						    					<label value="TOTAL($):" style="color: black; font-weight:bold;"/>
 						    				</div>
 						    				<div sclass="estilo_columnas_precios">
 						    					<label value="@load(each.nroPersonas)" style="text-align: right; font-size: 12px; color: black; font-weight: bold;"></label>
 							    				<space bar="true" orient="horizontal"/>
 							    				<label value="@load(each.montoTotal)" style="font-size: 12px; color: black; font-weight: bold;"></label>
-							    				
-<!-- 							    				<label value="@load(each.precioTotal)" style="color: black; font-weight:bold;"></label> -->
+							    				<label value="@load(each.montoTotalOtros)" style="font-size: 12px; color: black; font-weight: bold;"></label>
+							    				<separator bar="true"/>
+							    				<label value="@load(each.oReservaPaquete.nMontoTotalPaquete)" style="color: black; font-weight:bold;"/>
 						    				</div>
 						    			</div>    
 						    			<div sclass="estilo_monto_persona">

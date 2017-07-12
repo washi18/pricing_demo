@@ -12,6 +12,7 @@ import com.pricing.model.CHotel;
 import com.pricing.model.CImpuesto;
 import com.pricing.model.CPasajero;
 import com.pricing.model.CReporteReserva;
+import com.pricing.model.CReservaPaquete;
 import com.pricing.model.CServicio;
 import com.pricing.model.CSubServicio;
 
@@ -27,7 +28,7 @@ public class CReporteReservaDAO extends CConexion{
 	private ArrayList<CPasajero> listaPasajerosReserva;
 	private ArrayList<CActividad> listaActividadesReserva;
 	private CImpuesto impuesto;
-	
+	private CReservaPaquete oReservaPaquete;
 	//=======================getter and setter==============
 	
 	
@@ -88,6 +89,12 @@ public class CReporteReservaDAO extends CConexion{
 	public void setMasVendidosxMeses(
 			ArrayList<CEstadistica_Paquete> masVendidosxMeses) {
 		this.masVendidosxMeses = masVendidosxMeses;
+	}
+	public CReservaPaquete getoReservaPaquete() {
+		return oReservaPaquete;
+	}
+	public void setoReservaPaquete(CReservaPaquete oReservaPaquete) {
+		this.oReservaPaquete = oReservaPaquete;
 	}
 	//===================contructores====================
 	public CReporteReservaDAO() {
@@ -260,6 +267,22 @@ public class CReporteReservaDAO extends CConexion{
 				Map row=(Map)lista.get(i);
 				listaActividadesReserva.add(new CActividad((String)row.get("cactividadidioma1"),(Number)row.get("nprecioactividad")));
 		}
+	}
+	public List recuperarReservaPaquete(String codReserva)
+	{
+		Object[] values={codReserva};
+		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_MostrarReservaPaquete", values);
+	}
+	public void asignarReservaPaquete(List lista)
+	{
+		if(!lista.isEmpty())
+		{
+			Map row=(Map)lista.get(0);
+			oReservaPaquete=new CReservaPaquete((long)row.get("nreservapaquetecod"), 
+					(String)row.get("creservacod"),(String)row.get("cpaquetecod"), 
+					(int)row.get("nropasajerospaquete"),(Number)row.get("nmontototalpaquete"));
+		}else
+			oReservaPaquete=new CReservaPaquete();
 	}
 	public boolean isOperationCorrect(List lista)
 	{

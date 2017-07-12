@@ -12,6 +12,7 @@ import com.pricing.model.CHotel;
 import com.pricing.model.CPasajero;
 import com.pricing.model.CReportePagos;
 import com.pricing.model.CReporteReserva;
+import com.pricing.model.CReservaPaquete;
 import com.pricing.model.CServicio;
 import com.pricing.model.CSubServicio;
 
@@ -26,6 +27,7 @@ public class CReportePagosDAO  extends CConexion{
 	private ArrayList<CEstadistica_Pagos> listaformasPagos;
 	private ArrayList<CActividad> listaActividadesReserva;
 	private ArrayList<CSubServicio> listaSubServiciosReserva;
+	private CReservaPaquete oReservaPaquete;
 	//=================getter and setter=============
 	
 	public ArrayList<CReportePagos> getListaReportePagos() {
@@ -59,6 +61,12 @@ public class CReportePagosDAO  extends CConexion{
 		this.reportePagos = reportePagos;
 	}
 	
+	public CReservaPaquete getoReservaPaquete() {
+		return oReservaPaquete;
+	}
+	public void setoReservaPaquete(CReservaPaquete oReservaPaquete) {
+		this.oReservaPaquete = oReservaPaquete;
+	}
 	public ArrayList<CDestino> getListaDestinosReserva() {
 		return listaDestinosReserva;
 	}
@@ -245,6 +253,22 @@ public class CReportePagosDAO  extends CConexion{
 	public List modificarEstadoPago(String codReserva,String estado,String metodoPago,String codTransaccion){
 		Object[]values={codReserva,estado,metodoPago,codTransaccion};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_ModificarEstadoPago",values);
+	}
+	public List recuperarReservaPaquete(String codReserva)
+	{
+		Object[] values={codReserva};
+		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_MostrarReservaPaquete", values);
+	}
+	public void asignarReservaPaquete(List lista)
+	{
+		if(!lista.isEmpty())
+		{
+			Map row=(Map)lista.get(0);
+			oReservaPaquete=new CReservaPaquete((long)row.get("nreservapaquetecod"), 
+					(String)row.get("creservacod"),(String)row.get("cpaquetecod"), 
+					(int)row.get("nropasajerospaquete"),(Number)row.get("nmontototalpaquete"));
+		}else
+			oReservaPaquete=new CReservaPaquete();
 	}
 	public boolean isOperationCorrect(List lista)
 	{
