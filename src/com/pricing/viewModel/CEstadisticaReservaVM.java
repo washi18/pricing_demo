@@ -27,101 +27,97 @@ public class CEstadisticaReservaVM {
 	private String[] nombrestop2Paquetes={"","","","","","","","","","","",""};
 	private String[] nombrestop3Paquetes={"","","","","","","","","","","",""};
 	private CReporteReservaDAO reporteReservaDao;
+	private boolean isPagoTotal;
+	private boolean isPagoParcial;
+	private boolean isPagoAmbos;
     private ArrayList<CEstadistica_Paquete> listaPaquetesMasVendidos;
        //===============getter and setter======
-   	
    	public CReporteReservaDAO getReporteReservaDao() {
    		return reporteReservaDao;
    	}
-
    	public void setReporteReservaDao(CReporteReservaDAO reporteReservaDao) {
    		this.reporteReservaDao = reporteReservaDao;
    	}
-
    	public ArrayList<CEstadistica_Paquete> getListaPaquetesMasVendidos() {
    		return listaPaquetesMasVendidos;
    	}
-
    	public void setListaPaquetesMasVendidos(
    			ArrayList<CEstadistica_Paquete> listaPaquetesMasVendidos) {
    		this.listaPaquetesMasVendidos = listaPaquetesMasVendidos;
    	}
-   	
-   	
 	public boolean isVisibleGrafico() {
 		return visibleGrafico;
 	}
-
 	public void setVisibleGrafico(boolean visibleGrafico) {
 		this.visibleGrafico = visibleGrafico;
 	}
-
 	//=================getter and setter======
 	public ArrayList<String> getListaAnios() {
 		return listaAnios;
 	}
-
 	public void setListaAnios(ArrayList<String> listaAnios) {
 		this.listaAnios = listaAnios;
-	}
-	
+	}	
 	public String getAnio() {
 		return anio;
 	}
-
 	public void setAnio(String anio) {
 		this.anio = anio;
-	}
-	
-
+	}	
 	public long[] getTop1Paquetes() {
 		return top1Paquetes;
 	}
-
 	public void setTop1Paquetes(long[] top1Paquetes) {
 		this.top1Paquetes = top1Paquetes;
 	}
-
 	public long[] getTop2Paquetes() {
 		return top2Paquetes;
 	}
-
 	public void setTop2Paquetes(long[] top2Paquetes) {
 		this.top2Paquetes = top2Paquetes;
 	}
-
 	public long[] getTop3Paquetes() {
 		return top3Paquetes;
 	}
-
 	public void setTop3Paquetes(long[] top3Paquetes) {
 		this.top3Paquetes = top3Paquetes;
 	}
-
 	public String[] getNombrestop1Paquetes() {
 		return nombrestop1Paquetes;
 	}
-
 	public void setNombrestop1Paquetes(String[] nombrestop1Paquetes) {
 		this.nombrestop1Paquetes = nombrestop1Paquetes;
 	}
-
 	public String[] getNombrestop2Paquetes() {
 		return nombrestop2Paquetes;
 	}
-
 	public void setNombrestop2Paquetes(String[] nombrestop2Paquetes) {
 		this.nombrestop2Paquetes = nombrestop2Paquetes;
 	}
-
 	public String[] getNombrestop3Paquetes() {
 		return nombrestop3Paquetes;
 	}
-
 	public void setNombrestop3Paquetes(String[] nombrestop3Paquetes) {
 		this.nombrestop3Paquetes = nombrestop3Paquetes;
 	}
-
+	public boolean isPagoTotal() {
+		return isPagoTotal;
+	}
+	public void setPagoTotal(boolean isPagoTotal) {
+		this.isPagoTotal = isPagoTotal;
+	}
+	public boolean isPagoParcial() {
+		return isPagoParcial;
+	}
+	public void setPagoParcial(boolean isPagoParcial) {
+		this.isPagoParcial = isPagoParcial;
+	}
+	public boolean isPagoAmbos() {
+		return isPagoAmbos;
+	}
+	public void setPagoAmbos(boolean isPagoAmbos) {
+		this.isPagoAmbos = isPagoAmbos;
+	}
 	//==============metodos=======
 	@Init
 	public void initVM()
@@ -130,41 +126,75 @@ public class CEstadisticaReservaVM {
 		listaAnios=new ArrayList<String>();
 		visibleGrafico=false;
 		listaPaquetesMasVendidos=new ArrayList<CEstadistica_Paquete>();
+		isPagoTotal=true;
+		isPagoParcial=false;
+		isPagoAmbos=false;
 		/**Obtencion de las etiquetas de la base de datos**/
 		/**Asignacion de las etiquetas a la listaEtiquetas**/
-		int primerAnio=2016;
-		this.listaAnios.add(String.valueOf(primerAnio));
 		Calendar fechaActual=Calendar.getInstance();
 		int anioActual=fechaActual.get(Calendar.YEAR);
-		while(primerAnio<anioActual){
-			primerAnio=primerAnio+1;
-			this.listaAnios.add(String.valueOf(primerAnio));
-		}
-		if(anioActual>primerAnio)
-		{
-			this.listaAnios.add(String.valueOf(anioActual));
-		}
+		this.listaAnios.add(String.valueOf(anioActual));
+		this.listaAnios.add(String.valueOf(anioActual+1));
 	}
 	
-	
+	@Command
+	@NotifyChange({"pagoParcial","pagoTotal","pagoAmbos","anio","grafica","visibleGrafico"})
+	public void seleccionPago(@BindingParam("opcion")String opcion)
+	{
+		if(opcion.equals("PagosTotales"))
+		{
+			isPagoTotal=true;
+			isPagoParcial=false;
+			isPagoAmbos=false;
+			System.out.println("Este es el año-> "+anio);
+			if(!anio.isEmpty())
+				procesarPaquetesMasVendidos(true,false,false);
+		}
+		else if(opcion.equals("PagosParciales"))
+		{
+			isPagoTotal=false;
+			isPagoParcial=true;
+			isPagoAmbos=false;
+			System.out.println("Este es el año-> "+anio);
+			if(!anio.isEmpty())
+				procesarPaquetesMasVendidos(false,true,false);
+		}else
+		{
+			isPagoTotal=false;
+			isPagoParcial=false;
+			isPagoAmbos=true;
+			System.out.println("Este es el año-> "+anio);
+			if(!anio.isEmpty())
+				procesarPaquetesMasVendidos(false,false,true);
+		}
+	}
 	@Command
 	@NotifyChange({"anio","grafica","visibleGrafico"})
 	public void AsignarAnio(@BindingParam("anio")String anio)
 	{
 		visibleGrafico=true;
 		this.anio=anio;
-		
-		procesarPaquetesMasVendidos();
+		if(isPagoTotal)
+			procesarPaquetesMasVendidos(true,false,false);
+		else if(isPagoParcial)
+			procesarPaquetesMasVendidos(false,true,false);
+		else
+			procesarPaquetesMasVendidos(false,false,true);
 	}
 	
 	@NotifyChange({"nombrestop1Paquetes","nombrestop2Paquetes","nombrestop3Paquetes","top1Paquetes","top2Paquetes","top3Paquetes","listaPaquetesMasVendidos"})
-	public void procesarPaquetesMasVendidos()
+	public void procesarPaquetesMasVendidos(boolean isPagoTotal,boolean isPagoParcial,boolean isPagoAmbos)
 	{
 		top1Paquetes=new long[12];
 		top2Paquetes=new long[12];
 		top3Paquetes=new long[12];
 		reporteReservaDao=new CReporteReservaDAO();
-		reporteReservaDao.asignarPaquetesmasVendidos(reporteReservaDao.recuperarPaquetesMasVendidos(this.anio));
+		if(isPagoTotal)
+			reporteReservaDao.asignarPaquetesmasVendidos(reporteReservaDao.recuperarPaquetesMasVendidosTotales(this.anio));
+		else if(isPagoParcial)
+			reporteReservaDao.asignarPaquetesmasVendidos(reporteReservaDao.recuperarPaquetesMasVendidosParciales(this.anio));
+		else
+			reporteReservaDao.asignarPaquetesmasVendidos(reporteReservaDao.recuperarPaquetesMasVendidos(this.anio));
 		this.setListaPaquetesMasVendidos(reporteReservaDao.getMasVendidosxMeses());
 		if(this.listaPaquetesMasVendidos.isEmpty())
 		{

@@ -528,6 +528,7 @@ public class pricingVM
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma1());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma1());
 			oReservar.getoPaquete().setItinerario(oReservar.getoPaquete().getcItinerarioIdioma1());
+			oReservar.getoPaquete().setcTextoAdvertencia(oReservar.getoPaquete().getcTextoAdvertenciaIdioma1());
 			for(CPais pais:listaPaises)
 			{
 				pais.setNamePais(pais.getcNombreIdioma1());
@@ -539,6 +540,7 @@ public class pricingVM
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma3());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma3());
 			oReservar.getoPaquete().setItinerario(oReservar.getoPaquete().getcItinerarioIdioma3());
+			oReservar.getoPaquete().setcTextoAdvertencia(oReservar.getoPaquete().getcTextoAdvertenciaIdioma3());
 			for(CPais pais:listaPaises)
 			{
 				pais.setNamePais(pais.getcNombreIdioma3());
@@ -550,6 +552,7 @@ public class pricingVM
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma2());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma2());
 			oReservar.getoPaquete().setItinerario(oReservar.getoPaquete().getcItinerarioIdioma2());
+			oReservar.getoPaquete().setcTextoAdvertencia(oReservar.getoPaquete().getcTextoAdvertenciaIdioma2());
 			//Recuperar la lista de  paises
 			for(CPais pais:listaPaises)
 			{
@@ -560,7 +563,7 @@ public class pricingVM
 		Sessions.getCurrent().setAttribute("language", language);
 	}
 	@Command
-	@NotifyChange({"etiqueta","textoParcial","textoTotal","listaPaises"})
+	@NotifyChange({"etiqueta","textoParcial","textoTotal"})
 	public void cambiarIdioma(@BindingParam("idioma")Object idioma)
 	{
 		if(idioma.toString().equals("1"))
@@ -571,10 +574,12 @@ public class pricingVM
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma1());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma1());
 			oReservar.getoPaquete().setItinerario(oReservar.getoPaquete().getcItinerarioIdioma1());
+			oReservar.getoPaquete().setcTextoAdvertencia(oReservar.getoPaquete().getcTextoAdvertenciaIdioma1());
 			//Recuperar la lista de  paises
 			for(CPais pais:listaPaises)
 			{
 				pais.setNamePais(pais.getcNombreIdioma1());
+				BindUtils.postNotifyChange(null, null, pais, "namePais");
 			}
 			if(oReservar.getoPaquete().isConActividad())
 			{
@@ -631,10 +636,12 @@ public class pricingVM
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma3());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma3());
 			oReservar.getoPaquete().setItinerario(oReservar.getoPaquete().getcItinerarioIdioma3());
+			oReservar.getoPaquete().setcTextoAdvertencia(oReservar.getoPaquete().getcTextoAdvertenciaIdioma3());
 			//Recuperar la lista de  paises
 			for(CPais pais:listaPaises)
 			{
 				pais.setNamePais(pais.getcNombreIdioma3());
+				BindUtils.postNotifyChange(null, null, pais, "namePais");
 			}
 			if(oReservar.getoPaquete().isConActividad())
 			{
@@ -691,10 +698,12 @@ public class pricingVM
 			oReservar.getoPaquete().setTitulo(oReservar.getoPaquete().getcTituloIdioma2());
 			oReservar.getoPaquete().setDescripcion(oReservar.getoPaquete().getcDescripcionIdioma2());
 			oReservar.getoPaquete().setItinerario(oReservar.getoPaquete().getcItinerarioIdioma2());
+			oReservar.getoPaquete().setcTextoAdvertencia(oReservar.getoPaquete().getcTextoAdvertenciaIdioma2());
 			//Recuperar la lista de  paises
 			for(CPais pais:listaPaises)
 			{
 				pais.setNamePais(pais.getcNombreIdioma2());
+				BindUtils.postNotifyChange(null, null, pais, "namePais");
 			}
 			if(oReservar.getoPaquete().isConActividad())
 			{
@@ -2395,11 +2404,14 @@ public class pricingVM
 		}
 		/**CALCULANDO LOS MONTOS A PAGAR**/
 		String pagoParcial="";
-		if(oReservar.getoPaquete().isbModoPorcentual())
+		if(oReservar.getoPaquete().isbModoPorcentual())//Pago porcentual
 			pagoParcial=df.format(Double.parseDouble(lblMontoTotal)*((double)oReservar.getoPaquete().getnPorcentajeCobro()/100));
-		else
+		else//Pago minimo
 		{
-			pagoParcial=df.format(TotalServicios+TotalHabitaciones+TotalActividades+(oReservar.getoPaquete().getnPagoMinimo()*nroPasajeros));
+			//Del mismo modo que bioandean expeditions
+			pagoParcial=df.format(oReservar.getoPaquete().getnPagoMinimo()*nroPasajeros);
+			//Del mismo modo que info cusco
+//			pagoParcial=df.format(TotalServicios+TotalHabitaciones+TotalActividades+(oReservar.getoPaquete().getnPagoMinimo()*nroPasajeros));
 		}
 		/**ENVIAR CORREO**/
 		CEmail mail=new CEmail();
@@ -3047,11 +3059,14 @@ public class pricingVM
 		{
 			pagos.setPagoParcialPaypal(true);
 			pagos.setPagoTotalPaypal(false);
-			if(oReservar.getoPaquete().isbModoPorcentual())
+			if(oReservar.getoPaquete().isbModoPorcentual())//Pago por porcentaje
 				monto_Pagar_sin_impuesto=df.format(Double.parseDouble(lblMontoTotal)*((double)oReservar.getoPaquete().getnPorcentajeCobro()/100));
-			else
+			else//Pago minimo
 			{
-				monto_Pagar_sin_impuesto=df.format(TotalServicios+TotalHabitaciones+TotalActividades+oReservar.getoPaquete().getnPagoMinimo()*nroPasajeros);
+				//Del mismo modo que bioandeanexpeditions
+				monto_Pagar_sin_impuesto=df.format(oReservar.getoPaquete().getnPagoMinimo()*nroPasajeros);
+				//Del mismo modo que infocusco
+//				monto_Pagar_sin_impuesto=df.format(TotalServicios+TotalHabitaciones+TotalActividades+oReservar.getoPaquete().getnPagoMinimo()*nroPasajeros);
 			}
 			if(oReservar.getoPaquete().isbModoPorcentual())
 				textoPorcentaje=oReservar.getoPaquete().getnPorcentajeCobro()+" %";

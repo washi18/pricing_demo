@@ -1,6 +1,7 @@
 package com.pricing.viewModel;
 
 import java.io.File;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ import com.pricing.model.CGaleriaImageExist4;
 import com.pricing.model.CGaleriasHotel4;
 import com.pricing.model.CHotel;
 import com.pricing.model.Nro;
+import com.pricing.util.CReSizeImage;
 import com.pricing.util.ScannUtil;
 
 public class hotelesVM 
@@ -872,31 +874,42 @@ public class hotelesVM
 		win_imagenes.doModal();
 	}
 	@Command
-	public void uploadImagenes(@BindingParam("cHotel")final CHotel hotel,@BindingParam("tipoImagen")final int tipoImagen,@BindingParam("componente")final Component comp) {
-       System.out.print("entre a subir imagen");
-       Fileupload.get(100,new EventListener<UploadEvent>(){
-			public void onEvent(UploadEvent event) {
-			org.zkoss.util.media.Media[] listaMedias = event.getMedias();
-			for(Media media:listaMedias)
-        	{
-        		if(media instanceof org.zkoss.image.Image)
-        		{
-        			org.zkoss.image.Image img = (org.zkoss.image.Image) media;
+	public void uploadImagenes(@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event,
+			@BindingParam("cHotel")final CHotel hotel,
+			@BindingParam("tipoImagen")final int tipoImagen,
+			@BindingParam("componente")final Component comp) 
+	{
+		org.zkoss.util.media.Media[] listaMedias = event.getMedias();
+		if (listaMedias != null) {
+			for(org.zkoss.util.media.Media media:listaMedias)
+			{
+				if(media instanceof org.zkoss.image.Image)
+				{
+					org.zkoss.image.Image img = (org.zkoss.image.Image) media;
         			//Con este metodo(uploadFile) de clase guardo la imagen en la ruta del servidor
-		            boolean b=ScannUtil.uploadFileHoteles(img);
-		            //================================
-		            //Una vez creado el nuevo nombre de archivo de imagen se procede a cambiar el nombre
-		            String urlImagen=ScannUtil.getPathImagenHoteles()+img.getName();
+		            boolean b=ScannUtil.uploadAuxFolder(img);
+					// ================================
+					String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+					String urlImagenReal= ScannUtil.getPathImagenHoteles()+img.getName();
+					if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+					{
+						CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+						File fichero = new File(urlImagenAux);
+						boolean eliminar=fichero.delete();
+					}else
+					{
+						b = ScannUtil.uploadFileHoteles(img);
+						File fichero = new File(urlImagenAux);
+						boolean eliminar=fichero.delete();
+					}
 		            asignarRutaImagenHotel(img.getName(),tipoImagen,hotel,false);
 		            Clients.showNotification(img.getName()+" Se subio al servidor.",Clients.NOTIFICATION_TYPE_INFO,comp,"before_start",2700);
-        		} else {
-                    Messagebox.show("No es una imagen: " + media, "Error",
-                            Messagebox.OK, Messagebox.ERROR);
-                    break; //not to show too many errors
-                }
-        	}
-		  }
-       });
+				} else {
+					Messagebox.show("Not an image: "+media, "Error", Messagebox.OK, Messagebox.ERROR);
+					break; //not to show too many errors
+				}
+			}
+		}
     }
 	public void asignarRutaImagenHotel(String nombreImagen,int tipoImagen,CHotel hotel,boolean imageExist)
 	{

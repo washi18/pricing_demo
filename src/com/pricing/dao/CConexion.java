@@ -68,5 +68,4 @@ public class CConexion
     public List ejecutarProcedimiento(String procedimiento,String[] values){
     	return getEjecutorSQL().ejecutarProcedimiento(procedimiento, values);
     }
-	
 }

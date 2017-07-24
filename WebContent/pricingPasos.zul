@@ -1,3 +1,4 @@
+<?link rel="shortcut icon" type="image/x-icon" href="ICO/favicon.ico"?>
 <?page title="PRICING" contentType="text/html;charset=UTF-8"?>
 <?page viewport="width=device-width, initial-scale=1.0,  user-scalable=no"?>
 <div sclass="div_contenedor_pricing" viewModel="@id('vmPricing') @init('com.pricing.viewModel.pricingVM')">
@@ -133,6 +134,10 @@
 									<label sclass="style_Step" value="1"
 										style="@bind(vmPricing.oInterfaz.style_lbl_CirclePasos)" />
 								</caption>
+								<div zclass="div_comentarios_enjoy" visible="@bind(vmPricing.oReservar.oPaquete.bAdvertencia)">
+									<label value="@bind(vmPricing.etiqueta[254])" style="color:#F7653A;font-size:15px;font-weight:bold;text-decoration: underline;"/>
+									<label value="@bind(vmPricing.oReservar.oPaquete.cTextoAdvertencia)" style="color:#F7653A;font-size:15px;font-weight:bold;"/>
+								</div>
 								<div visible="@bind(vmPricing.oReservar.oPaquete.conFechaArribo)">
 									<div>
 										<label value="@bind(vmPricing.etiqueta[243])" sclass="titulo-groupbox"/>
@@ -213,6 +218,10 @@
 									<label sclass="style_Step" value="1"
 										style="@bind(vmPricing.oInterfaz.style_lbl_CirclePasos)" />
 								</caption>
+								<div zclass="div_comentarios_enjoy" visible="@bind(vmPricing.oReservar.oPaquete.bAdvertencia)">
+									<label value="@bind(vmPricing.etiqueta[254])" style="color:#F7653A;font-size:15px;font-weight:bold;text-decoration: underline;"/>
+									<label value="@bind(vmPricing.oReservar.oPaquete.cTextoAdvertencia)" style="color:#F7653A;font-size:15px;font-weight:bold;"/>
+								</div>
 								<div sclass="div_fechas">
 									<div visible="@bind(vmPricing.oReservar.oPaquete.conFechaArribo)">
 										<div>
@@ -340,44 +349,44 @@
 						<label sclass="style_Step" value="2"
 							style="@bind(vmPricing.oInterfaz.style_lbl_CirclePasos)" />
 					</caption>
-						<div zclass="div_comentarios" style="background:rgba(76, 175, 80,0.3);padding:10px;border-radius:5px;">
-							<div sclass="div_info_item">
-								<div sclass="div_info_item_der">
+						<div zclass="div_comentarios_paso2">
+							<div sclass="div_info_item_paso2">
+								<div style="display:flex;">
 									<div><label value="@bind(vmPricing.etiqueta[21])" sclass="div_info_item_label"/></div>
-									<separator bar="true"/>
-									<div><label value="@bind(vmPricing.oReservar.nNroPersonas)" style="font-weight:bold;font-size:18px;text-align:center;"/></div>
+									<separator bar="true" orient="vertical"/>
+									<div><label value="@bind(vmPricing.oReservar.nNroPersonas)" style="font-size:12px;font-weight:bold;"/></div>
 								</div>
 							</div>
 							<separator bar="true"/>
-							<div sclass="div_info_item">
-								<div sclass="div_info_item_der">
+							<div sclass="div_info_item_paso2">
+								<div style="display:flex;">
 									<div><label value="@bind(vmPricing.etiqueta[1])" sclass="div_info_item_label"/></div>
-									<separator bar="true"/>
+									<separator bar="true" orient="vertical"/>
 									<div>
 										<vbox>
-											<label id="lblFechaInicioPaso2" style="font-size:18px;font-weight:bold;"/>
-											<label id="lblFechaFinPaso2" style="font-size:18px;font-weight:bold;"/>
+											<label id="lblFechaInicioPaso2" style="font-size:12px;font-weight:bold;"/>
+											<label id="lblFechaFinPaso2" style="font-size:12px;font-weight:bold;"/>
 										</vbox>
 									</div>
 								</div>
 							</div>
 							<separator bar="true" visible="@bind(vmPricing.oReservar.oPaquete.conFechaArribo)"/>
-							<div sclass="div_info_item" visible="@bind(vmPricing.oReservar.oPaquete.conFechaArribo)">
-								<div sclass="div_info_item_der">
+							<div sclass="div_info_item_paso2" visible="@bind(vmPricing.oReservar.oPaquete.conFechaArribo)">
+								<div style="display:flex;">
 									<div><label value="@bind(vmPricing.etiqueta[243])" sclass="div_info_item_label"/></div>
-									<separator bar="true"/>
+									<separator bar="true" orient="vertical"/>
 									<div>
 										<vbox>										
-											<label id="lblFechaArriboPaso2" style="font-size:18px;font-weight:bold;"/>
+											<label id="lblFechaArriboPaso2" style="font-size:12px;font-weight:bold;"/>
 										</vbox>
 									</div>
 								</div>
 							</div>
 							<separator bar="true"/>
-							<div sclass="div_info_item" visible="@bind(vmPricing.mostrarDispIncaTrail)">
-								<div sclass="div_info_item_der">
+							<div sclass="div_info_item_paso2" visible="@bind(vmPricing.mostrarDispIncaTrail)">
+								<div style="display:flex;">
 									<label value="@bind(vmPricing.etiqueta[3])" sclass="div_info_item_label"/>
-									<separator bar="true"/>
+									<separator bar="true" orient="vertical"/>
 									<listbox model="@load(vmPricing.listaFechasAlternas)" width="200px" style="border:1px solid black;border-radius:5px;">
 										<listhead>
 											<listheader label=""/>

@@ -41,6 +41,7 @@ import com.pricing.model.CHotel;
 import com.pricing.model.CServicio;
 import com.pricing.model.CSubServicio;
 import com.pricing.model.Nro;
+import com.pricing.util.CReSizeImage;
 import com.pricing.util.ScannUtil;
 
 public class subServicioVM 
@@ -672,10 +673,21 @@ public class subServicioVM
 						if (media instanceof org.zkoss.image.Image) {
 							org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 							//Con este metodo(uploadFile) de clase guardo la imagen en la ruta del servidor
-				            boolean b=ScannUtil.uploadFileServicios(img);
-				            //================================
-				            //Una vez creado el nuevo nombre de archivo de imagen se procede a cambiar el nombre
-				            String urlImagen=ScannUtil.getPathImagensSubServicios()+img.getName();
+							boolean b=ScannUtil.uploadAuxFolder(img);
+							// ================================
+							String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+							String urlImagenReal= ScannUtil.getPathImagensSubServicios()+img.getName();
+							if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+							{
+								CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+								File fichero = new File(urlImagenAux);
+								boolean eliminar=fichero.delete();
+							}else
+							{
+								b = ScannUtil.uploadFileServicios(img);
+								File fichero = new File(urlImagenAux);
+								boolean eliminar=fichero.delete();
+							}
 				            asignarUrlImagenSubServicio(img.getName(),oSubServicioNew,false);
 				            Clients.showNotification(img.getName()+" Se inserto",Clients.NOTIFICATION_TYPE_INFO,comp,"before_start",2700);
 
@@ -701,10 +713,21 @@ public class subServicioVM
 						if (media instanceof org.zkoss.image.Image) {
 							org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 							//Con este metodo(uploadFile) de clase guardo la imagen en la ruta del servidor
-				            boolean b=ScannUtil.uploadFileServicios(img);
-				            //================================
-				            //Una vez creado el nuevo nombre de archivo de imagen se procede a cambiar el nombre
-				            String urlImagen=ScannUtil.getPathImagensSubServicios()+img.getName();
+							boolean b=ScannUtil.uploadAuxFolder(img);
+							// ================================
+							String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+							String urlImagenReal= ScannUtil.getPathImagensSubServicios()+img.getName();
+							if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+							{
+								CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+								File fichero = new File(urlImagenAux);
+								boolean eliminar=fichero.delete();
+							}else
+							{
+								b = ScannUtil.uploadFileServicios(img);
+								File fichero = new File(urlImagenAux);
+								boolean eliminar=fichero.delete();
+							}
 				            asignarUrlImagenSubServicio(img.getName(),subServ,false);
 				            Clients.showNotification(img.getName()+" Se cambio",Clients.NOTIFICATION_TYPE_INFO,comp,"before_start",2700);
 

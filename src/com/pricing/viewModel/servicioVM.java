@@ -37,6 +37,7 @@ import com.pricing.model.CGaleriaImageExist4;
 import com.pricing.model.CHotel;
 import com.pricing.model.CServicio;
 import com.pricing.model.Nro;
+import com.pricing.util.CReSizeImage;
 import com.pricing.util.ScannUtil;
 
 public class servicioVM {
@@ -604,7 +605,7 @@ public class servicioVM {
 			oServicioNuevo.setcUrlImg("");
 			BindUtils.postNotifyChange(null, null, oServicioNuevo,"cUrlImg");
 		}else if(rest.equals("si_no")){
-			oServicioNuevo.setbEstado(false);
+			oServicioNuevo.setbEstado(true);
 			oServicioNuevo.setSelectResNumeric(false);
 			oServicioNuevo.setSelectResYesNo(true);
 			oServicioNuevo.setSelectResSubServ(false);
@@ -774,10 +775,21 @@ public class servicioVM {
 						if (media instanceof org.zkoss.image.Image) {
 							org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 							//Con este metodo(uploadFile) de clase guardo la imagen en la ruta del servidor
-				            boolean b=ScannUtil.uploadFileServicios(img);
-				            //================================
-				            //Una vez creado el nuevo nombre de archivo de imagen se procede a cambiar el nombre
-				            String urlImagen=ScannUtil.getPathImagensSubServicios()+img.getName();
+							boolean b=ScannUtil.uploadAuxFolder(img);
+							// ================================
+							String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+							String urlImagenReal= ScannUtil.getPathImagensSubServicios()+img.getName();
+							if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+							{
+								CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+								File fichero = new File(urlImagenAux);
+								boolean eliminar=fichero.delete();
+							}else
+							{
+								b = ScannUtil.uploadFileServicios(img);
+								File fichero = new File(urlImagenAux);
+								boolean eliminar=fichero.delete();
+							}
 				            asignarUrlImagenServicio(img.getName(),oServicioNuevo,false);
 				            Clients.showNotification(img.getName()+" Se inserto",Clients.NOTIFICATION_TYPE_INFO,comp,"before_start",2700);
 						} else {
@@ -794,10 +806,21 @@ public class servicioVM {
 						if (media instanceof org.zkoss.image.Image) {
 							org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 							//Con este metodo(uploadFile) de clase guardo la imagen en la ruta del servidor
-				            boolean b=ScannUtil.uploadFileServicios(img);
-				            //================================
-				            //Una vez creado el nuevo nombre de archivo de imagen se procede a cambiar el nombre
-				            String urlImagen=ScannUtil.getPathImagensSubServicios()+img.getName();
+							boolean b=ScannUtil.uploadAuxFolder(img);
+							// ================================
+							String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+							String urlImagenReal= ScannUtil.getPathImagensSubServicios()+img.getName();
+							if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+							{
+								CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+								File fichero = new File(urlImagenAux);
+								boolean eliminar=fichero.delete();
+							}else
+							{
+								b = ScannUtil.uploadFileServicios(img);
+								File fichero = new File(urlImagenAux);
+								boolean eliminar=fichero.delete();
+							}
 				            asignarUrlImagenServicio(img.getName(),serv,false);
 				            Clients.showNotification(img.getName()+" Se inserto",Clients.NOTIFICATION_TYPE_INFO,comp,"before_start",2700);
 						} else {

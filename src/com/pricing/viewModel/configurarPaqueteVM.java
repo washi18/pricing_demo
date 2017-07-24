@@ -120,6 +120,20 @@ public class configurarPaqueteVM {
 	}
 	@Command
 	@NotifyChange({"oPaquete"})
+	public void selectConAdvertencia(@BindingParam("valor")String valor)
+	{
+		if(valor.equals("conAdvertencia"))
+		{
+			oPaquete.setbAdvertencia(true);
+			oPaquete.setbSinAdvertencia(false);
+		}else
+		{
+			oPaquete.setbAdvertencia(false);
+			oPaquete.setbSinAdvertencia(true);
+		}
+	}
+	@Command
+	@NotifyChange({"oPaquete"})
 	public void changeValorCobro(@BindingParam("valor")int valor,@BindingParam("componente")Component comp)
 	{
 		if(valor==1)

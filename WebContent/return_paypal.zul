@@ -1,4 +1,5 @@
 <?page title="Return Paypal" contentType="text/html;charset=UTF-8"?>
+<?link rel="shortcut icon" type="image/x-icon" href="ICO/favicon.ico"?>
 <zk>
 	<style src="css/return_paypal.css"/>
 	<div viewModel="@id('vmReturn') @init('com.pricing.viewModel.returnPaypalVM')"

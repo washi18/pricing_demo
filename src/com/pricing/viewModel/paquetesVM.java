@@ -60,6 +60,7 @@ import com.pricing.model.CPaqueteServicio;
 import com.pricing.model.CServicio;
 import com.pricing.model.ConfAltoNivel;
 import com.pricing.model.Nro;
+import com.pricing.util.CReSizeImage;
 import com.pricing.util.ScannUtil;
 
 public class paquetesVM {
@@ -2168,22 +2169,31 @@ public class paquetesVM {
 	}
 
 	@Command
-	public void uploadImagenes(@BindingParam("cPaquete") final CPaquete paquete,
+	public void uploadImagenes(@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event,
+			@BindingParam("cPaquete") final CPaquete paquete,
 			@BindingParam("componente") final Component comp) {
-		System.out.print("entre a subir imagen verdadera");
-		Fileupload.get(100, new EventListener<UploadEvent>() {
-			public void onEvent(UploadEvent event) {
-				org.zkoss.util.media.Media[] listaMedias = event.getMedias();
+		org.zkoss.util.media.Media[] listaMedias = event.getMedias();
+		if (listaMedias != null) {
 				for (Media media : listaMedias) {
 					if (media instanceof org.zkoss.image.Image) {
 						org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 						// Con este metodo(uploadFile) de clase guardo la imagen
 						// en la ruta del servidor
-						boolean b = ScannUtil.uploadFilePaquetes(img);
+						boolean b=ScannUtil.uploadAuxFolder(img);
 						// ================================
-						// Una vez creado el nuevo nombre de archivo de imagen
-						// se procede a cambiar el nombre
-						String urlImagen = ScannUtil.getPathImagenPaquetes() + img.getName();
+						String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+						String urlImagenReal= ScannUtil.getPathImagenPaquetes()+img.getName();
+						if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+						{
+							CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}else
+						{
+							b = ScannUtil.uploadFilePaquetes(img);
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}
 						asignarRutaImagenPaquete(img.getName(), paquete,false);
 						Clients.showNotification(img.getName() + " Se subio al servidor.",
 								Clients.NOTIFICATION_TYPE_INFO, comp, "before_start", 2700);
@@ -2193,7 +2203,6 @@ public class paquetesVM {
 					}
 				}
 			}
-		});
 	}
 
 	@Command

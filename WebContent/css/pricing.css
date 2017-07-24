@@ -863,7 +863,20 @@
 	border-radius: 5px;
 	margin-right: 20px;
 }
-
+.div_comentarios_paso2 {
+	height: auto;
+	width: 98%;
+	padding: 10px;
+	border-radius: 5px;
+	margin-right: 20px;
+	background:rgba(76, 175, 80,0.3);
+	display:flex;
+}
+@media (max-width:700px){
+	.div_comentarios_paso2{
+		flex-direction:column;
+	}
+}
 .div_fecha_pasajero {
 	display: flex;
 	display: -webkit-flex;
@@ -1266,7 +1279,20 @@
 	/* 	padding:5px 0 5px 0; */
 	padding: 0 10px 0 0;
 }
-
+.div_info_item_paso2 {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	/* 	padding:5px 0 5px 0; */
+	padding:6px;
+	box-sizing:border-box;
+	background:rgba(0,0,0,0.1);
+	border-radius:4px;
+	border:1px solid black;
+	margin:1px;
+}
 .div_info_item_izq {
 	width: 20%;
 	box-sizing: border-box;
@@ -2822,4 +2848,23 @@ font-family: 'Titillium Web';
 	.button_descripcion{
 		width: 100%;
 	}
+}
+.div_comentarios_enjoy{
+	font-family: 'Titillium Web';
+	height: auto;
+	width: 90%;
+	background: rgba(0,0,0,0.1);
+	padding: 10px;
+	border-radius:5px;
+	margin-right: 20px;
+	display:flex;
+	display:-webkit-flex;
+	display:-moz-flex;
+	display:-ms-flex;
+	display:-o-flex;
+	flex-direction:column;
+	-webkit-flex-direction:column;
+	-moz-flex-direction:column;
+	-ms-flex-direction:column;
+	-o-flex-direction:column;
 }

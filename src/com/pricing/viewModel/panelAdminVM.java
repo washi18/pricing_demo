@@ -507,6 +507,7 @@ public class panelAdminVM
 			}else if(cambios.equals("itemPaypal"))
 			{ 
 				visibleConfPaypal=true;
+				visibleConfAltoNivel=false;
 				visibleRegistroUsuarios=false;
 				visibleActualizarUsuario=false;
 				visibleEstadisticaPaquetesmasVendidos=false;

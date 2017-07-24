@@ -89,12 +89,12 @@
 						<a label="@bind(vmConfUrl.oConfigUrl.urlServletPagoTotal)"/>
 					</div>
 				</div>
-<!-- 				<div sclass="div_content_config_items"> -->
-<!-- 					<label value="URL de Terminos y Condiciones:" sclass="lbl_congif_sutitle"/> -->
-<!-- 					<div> -->
-<!-- 						<a label="@bind(vmConfUrl.oConfigUrl.urlTerminosYCondiciones)"/> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
+				<div sclass="div_content_config_items">
+					<label value="URL del panel de administracion:" sclass="lbl_congif_sutitle"/>
+					<div>
+						<a label="@bind(vmConfUrl.oConfigUrl.urlTerminosYCondiciones)"/>
+					</div>
+				</div>
 				<div>
 					<label value="Logo de la Empresa:" sclass="lbl_congif_sutitle"/>
 					<div width="80px" height="80px" sclass="div_content_logo">

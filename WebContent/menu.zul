@@ -861,7 +861,7 @@
 <!-- 											style="color:red;font-size:15px;"/> -->
 <!-- 									<label value="X" zclass="lbl_X" visible="@bind(!vmMenu.mostrarTextImgSeleccionado)"/> -->
 <!-- 									<space></space> -->
-<!-- 									<button label="X" onClick="@command('cerrarImagenesExistentes')" zclass="btn_cerrar_descHotel"/> -->
+									<button label="X" onClick="@command('cerrarImagenesExistentes')" zclass="btn_cerrar_descHotel"/>
 <!-- 								</div> -->
 								<div sclass="div_contenido_descHotel">
 											<div width="100%">

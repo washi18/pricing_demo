@@ -39,12 +39,14 @@
 							</div>
 							<div zclass="div_space_entre_botones">
 								<button label="Subir Imagenes del hotel" 
-										onClick="@command('uploadImagenes',cHotel=vmHotel.oHotel,tipoImagen=1,componente=self)"
+										onUpload="@command('uploadImagenes',upload=event,cHotel=vmHotel.oHotel,tipoImagen=1,componente=self)"
+										upload="true,multiple=true"
 										zclass="btn_guardar"/>
 							</div>
 							<div zclass="div_space_entre_botones">
 								<button label="Subir Imagenes de la ubicacion" 
-										onClick="@command('uploadImagenes',cHotel=vmHotel.oHotel,tipoImagen=2,componente=self)"
+										onUpload="@command('uploadImagenes',upload=event,cHotel=vmHotel.oHotel,tipoImagen=2,componente=self)"
+										upload="true,multiple=true"
 										zclass="btn_guardar"/>
 							</div>
 							<div zclass="div_space_entre_botones">
@@ -318,12 +320,14 @@
 									</div>
 									<div zclass="div_space_entre_botones">
 										<button label="Subir Imagenes del hotel" 
-												onClick="@command('uploadImagenes',cHotel=hotel,tipoImagen=1,componente=self)"
+												onUpload="@command('uploadImagenes',upload=event,cHotel=hotel,tipoImagen=1,componente=self)"
+												upload="true,multiple=true"
 												zclass="btn_guardar"/>
 									</div>
 									<div zclass="div_space_entre_botones">
 										<button label="Subir Imagenes de la ubicacion" 
-												onClick="@command('uploadImagenes',cHotel=hotel,tipoImagen=2,componente=self)"
+												onUpload="@command('uploadImagenes',upload=event,cHotel=hotel,tipoImagen=2,componente=self)"
+												upload="true,multiple=true"
 												zclass="btn_guardar"/>
 									</div>
 									<div zclass="div_space_entre_botones">

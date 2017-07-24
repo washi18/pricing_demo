@@ -1,5 +1,6 @@
 <?page title="PRICING" contentType="text/html;charset=UTF-8"?>
 <?page viewport="width=device-width, initial-scale=1.0,  user-scalable=no"?>
+<?link rel="shortcut icon" type="image/x-icon" href="ICO/favicon.ico"?>
 <div sclass="div_contenedor_pricing" 
 		 viewModel="@id('vmPricing') @init('com.pricing.viewModel.pricingVM')">
 		<!-- ======PASO 1======== -->
@@ -32,6 +33,10 @@
 									<label value="@bind(vmPricing.etiqueta[22])" sclass="titulo-pasos" style="@bind(vmPricing.oInterfaz.style_lbl_TextoFondoPasos)"/>
 									<label sclass="style_Step" value="1" style="@bind(vmPricing.oInterfaz.style_lbl_CirclePasos)"/>
 								</caption>
+								<div zclass="div_comentarios_enjoy" visible="@bind(vmPricing.oReservar.oPaquete.bAdvertencia)">
+									<label value="@bind(vmPricing.etiqueta[254])" style="color:#F7653A;font-size:15px;font-weight:bold;text-decoration: underline;"/>
+									<label value="@bind(vmPricing.oReservar.oPaquete.cTextoAdvertencia)" style="color:#F7653A;font-size:15px;font-weight:bold;"/>
+								</div>
 								<div visible="@bind(vmPricing.oReservar.oPaquete.conFechaArribo)">
 									<div>
 										<label value="@bind(vmPricing.etiqueta[243])" sclass="titulo-groupbox"/>
@@ -80,6 +85,10 @@
 									<label value="@bind(vmPricing.etiqueta[22])" sclass="titulo-pasos" style="@bind(vmPricing.oInterfaz.style_lbl_TextoFondoPasos)"/>
 									<label sclass="style_Step" value="1" style="@bind(vmPricing.oInterfaz.style_lbl_CirclePasos)"/>
 								</caption>
+								<div zclass="div_comentarios_enjoy" visible="@bind(vmPricing.oReservar.oPaquete.bAdvertencia)">
+									<label value="@bind(vmPricing.etiqueta[254])" style="color:#F7653A;font-size:15px;font-weight:bold;text-decoration: underline;"/>
+									<label value="@bind(vmPricing.oReservar.oPaquete.cTextoAdvertencia)" style="color:#F7653A;font-size:15px;font-weight:bold;"/>
+								</div>
 								<div sclass="div_fechas">
 									<div visible="@bind(vmPricing.oReservar.oPaquete.conFechaArribo)">
 										<div>
@@ -163,17 +172,6 @@
 						<a iconSclass="icon-profile" sclass="titulo-groupbox"/>
 						<label value="@bind(vmPricing.etiqueta[88])" sclass="titulo-groupbox"/>
 					</caption>
-<!-- 					<div zclass="titulos_pasajeros visible-grande" style="@bind(vmPricing.oInterfaz.style_div_ColDatosPax)" visible="@bind(!vmPricing.oInterfaz.bLlenarDatosUnPax)"> -->
-<!-- 						<div sclass="div_upload" visible="@bind(vmPricing.oInterfaz.bSubirDocPax)"><label value="@bind(vmPricing.etiqueta[68])" style="@bind(vmPricing.oInterfaz.style_lbl_ColDatosPasajeros)"/></div> -->
-<!-- 						<div sclass="div_upload" visible="@bind(vmPricing.oInterfaz.bSubirDoc_Y_llenarDatosPax)"><label value="@bind(vmPricing.etiqueta[68])" style="@bind(vmPricing.oInterfaz.style_lbl_ColDatosPasajeros)"/></div> -->
-<!-- 						<div sclass="div_tipoDoc" visible="@bind(!vmPricing.oInterfaz.bSubirDocPax)"><label value="@bind(vmPricing.etiqueta[69])" style="@bind(vmPricing.oInterfaz.style_lbl_ColDatosPasajeros)"/></div> -->
-<!-- 						<div sclass="div_nroDoc" visible="@bind(!vmPricing.oInterfaz.bSubirDocPax)"><label value="@bind(vmPricing.etiqueta[70])" style="@bind(vmPricing.oInterfaz.style_lbl_ColDatosPasajeros)"/></div> -->
-<!-- 						<div sclass="div_apellido" visible="@bind(!vmPricing.oInterfaz.bSubirDocPax)"><label value="@bind(vmPricing.etiqueta[71])" style="@bind(vmPricing.oInterfaz.style_lbl_ColDatosPasajeros)"/></div> -->
-<!-- 						<div sclass="div_nombre" visible="@bind(!vmPricing.oInterfaz.bSubirDocPax)"><label value="@bind(vmPricing.etiqueta[72])" style="@bind(vmPricing.oInterfaz.style_lbl_ColDatosPasajeros)"/></div> -->
-<!-- 						<div sclass="div_sexo" visible="@bind(!vmPricing.oInterfaz.bSubirDocPax)"><label value="@bind(vmPricing.etiqueta[73])" style="@bind(vmPricing.oInterfaz.style_lbl_ColDatosPasajeros)"/></div> -->
-<!-- 						<div sclass="div_edad" visible="@bind(!vmPricing.oInterfaz.bSubirDocPax)"><label value="@bind(vmPricing.etiqueta[74])" style="@bind(vmPricing.oInterfaz.style_lbl_ColDatosPasajeros)"/></div> -->
-<!-- 						<div sclass="div_pais" visible="@bind(!vmPricing.oInterfaz.bSubirDocPax)"><label value="@bind(vmPricing.etiqueta[75])" style="@bind(vmPricing.oInterfaz.style_lbl_ColDatosPasajeros)"/></div> -->
-<!-- 					</div> -->
 					<listbox width="100%"  sclass="list_pasajeros" model="@load(vmPricing.listaPasajeros)">
 						<listhead>
 							<listheader label=""/>

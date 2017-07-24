@@ -49,7 +49,8 @@ public class agenciaVM {
 		CAgenciaDAO agenciaDao=new CAgenciaDAO();
 		agenciaDao.asignarAgencia(agenciaDao.recuperarAgenciaDB());
 		setoAgencia(agenciaDao.getoAgencia());
-		fecha=oAgencia.getdFechaCreacion().toString();
+		if(oAgencia.getdFechaCreacion()!=null)
+			fecha=oAgencia.getdFechaCreacion().toString();
 	}
 	@Command
 	@NotifyChange({"oAgencia"})

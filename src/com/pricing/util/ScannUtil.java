@@ -18,6 +18,9 @@ public class ScannUtil {
 	public static boolean uploadFile(Media media) {
 		return saveFile(media,getPath());
 	}
+	public static boolean uploadAuxFolder(Media media) {
+		return saveFile(media,getPathAuxFolder());
+	}
 	public static boolean uploadFileServicios(Media media) {
 		return saveFile(media,getPathImagensSubServicios());
 	}
@@ -49,6 +52,10 @@ public class ScannUtil {
 	//Gets the path of the current web application
 	public static String getPath(){
 		return Executions.getCurrent().getDesktop().getWebApp().getRealPath(separator)+separator+"DocumentosScanneados"+separator;
+	}
+	public static String getPathAuxFolder()
+	{
+		return Executions.getCurrent().getDesktop().getWebApp().getRealPath(separator)+separator+"img"+separator+"auxFolder"+separator;
 	}
 	public static String getPathImagenHoteles()
 	{

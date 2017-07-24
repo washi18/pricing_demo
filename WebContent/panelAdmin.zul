@@ -1,5 +1,6 @@
 <?page title="PANEL ADMIN" contentType="text/html;charset=UTF-8"?>
 <?page viewport="width=device-width, initial-scale=1.0,  user-scalable=no"?>
+<?link rel="shortcut icon" type="image/x-icon" href="ICO/favicon.ico"?>
 <zk>
 	<style src="css/style_zk.css"/>
 	<style src="fonts/style.css"/>
@@ -195,12 +196,12 @@
 											<label value="Reporte de pagos" sclass="lbls_mantenimientos"/>
 										</div>
 									</div>
-									<div width="100%" zclass="div_mantenimiento_items_sub" visible="@bind(vmAdmin.oAcceso.accesoEstadPagos)">
-										<div id="itemEstadisticaPagos" onClick="@command('Cambio',cambioInterfaz=self.id)">
-											<span sclass="fa fa-area-chart estilos-iconos"/>
-											<label value="Top Pagos" sclass="lbls_mantenimientos"/>
-										</div>
-									</div>
+<!-- 									<div width="100%" zclass="div_mantenimiento_items_sub" visible="@bind(vmAdmin.oAcceso.accesoEstadPagos)"> -->
+<!-- 										<div id="itemEstadisticaPagos" onClick="@command('Cambio',cambioInterfaz=self.id)"> -->
+<!-- 											<span sclass="fa fa-area-chart estilos-iconos"/> -->
+<!-- 											<label value="Top Pagos" sclass="lbls_mantenimientos"/> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
 									<div width="100%" zclass="div_mantenimiento_items_sub" visible="@bind(vmAdmin.oAcceso.accesoEstadPaquMasVendidos)">
 										<div id="itemEstadisticaPaquetesmasVendidos" onClick="@command('Cambio',cambioInterfaz=self.id)">
 											<span sclass="fa fa-area-chart estilos-iconos"/>
@@ -277,7 +278,7 @@
 								   	<button width="100%" iconSclass="fa fa-user estilos-iconos" visible="@bind(vmAdmin.visibleActualizarUsuario)" zclass="btn_opciones_config" label="ACTUALIZAR DATOS USUARIO"/>
 								   	<button width="100%" iconSclass="fa fa-file-text-o estilos-iconos" visible="@bind(vmAdmin.visibleReportReservas)" zclass="btn_opciones_config" label="REPORTE RESERVAS"/>
 								   	<button width="100%" iconSclass="fa fa-file-text-o estilos-iconos" visible="@bind(vmAdmin.visibleReportPagos)" zclass="btn_opciones_config" label="REPORTE PAGOS"/>
-								   	<button width="100%" iconSclass="fa fa-area-chart estilos-iconos" visible="@bind(vmAdmin.visibleEstadisticaPagos)" zclass="btn_opciones_config" label="TOP PAGOS"/>
+<!-- 								   	<button width="100%" iconSclass="fa fa-area-chart estilos-iconos" visible="@bind(vmAdmin.visibleEstadisticaPagos)" zclass="btn_opciones_config" label="TOP PAGOS"/> -->
 								   	<button width="100%" iconSclass="fa fa-area-chart estilos-iconos" visible="@bind(vmAdmin.visibleEstadisticaPaquetesmasVendidos)" zclass="btn_opciones_config" label="TOP PAQUETES"/>
 								   	<button width="100%" iconSclass="fa fa-address-book-o estilos-iconos" visible="@bind(vmAdmin.visibleRegistroUsuarios)" zclass="btn_opciones_config" label="REGISTRO USUARIOS"/>
 									<button width="100%" iconSclass="fa fa-paypal estilos-iconos" visible="@bind(vmAdmin.visibleConfPaypal)" zclass="btn_opciones_config" label="CONFIGURACION DE PAYPAL"/>
@@ -326,9 +327,9 @@
 									<div visible="@bind(vmAdmin.visibleReportPagos)">
 										<include src="reporte_pagos.zul"/>
 									</div>
-									<div visible="@bind(vmAdmin.visibleEstadisticaPagos)">
-										<include src="estadistica_Pagos.zul"/>
-									</div>
+<!-- 									<div visible="@bind(vmAdmin.visibleEstadisticaPagos)"> -->
+<!-- 										<include src="estadistica_Pagos.zul"/> -->
+<!-- 									</div> -->
 									<div visible="@bind(vmAdmin.visibleEstadisticaPaquetesmasVendidos)">
 										<include src="estadistica.zul"/>
 									</div>

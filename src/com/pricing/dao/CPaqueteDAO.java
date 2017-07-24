@@ -67,7 +67,10 @@ public class CPaqueteDAO extends CConexion
 				(Number)row.get("ndescuentomenor_estudiante"),(boolean)row.get("bsubirdocpax"),
 				(boolean)row.get("bsubirdoc_y_llenardatospax"),(boolean)row.get("bsubirdoc_o_llenardatospax"),
 				(boolean)row.get("bllenardatosunpax"),(boolean)row.get("bhotelesconcamaadicional"),
-				(boolean)row.get("bconcupon"));
+				(boolean)row.get("bconcupon"),(boolean)row.get("badvertencia"),
+				(String)row.get("ctextoadvertenciaidioma1"),(String)row.get("ctextoadvertenciaidioma2"),
+				(String)row.get("ctextoadvertenciaidioma3"),(String)row.get("ctextoadvertenciaidioma4"),
+				(String)row.get("ctextoadvertenciaidioma5"));
 	}
 	public void asignarListaPaquetes(List lista) throws UnsupportedEncodingException
 	{
@@ -93,7 +96,10 @@ public class CPaqueteDAO extends CConexion
 					(Number)row.get("ndescuentomenor_estudiante"),(boolean)row.get("bsubirdocpax"),
 					(boolean)row.get("bsubirdoc_y_llenardatospax"),(boolean)row.get("bsubirdoc_o_llenardatospax"),
 					(boolean)row.get("bllenardatosunpax"),(boolean)row.get("bhotelesconcamaadicional"),
-					(boolean)row.get("bconcupon")));
+					(boolean)row.get("bconcupon"),(boolean)row.get("badvertencia"),
+					(String)row.get("ctextoadvertenciaidioma1"),(String)row.get("ctextoadvertenciaidioma2"),
+					(String)row.get("ctextoadvertenciaidioma3"),(String)row.get("ctextoadvertenciaidioma4"),
+					(String)row.get("ctextoadvertenciaidioma5")));
 		}
 	}
 	public List buscarPaquetesBD(String nombre){
@@ -114,7 +120,10 @@ public class CPaqueteDAO extends CConexion
 				paquete.getcUrlReferenciaPaquete(),paquete.getnPorcentajeCobro(),paquete.getnPagoMinimo(),
 				paquete.isbModoPorcentual(),paquete.isbModoPagoTotal(),paquete.getnDescuentoMenor_Estudiante().doubleValue(),
 				paquete.isbSubirDocPax(),paquete.isbSubirDoc_Y_LlenarDatosPax(),paquete.isbSubirDoc_O_LlenarDatosPax(),
-				paquete.isbLlenarDatosUnPax(),paquete.isbHotelesConCamaAdicional(),paquete.isbConCupon()};
+				paquete.isbLlenarDatosUnPax(),paquete.isbHotelesConCamaAdicional(),paquete.isbConCupon(),
+				paquete.isbAdvertencia(),paquete.getcTextoAdvertenciaIdioma1(),paquete.getcTextoAdvertenciaIdioma2(),
+				paquete.getcTextoAdvertenciaIdioma3(),paquete.getcTextoAdvertenciaIdioma4(),
+				paquete.getcTextoAdvertenciaIdioma5()};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_RegistrarPaquete", values);
 	}
 	/**METODOS DE PAQUETE SERVICIO**/
@@ -185,7 +194,10 @@ public class CPaqueteDAO extends CConexion
 				paquete.getcUrlReferenciaPaquete(),paquete.getnPorcentajeCobro(),paquete.getnPagoMinimo(),
 				paquete.isbModoPorcentual(),paquete.isbModoPagoTotal(),paquete.getnDescuentoMenor_Estudiante().doubleValue(),
 				paquete.isbSubirDocPax(),paquete.isbSubirDoc_Y_LlenarDatosPax(),paquete.isbSubirDoc_O_LlenarDatosPax(),
-				paquete.isbLlenarDatosUnPax(),paquete.isbHotelesConCamaAdicional(),paquete.isbConCupon()};
+				paquete.isbLlenarDatosUnPax(),paquete.isbHotelesConCamaAdicional(),paquete.isbConCupon(),
+				paquete.isbAdvertencia(),paquete.getcTextoAdvertenciaIdioma1(),paquete.getcTextoAdvertenciaIdioma2(),
+				paquete.getcTextoAdvertenciaIdioma3(),paquete.getcTextoAdvertenciaIdioma4(),
+				paquete.getcTextoAdvertenciaIdioma5()};
 		return getEjecutorSQL().ejecutarProcedimiento("Pricing_sp_ModificarPaquetes", values);
 	}
 	public List modificarImagenesPaquete(CPaquete paquete)

@@ -6,9 +6,9 @@
 		position="center"
 		sclass="win_imagenesHotel"
 		viewModel="@id('vm') @init('com.pricing.viewModel.configurarPaqueteVM')">
-		<div width="100%" sclass="div_content_config">
-			<div>
-				<label value="CONFIGURACION DE LLENADO DE DATOS DE LOS PASAJEROS:" sclass="lbl_select_title"/>
+		<div width="100%">
+			<groupbox sclass="extras">
+				<caption label="CONFIGURACION DE LLENADO DE DATOS DE LOS PASAJEROS" sclass="lbl_select_title"/>
 				<div>
 					<radiogroup sclass="select_modo_pago" orient="vertical" onCheck="@command('selectModoLlenadoPax',opcion=self.selectedItem.value)">
 						<radio label="Subir sólo documentos" value="1" checked="@load(vm.oPaquete.bSubirDocPax)"/>
@@ -23,37 +23,76 @@
 						<radio label="Sólo llenar datos del pasajero que reserva" value="4" checked="@load(vm.oPaquete.bLlenarDatosUnPax)"/>
 					</radiogroup>
 				</div>
-			</div>
-			<div>
-				<label value="CONFIGURACION DEL PAGO TOTAL/PARCIAL:" sclass="lbl_select_title"/>
+			</groupbox>
+			<separator bar="true"/>
+			<groupbox sclass="extras">
+				<caption label="CONFIGURACION DE ADVERTENCIA" sclass="lbl_select_title"/>
+				<div>
+					<radiogroup sclass="select_modo_pago" orient="vertical" onCheck="@command('selectConAdvertencia',valor=self.selectedItem.value)">
+						<radio label="Con Advertencia" value="conAdvertencia" checked="@load(vm.oPaquete.bAdvertencia)"/>
+						<div sclass="div_content_config_items" visible="@bind(vm.oPaquete.bAdvertencia)">
+							<div>
+								<label value="Texto de Advertencia: " zclass="lbl_llenar_datos"/>
+								<div zclass="div_contiene_banderas" width="220px">
+									<image src="img/Flag-of-Spain.png" sclass="estilo_banderas"
+											onClick="txtSpainDesc.setVisible(true);
+													txtInglesDesc.setVisible(false);txtPortuDesc.setVisible(false)"/>
+									<image src="img/en.png" sclass="estilo_banderas"
+											onClick="txtSpainDesc.setVisible(false);
+													txtInglesDesc.setVisible(true);txtPortuDesc.setVisible(false)"/>
+									<image src="img/Flag_of_Brazil.png" sclass="estilo_banderas"
+											onClick="txtSpainDesc.setVisible(false);
+													txtInglesDesc.setVisible(false);txtPortuDesc.setVisible(true)"/>
+								</div>
+								<textbox value="@bind(vm.oPaquete.cTextoAdvertenciaIdioma1)"
+										id="txtSpainDesc" visible="true" placeholder="ESPAÑOL"
+						 				multiline="true" sclass="txt_config_valor" height="80px"/>
+								<textbox value="@bind(vm.oPaquete.cTextoAdvertenciaIdioma2)"
+										id="txtInglesDesc" visible="false" placeholder="INGLES"
+						 				multiline="true" sclass="txt_config_valor" height="80px"/>
+						 		<textbox value="@bind(vm.oPaquete.cTextoAdvertenciaIdioma3)"
+										id="txtPortuDesc" visible="false" placeholder="PORTUGUES"
+										multiline="true" sclass="txt_config_valor" height="80px"/>
+							</div>
+						</div>
+						<radio label="Sin Advertencia" value="sinAdvertencia" checked="@load(vm.oPaquete.bSinAdvertencia)"/>
+					</radiogroup>
+				</div>
+			</groupbox>
+			<separator bar="true"/>
+			<groupbox sclass="extras">
+				<caption label="CONFIGURACION DEL PAGO TOTAL/PARCIAL" sclass="lbl_select_title"/>
 				<div>
 					<radiogroup sclass="select_modo_pago" orient="vertical" onCheck="@command('selectConfigParcialTotal',opcion=self.selectedItem.value)">
 						<radio label="Se puede pagar parcialmente" value="1" checked="@load(vm.oPaquete.bModoPagoPartes)"/>
 						<radio label="El pago es total" value="2" checked="@load(vm.oPaquete.bModoPagoTotal)"/>
 					</radiogroup>
 				</div>
-			</div>
-			<div visible="@bind(vm.oPaquete.conDestino)">
-				<label value="CONFIGURACION DE HOTELES:" sclass="lbl_select_title"/>
+			</groupbox>
+			<separator bar="true" visible="@bind(vm.oPaquete.conDestino)"/>
+			<groupbox sclass="extras" visible="@bind(vm.oPaquete.conDestino)">
+				<caption label="CONFIGURACION DE HOTELES" sclass="lbl_select_title"/>
 				<div>
 					<radiogroup sclass="select_modo_pago" orient="vertical" onCheck="@command('selectConfigHoteles',opcion=self.selectedItem.value)">
 						<radio label="Con cama adicional" value="1" checked="@load(vm.oPaquete.bHotelesConCamaAdicional)"/>
 						<radio label="Sin cama adicional" value="2" checked="@load(vm.oPaquete.bHotelesSinCamaAdicional)"/>
 					</radiogroup>
 				</div>
-			</div>
-			<div visible="@bind(!vm.oPaquete.conDescuento)">
-				<label value="CONFIGURACION DE CUPON:" sclass="lbl_select_title"/>
+			</groupbox>
+			<separator bar="true" visible="@bind(!vm.oPaquete.conDescuento)"/>
+			<groupbox sclass="extras" visible="@bind(!vm.oPaquete.conDescuento)">
+				<caption label="CONFIGURACION DE CUPON" sclass="lbl_select_title"/>
 				<div>
 					<radiogroup sclass="select_modo_pago" orient="vertical" onCheck="@command('selectConfigCupon',opcion=self.selectedItem.value)">
 						<radio label="Con cupon de descuento" value="1" checked="@load(vm.oPaquete.bConCupon)"/>
 						<radio label="Sin cupon de descuento" value="2" checked="@load(vm.oPaquete.bSinCupon)"/>
 					</radiogroup>
 				</div>
-			</div>
-			<div>
-		 			<label value="MODO DE COBRO:" sclass="lbl_select_title"/>
-		 			<div>
+			</groupbox>
+			<separator bar="true" visible="@bind(!vm.oPaquete.bModoPagoTotal)"/>
+			<groupbox sclass="extras" visible="@bind(!vm.oPaquete.bModoPagoTotal)" >
+				<caption label="MODO DE COBRO" sclass="lbl_select_title"/>
+					<div>
 		 				<radiogroup sclass="select_modo_pago" orient="horizontal" onCheck="@command('selectModoDeCobro',modo=self.selectedItem.value)">
 		 					<radio label="Porcentual" value="porcentaje" checked="@bind(vm.oPaquete.bModoPorcentual)"/>
 		 					<radio label="Minimo" value="minimo" checked="@bind(vm.oPaquete.bModoMinimo)"/>
@@ -73,6 +112,6 @@
 		 					<label value="por pasajero." sclass="lbl_config_porcentaje"/>
 		 				</div>
 		 			</div>
-		 		</div>
+			</groupbox>
 		</div>
 </window>

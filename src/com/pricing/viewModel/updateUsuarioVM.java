@@ -1,5 +1,6 @@
 package com.pricing.viewModel;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
@@ -48,6 +49,7 @@ import com.pricing.model.CPerfil;
 import com.pricing.model.CUsuario;
 import com.pricing.model.CUsuarioLogin;
 import com.pricing.util.CEmail;
+import com.pricing.util.CReSizeImage;
 import com.pricing.util.ScannUtil;
 
 public class updateUsuarioVM {
@@ -269,10 +271,21 @@ public class updateUsuarioVM {
 							if (media instanceof org.zkoss.image.Image) {
 								org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 								//Con este metodo(uploadFile) de clase guardo la imagen en la ruta del servidor
-					            boolean b=ScannUtil.uploadFileUsuario(img);
-					            //================================
-					            //Una vez creado el nuevo nombre de archivo de imagen se procede a cambiar el nombre
-					            String urlImagen=ScannUtil.getPathImagenUsuario()+img.getName();
+					            boolean b=ScannUtil.uploadAuxFolder(img);
+								// ================================
+								String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+								String urlImagenReal= ScannUtil.getPathImagenUsuario()+img.getName();
+								if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+								{
+									CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+									File fichero = new File(urlImagenAux);
+									boolean eliminar=fichero.delete();
+								}else
+								{
+									b = ScannUtil.uploadFileUsuario(img);
+									File fichero = new File(urlImagenAux);
+									boolean eliminar=fichero.delete();
+								}
 					            asignarUrlImagenServicio(img.getName());
 					            Clients.showNotification(img.getName()+" Se inserto",Clients.NOTIFICATION_TYPE_INFO,comp,"before_start",2700);
 							} else {
@@ -284,7 +297,7 @@ public class updateUsuarioVM {
 		public void asignarUrlImagenServicio(String url)
 		{
 			System.out.println("==>:::"+url);
-			oUsuarioUpdate.setImgUsuario("/img/usuarios/"+url);
+			oUsuarioUpdate.setImgUsuario("img/usuarios/"+url);
 			BindUtils.postNotifyChange(null, null, oUsuarioUpdate,"imgUsuario");
 		}
 		

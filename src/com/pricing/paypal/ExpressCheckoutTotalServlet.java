@@ -79,6 +79,7 @@ public class ExpressCheckoutTotalServlet extends HttpServlet implements javax.se
 		 seshttp.setAttribute("token",SECResult[1]);
 		 seshttp.setAttribute("formaPago",1);
 		 seshttp.setAttribute("codReserva", codReserva);
+		 seshttp.setAttribute("codPaquete", codPaquete);
 		 seshttp.setAttribute("porcentajePago","2");
 		 seshttp.setAttribute("mail", mail);
 		 seshttp.setAttribute("contacto", contacto);

@@ -63,7 +63,15 @@ public class CPaquete
 	private boolean bLlenarDatosUnPax;// boolean 
 	private boolean bHotelesConCamaAdicional;// boolean
 	private boolean bConCupon;//boolean
+	private boolean bAdvertencia;// boolean
+	private String cTextoAdvertenciaIdioma1;// text
+	private String cTextoAdvertenciaIdioma2;// text
+	private String cTextoAdvertenciaIdioma3;// text
+	private String cTextoAdvertenciaIdioma4;// text
+	private String cTextoAdvertenciaIdioma5;// text
+	private String cTextoAdvertencia;
 	private boolean bSinCupon;
+	private boolean bSinAdvertencia;
 	private boolean bHotelesSinCamaAdicional;
 	private String url_pricingPaquete;
 	private String nPrecio1_text;
@@ -669,6 +677,54 @@ public class CPaquete
 	public void setbModoPagoPartes(boolean bModoPagoPartes) {
 		this.bModoPagoPartes = bModoPagoPartes;
 	}
+	public boolean isbAdvertencia() {
+		return bAdvertencia;
+	}
+	public void setbAdvertencia(boolean bAdvertencia) {
+		this.bAdvertencia = bAdvertencia;
+	}
+	public boolean isbSinAdvertencia() {
+		return bSinAdvertencia;
+	}
+	public void setbSinAdvertencia(boolean bSinAdvertencia) {
+		this.bSinAdvertencia = bSinAdvertencia;
+	}
+	public String getcTextoAdvertenciaIdioma1() {
+		return cTextoAdvertenciaIdioma1;
+	}
+	public void setcTextoAdvertenciaIdioma1(String cTextoAdvertenciaIdioma1) {
+		this.cTextoAdvertenciaIdioma1 = cTextoAdvertenciaIdioma1;
+	}
+	public String getcTextoAdvertenciaIdioma2() {
+		return cTextoAdvertenciaIdioma2;
+	}
+	public void setcTextoAdvertenciaIdioma2(String cTextoAdvertenciaIdioma2) {
+		this.cTextoAdvertenciaIdioma2 = cTextoAdvertenciaIdioma2;
+	}
+	public String getcTextoAdvertenciaIdioma3() {
+		return cTextoAdvertenciaIdioma3;
+	}
+	public void setcTextoAdvertenciaIdioma3(String cTextoAdvertenciaIdioma3) {
+		this.cTextoAdvertenciaIdioma3 = cTextoAdvertenciaIdioma3;
+	}
+	public String getcTextoAdvertenciaIdioma4() {
+		return cTextoAdvertenciaIdioma4;
+	}
+	public void setcTextoAdvertenciaIdioma4(String cTextoAdvertenciaIdioma4) {
+		this.cTextoAdvertenciaIdioma4 = cTextoAdvertenciaIdioma4;
+	}
+	public String getcTextoAdvertenciaIdioma5() {
+		return cTextoAdvertenciaIdioma5;
+	}
+	public void setcTextoAdvertenciaIdioma5(String cTextoAdvertenciaIdioma5) {
+		this.cTextoAdvertenciaIdioma5 = cTextoAdvertenciaIdioma5;
+	}
+	public String getcTextoAdvertencia() {
+		return cTextoAdvertencia;
+	}
+	public void setcTextoAdvertencia(String cTextoAdvertencia) {
+		this.cTextoAdvertencia = cTextoAdvertencia;
+	}
 	//=========================================
 	public CPaquete() {
 		// TODO Auto-generated constructor stub
@@ -735,6 +791,13 @@ public class CPaquete
 		this.bHotelesSinCamaAdicional=true;
 		this.bConCupon=false;
 		this.bSinCupon=true;
+		this.bAdvertencia=false;
+		this.bSinAdvertencia=true;
+		this.cTextoAdvertenciaIdioma1="";
+		this.cTextoAdvertenciaIdioma2="";
+		this.cTextoAdvertenciaIdioma3="";
+		this.cTextoAdvertenciaIdioma4="";
+		this.cTextoAdvertenciaIdioma5="";
 		//======================
 		this.cFoto1="img/tours/tourxdefecto.png";
 		this.cFoto2="img/tours/tourxdefecto.png";
@@ -759,7 +822,10 @@ public class CPaquete
 			boolean bModoPagoTotal,Number nDescuentoMenor_Estudiante,
 			boolean bSubirDocPax,boolean bSubirDoc_Y_LlenarDatosPax,
 			boolean bSubirDoc_O_LlenarDatosPax,boolean bLlenarDatosUnPax,
-			boolean bHotelesConCamaAdicional,boolean bConCupon)
+			boolean bHotelesConCamaAdicional,boolean bConCupon,
+			boolean bAdvertencia,String cTextoAdvertenciaIdioma1,
+			String cTextoAdvertenciaIdioma2,String cTextoAdvertenciaIdioma3,
+			String cTextoAdvertenciaIdioma4,String cTextoAdvertenciaIdioma5)
 	{
 		this.cPaqueteCod=cPaqueteCod;
 		this.cTituloIdioma1=cTituloIdioma1;
@@ -802,6 +868,13 @@ public class CPaquete
 		this.bHotelesConCamaAdicional=bHotelesConCamaAdicional;
 		this.bHotelesSinCamaAdicional=!bHotelesConCamaAdicional;
 		this.bConCupon=bConCupon;
+		this.bAdvertencia=bAdvertencia;
+		this.cTextoAdvertenciaIdioma1=cTextoAdvertenciaIdioma1;
+		this.cTextoAdvertenciaIdioma2=cTextoAdvertenciaIdioma2;
+		this.cTextoAdvertenciaIdioma3=cTextoAdvertenciaIdioma3;
+		this.cTextoAdvertenciaIdioma4=cTextoAdvertenciaIdioma4;
+		this.cTextoAdvertenciaIdioma5=cTextoAdvertenciaIdioma5;
+		this.cTextoAdvertencia="";
 		//===================
 		listaDestinos=new ArrayList<CDestino>();
 		listaServicios=new ArrayList<CServicio>();
@@ -830,7 +903,10 @@ public class CPaquete
 			boolean bModoPagoTotal,Number nDescuentoMenor_Estudiante,
 			boolean bSubirDocPax,boolean bSubirDoc_Y_LlenarDatosPax,
 			boolean bSubirDoc_O_LlenarDatosPax,boolean bLlenarDatosUnPax,
-			boolean bHotelesConCamaAdicional,boolean bConCupon) throws UnsupportedEncodingException {
+			boolean bHotelesConCamaAdicional,boolean bConCupon,
+			boolean bAdvertencia,String cTextoAdvertenciaIdioma1,
+			String cTextoAdvertenciaIdioma2,String cTextoAdvertenciaIdioma3,
+			String cTextoAdvertenciaIdioma4,String cTextoAdvertenciaIdioma5) throws UnsupportedEncodingException {
 		/*******************************/
 		simbolos= new DecimalFormatSymbols();
 		simbolos.setDecimalSeparator('.');
@@ -869,6 +945,13 @@ public class CPaquete
 		this.bHotelesSinCamaAdicional=!bHotelesConCamaAdicional;
 		this.bConCupon=bConCupon;
 		this.bSinCupon=!bConCupon;
+		this.bAdvertencia=bAdvertencia;
+		this.bSinAdvertencia=!bAdvertencia;
+		this.cTextoAdvertenciaIdioma1=cTextoAdvertenciaIdioma1;
+		this.cTextoAdvertenciaIdioma2=cTextoAdvertenciaIdioma2;
+		this.cTextoAdvertenciaIdioma3=cTextoAdvertenciaIdioma3;
+		this.cTextoAdvertenciaIdioma4=cTextoAdvertenciaIdioma4;
+		this.cTextoAdvertenciaIdioma5=cTextoAdvertenciaIdioma5;
 		this.nDias = nDias;
 		this.nNoches = nNoches;
 		this.dias_noches=nDias+" DIAS Y "+nNoches+" NOCHES";

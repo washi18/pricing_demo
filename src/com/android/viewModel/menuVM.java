@@ -38,6 +38,7 @@ import com.pricing.extras.KMP;
 import com.pricing.model.CGaleriaImageExist;
 import com.pricing.model.CGaleriaImageExist4;
 import com.pricing.model.Nro;
+import com.pricing.util.CReSizeImage;
 import com.pricing.util.ScannUtil;
 
 public class menuVM {
@@ -1175,12 +1176,21 @@ public class menuVM {
 					if (media instanceof org.zkoss.image.Image) {
 						org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 						// Con este metodo(uploadFile) de clase guardo la imagen
-						// en la ruta del servidor
-						boolean b = ScannUtil.uploadFileAndroid(img);
+						boolean b=ScannUtil.uploadAuxFolder(img);
 						// ================================
-						// Una vez creado el nuevo nombre de archivo de imagen
-						// se procede a cambiar el nombre
-						String urlImagen = ScannUtil.getPathImagenAndroid() + img.getName();
+						String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+						String urlImagenReal= ScannUtil.getPathImagenAndroid()+img.getName();
+						if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+						{
+							CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}else
+						{
+							b = ScannUtil.uploadFileAndroid(img);
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}
 						asignarRutaImagenMenu(img.getName(), menu,opcion);
 						Clients.showNotification(img.getName() + " Se subio al servidor.",
 								Clients.NOTIFICATION_TYPE_INFO, comp, "before_start", 2700);
@@ -1215,12 +1225,21 @@ public class menuVM {
 					if (media instanceof org.zkoss.image.Image) {
 						org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 						// Con este metodo(uploadFile) de clase guardo la imagen
-						// en la ruta del servidor
-						boolean b = ScannUtil.uploadFileAndroid(img);
+						boolean b=ScannUtil.uploadAuxFolder(img);
 						// ================================
-						// Una vez creado el nuevo nombre de archivo de imagen
-						// se procede a cambiar el nombre
-						String urlImagen = ScannUtil.getPathImagenAndroid() + img.getName();
+						String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+						String urlImagenReal= ScannUtil.getPathImagenAndroid()+img.getName();
+						if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+						{
+							CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}else
+						{
+							b = ScannUtil.uploadFileAndroid(img);
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}
 						asignarRutaImagenSubMenu(img.getName(), submenu,false);
 						Clients.showNotification(img.getName() + " Se subio al servidor.",
 								Clients.NOTIFICATION_TYPE_INFO, comp, "before_start", 2700);
@@ -1250,12 +1269,21 @@ public class menuVM {
 					if (media instanceof org.zkoss.image.Image) {
 						org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 						// Con este metodo(uploadFile) de clase guardo la imagen
-						// en la ruta del servidor
-						boolean b = ScannUtil.uploadFileAndroid(img);
+						boolean b=ScannUtil.uploadAuxFolder(img);
 						// ================================
-						// Una vez creado el nuevo nombre de archivo de imagen
-						// se procede a cambiar el nombre
-						String urlImagen = ScannUtil.getPathImagenAndroid() + img.getName();
+						String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+						String urlImagenReal= ScannUtil.getPathImagenAndroid()+img.getName();
+						if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+						{
+							CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}else
+						{
+							b = ScannUtil.uploadFileAndroid(img);
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}
 						asignarRutaImagenItem(img.getName(), item,false);
 						Clients.showNotification(img.getName() + " Se subio al servidor.",
 								Clients.NOTIFICATION_TYPE_INFO, comp, "before_start", 2700);
@@ -1285,12 +1313,21 @@ public class menuVM {
 					if (media instanceof org.zkoss.image.Image) {
 						org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 						// Con este metodo(uploadFile) de clase guardo la imagen
-						// en la ruta del servidor
-						boolean b = ScannUtil.uploadFileAndroid(img);
+						boolean b=ScannUtil.uploadAuxFolder(img);
 						// ================================
-						// Una vez creado el nuevo nombre de archivo de imagen
-						// se procede a cambiar el nombre
-						String urlImagen = ScannUtil.getPathImagenAndroid() + img.getName();
+						String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+						String urlImagenReal= ScannUtil.getPathImagenAndroid()+img.getName();
+						if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+						{
+							CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}else
+						{
+							b = ScannUtil.uploadFileAndroid(img);
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}
 						asignarRutaImagenDatoGeneral(img.getName(), datoGeneral,false);
 						Clients.showNotification(img.getName() + " Se subio al servidor.",
 								Clients.NOTIFICATION_TYPE_INFO, comp, "before_start", 2700);
@@ -1321,12 +1358,21 @@ public class menuVM {
 					if (media instanceof org.zkoss.image.Image) {
 						org.zkoss.image.Image img = (org.zkoss.image.Image) media;
 						// Con este metodo(uploadFile) de clase guardo la imagen
-						// en la ruta del servidor
-						boolean b = ScannUtil.uploadFileAndroid(img);
+						boolean b=ScannUtil.uploadAuxFolder(img);
 						// ================================
-						// Una vez creado el nuevo nombre de archivo de imagen
-						// se procede a cambiar el nombre
-						String urlImagen = ScannUtil.getPathImagenAndroid() + img.getName();
+						String urlImagenAux = ScannUtil.getPathAuxFolder() + img.getName();
+						String urlImagenReal= ScannUtil.getPathImagenAndroid()+img.getName();
+						if(!CReSizeImage.tamanioSuficiente(urlImagenAux))
+						{
+							CReSizeImage.copyImage(urlImagenAux,urlImagenReal,img.getFormat());
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}else
+						{
+							b = ScannUtil.uploadFileAndroid(img);
+							File fichero = new File(urlImagenAux);
+							boolean eliminar=fichero.delete();
+						}
 						asignarRutaImagenElemento(img.getName(),elemento,opcion,false);
 						Clients.showNotification(img.getName() + " Se subio al servidor.",
 								Clients.NOTIFICATION_TYPE_INFO, comp, "before_start", 2700);
