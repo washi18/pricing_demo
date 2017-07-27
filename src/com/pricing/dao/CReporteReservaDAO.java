@@ -182,9 +182,7 @@ public class CReporteReservaDAO extends CConexion{
 		{
 			Map row=(Map)lista.get(i);
 			Number a=(Number)row.get("npreciopaquetepersona");
-			double preciopersona=a.doubleValue();
-			int n=(int)row.get("nnropersonas");
-			double total=n*preciopersona;
+			double total=a.doubleValue();
 			listaReporteReservas.add(new CReporteReserva((String)row.get("creservacod"),(Date)row.get("dfechainicio"), 
 					(Date)row.get("dfechafin"),(Date)row.get("dfecha"),
 					(String)row.get("ccontacto"),(String)row.get("cemail"),

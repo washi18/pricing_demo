@@ -410,6 +410,5 @@ public class CReporteReserva {
 		if(oReservaPaquete.getnMontoTotalPaquete()!=null)
 			this.montoTotalOtros=oReservaPaquete.getnMontoTotalPaquete().doubleValue()-precioTotal;
 	}
-	//=================otros metodos======================
-	
+	//=================otros metodos======================	
 }
